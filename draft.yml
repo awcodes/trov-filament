@@ -1,0 +1,10 @@
+models:
+  Page:
+    title: string
+    slug: string unique
+    status: string default:draft
+    featured_image: string nullable
+    content: longtext nullable
+    published_at: timestamp
+
+seeders: Page

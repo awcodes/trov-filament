@@ -19,6 +19,7 @@ class DatabaseSeeder extends Seeder
                 'email' => 'adam.weston@titlemax.com'
             ]);
         }
-        // \App\Models\User::factory(10)->create();
+
+        $this->call(AuthorSeeder::class);
     }
 }
