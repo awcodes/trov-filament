@@ -27,7 +27,7 @@ class Author extends Model implements HasAvatar
 
         static::deleting(function ($author) {
             if ($author->avatar) {
-                Storage::delete($author->avatar);
+                Storage::disk('avatars')->delete($author->avatar);
             }
         });
     }
@@ -42,12 +42,7 @@ class Author extends Model implements HasAvatar
 
     public function getFilamentAvatarUrl(): ?string
     {
-        // $name = trim(collect(explode(' ', $this->name))->map(function ($segment) {
-        //     return $segment[0] ?? '';
-        // })->join(' '));
-
-        // return 'https://ui-avatars.com/api/?name=' . urlencode($name) . '&color=1e40af&background=bfdbfe';
-        return '/default-avatar.jpg';
+        return 'default-avatar.jpg';
     }
 
     /**

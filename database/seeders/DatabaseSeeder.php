@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Storage;
 
 class DatabaseSeeder extends Seeder
 {
@@ -20,6 +21,11 @@ class DatabaseSeeder extends Seeder
             ]);
         }
 
+        $d = '/public/images';
+        Storage::deleteDirectory($d);
+        Storage::makeDirectory($d);
+
         $this->call(AuthorSeeder::class);
+        $this->call(PageSeeder::class);
     }
 }

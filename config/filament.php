@@ -124,6 +124,18 @@ return [
 
     /*
     |--------------------------------------------------------------------------
+    | Dark mode
+    |--------------------------------------------------------------------------
+    |
+    | By enabling this feature, your users are able to select between a light
+    | and dark appearance for the admin panel, or let their system decide.
+    |
+    */
+
+    'dark_mode' => true,
+
+    /*
+    |--------------------------------------------------------------------------
     | Livewire
     |--------------------------------------------------------------------------
     |
@@ -156,7 +168,7 @@ return [
             ],
         ],
         'footer' => [
-            'should_show_logo' => true,
+            'should_show_logo' => false,
         ],
         'max_content_width' => null,
         'tables' => [

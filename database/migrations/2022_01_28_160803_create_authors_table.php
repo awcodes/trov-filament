@@ -18,12 +18,12 @@ class CreateAuthorsTable extends Migration
             $table->string('name');
             $table->string('slug')->unique();
             $table->longText('bio')->nullable();
-            $table->string('facebook')->nullable();
-            $table->string('twitter')->nullable();
-            $table->string('instagram')->nullable();
-            $table->string('linkedin')->nullable();
-            $table->string('youtube')->nullable();
-            $table->string('pinterest')->nullable();
+            $table->string('facebook_handle')->nullable();
+            $table->string('twitter_handle')->nullable();
+            $table->string('instagram_handle')->nullable();
+            $table->string('linkedin_handle')->nullable();
+            $table->string('youtube_handle')->nullable();
+            $table->string('pinterest_handle')->nullable();
             $table->string('avatar')->nullable();
             $table->timestamps();
         });

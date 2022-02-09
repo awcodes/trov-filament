@@ -3,8 +3,12 @@ models:
     title: string
     slug: string unique
     status: string default:draft
-    featured_image: string nullable
+    hero_image: string nullable
+    hero_content: mediumtext nullable
     content: longtext nullable
-    published_at: timestamp
+    seo_title: string
+    seo_description: text
+    indexable: boolean default:true
+    has_chat: boolean default:true
 
 seeders: Page

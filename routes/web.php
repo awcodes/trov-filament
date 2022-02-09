@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\PageController;
 
 /*
 |--------------------------------------------------------------------------
@@ -13,10 +14,14 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
-
 Route::get('/admin/login', function () {
     return redirect('/login');
 })->name('filament.auth.login');
+
+Route::middleware('forceslash')->group(function () {
+    Route::name('welcome')->get('/', function () {
+        return view('welcome');
+    });
+
+    Route::name('page.show')->get('/{page:slug}', [PageController::class, 'show']);
+});

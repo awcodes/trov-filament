@@ -2,19 +2,23 @@
 
 namespace App\Filament\Resources;
 
+use Filament\Forms;
+use Filament\Tables;
+use App\Models\Author;
+use Filament\Resources\Form;
+use Filament\Resources\Table;
+use Filament\Resources\Resource;
+use Filament\Forms\Components\Card;
+use Filament\Forms\Components\Group;
+use Filament\Forms\Components\RichEditor;
 use App\Filament\Resources\AuthorResource\Pages;
 use App\Filament\Resources\AuthorResource\RelationManagers;
-use App\Models\Author;
-use Filament\Forms;
-use Filament\Forms\Components\Group;
-use Filament\Resources\Form;
-use Filament\Resources\Resource;
-use Filament\Resources\Table;
-use Filament\Tables;
 
 class AuthorResource extends Resource
 {
     protected static ?string $model = Author::class;
+
+    protected static ?string $navigationGroup = 'Blog';
 
     protected static ?string $navigationIcon = 'heroicon-s-user-group';
 
@@ -22,25 +26,27 @@ class AuthorResource extends Resource
     {
         return $form
             ->schema([
-                Group::make()->schema([
+                Card::make()->schema([
                     Group::make()->schema([
                         Forms\Components\TextInput::make('name')->required(),
                         Forms\Components\TextInput::make('slug'),
                     ])->columns(2),
                     Group::make()->schema([
-                        Forms\Components\Textarea::make('bio')->rows(5),
+                        Forms\Components\RichEditor::make('bio')->disableToolbarButtons(['attachFiles', 'h2', 'h3', 'blockquote', 'codeBlock', 'strike']),
                     ]),
                     Group::make()->schema([
-                        Forms\Components\TextInput::make('facebook')->url(),
-                        Forms\Components\TextInput::make('twitter')->url(),
-                        Forms\Components\TextInput::make('instagram')->url(),
-                        Forms\Components\TextInput::make('linkedin')->url(),
-                        Forms\Components\TextInput::make('youtube')->url(),
-                        Forms\Components\TextInput::make('pinterest')->url(),
-                    ])
+                        Forms\Components\TextInput::make('facebook_handle'),
+                        Forms\Components\TextInput::make('twitter_handle'),
+                        Forms\Components\TextInput::make('instagram_handle'),
+                        Forms\Components\TextInput::make('linkedin_handle'),
+                        Forms\Components\TextInput::make('youtube_handle'),
+                        Forms\Components\TextInput::make('pinterest_handle'),
+                    ])->columns(2)
                 ])->columnSpan(2),
-                Group::make()->schema([
-                    Forms\Components\FileUpload::make('avatar')->image()->imagePreviewHeight('250')->maxFiles(1)->maxSize(512)
+                Card::make()->schema([
+                    Group::make()->schema([
+                        Forms\Components\FileUpload::make('avatar')->disk('avatars')->image()->imagePreviewHeight('250')->maxFiles(1)->maxSize(512)
+                    ])
                 ])->columnSpan(1)
             ])->columns(3);
     }
@@ -49,7 +55,7 @@ class AuthorResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\ImageColumn::make('avatar'),
+                Tables\Columns\ImageColumn::make('avatar')->disk('avatars'),
                 Tables\Columns\TextColumn::make('name'),
             ])
             ->filters([
