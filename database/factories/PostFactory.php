@@ -2,18 +2,18 @@
 
 namespace Database\Factories;
 
-use App\Models\Page;
-use Illuminate\Support\Str;
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Illuminate\Support\Str;
+use App\Models\Post;
 
-class PageFactory extends Factory
+class PostFactory extends Factory
 {
     /**
      * The name of the factory's corresponding model.
      *
      * @var string
      */
-    protected $model = Page::class;
+    protected $model = Post::class;
 
     /**
      * Indicate that the page is in review status.
@@ -53,20 +53,13 @@ class PageFactory extends Factory
         $title = $this->faker->sentence(4);
 
         return [
-            'title' => $this->faker->sentence(4),
+            'title' => $title,
             'slug' => Str::slug($title),
             'status' => 'draft',
-            'hero_image' => $this->faker->image(storage_path('app/public/images'), 1024, 576, 'nature', false, true, null),
-            'hero_image_alt' => $this->faker->text,
-            'hero_content' => $this->faker->text,
+            'author_id' => rand(1, 5),
+            'featured_image' => $this->faker->image(storage_path('app/public/images'), 1024, 576, 'nature', false, true, null),
+            'featured_image_alt' => $this->faker->text,
             'content' => [
-                [
-                    "type" => "heading",
-                    "data" => [
-                        "content" => Str::title($this->faker->words(rand(3, 8), true)),
-                        "level" => "h1"
-                    ]
-                ],
                 [
                     "type" => "rich-text",
                     "data" => [
@@ -90,7 +83,7 @@ class PageFactory extends Factory
             'seo_title' => Str::title($this->faker->words(rand(2, 6), true)),
             'seo_description' => $this->faker->text,
             'indexable' => $this->faker->boolean,
-            'has_chat' => $this->faker->boolean,
+            'published_at' => $this->faker->dateTime(),
         ];
     }
 }

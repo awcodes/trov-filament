@@ -2,14 +2,16 @@
 
 namespace App\Models;
 
+use Spatie\Tags\HasTags;
 use Spatie\Sluggable\SlugOptions;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
-class Page extends Model
+class Post extends Model
 {
     use HasFactory;
+    use HasTags;
 
     protected static function booted()
     {
@@ -40,14 +42,14 @@ class Page extends Model
         'title',
         'slug',
         'status',
-        'hero_image',
-        'hero_alt',
-        'hero_content',
+        'author_id',
+        'featured_image',
+        'featured_image_alt',
         'content',
         'seo_title',
         'seo_description',
         'indexable',
-        'has_chat',
+        'published_at',
     ];
 
     /**
@@ -58,20 +60,25 @@ class Page extends Model
     protected $casts = [
         'id' => 'integer',
         'indexable' => 'boolean',
-        'has_chat' => 'boolean',
+        'published_at' => 'datetime',
         'content' => 'array',
     ];
 
-    public function getHeroImageDataAttribute()
+    public function getFeaturedImageDataAttribute()
     {
-        $imageData = Storage::disk('images')->path($this->hero_image);
+        $imageData = Storage::disk('images')->path($this->featured_image);
         $size = getimagesize($imageData);
 
         return [
-            'url' => Storage::disk('images')->url($this->hero_image),
-            'alt' => $this->hero_image_alt,
+            'url' => Storage::disk('images')->url($this->featured_image),
+            'alt' => $this->featured_image_alt,
             'width' => $size[0],
             'height' => $size[1],
         ];
+    }
+
+    public function author()
+    {
+        return $this->belongsTo(Author::class);
     }
 }

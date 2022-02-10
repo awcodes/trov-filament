@@ -1,9 +1,16 @@
 created:
-    - database/factories/PageFactory.php
-    - database/migrations/2022_02_09_155954_create_pages_table.php
-    - app/Models/Page.php
-    - database/seeders/PageSeeder.php
+    - database/factories/PostFactory.php
+    - database/factories/TagsFactory.php
+    - database/migrations/2022_02_10_192404_create_posts_table.php
+    - database/migrations/2022_02_10_192405_create_tags_table.php
+    - database/migrations/2022_02_10_192406_create_post_tags_table.php
+    - app/Models/Post.php
+    - app/Models/Tags.php
+    - database/seeders/PostSeeder.php
+    - database/seeders/TagsSeeder.php
 models:
     User: { name: string, email: string, email_verified_at: 'datetime nullable', password: string, remember_token: 'string nullable', current_team_id: 'integer nullable', profile_photo_path: 'string nullable', two_factor_secret: 'text nullable', two_factor_recovery_codes: 'text nullable' }
     Author: { name: string, slug: 'string unique', bio: 'longtext nullable', facebook: 'string nullable', twitter: 'string nullable', instagram: 'string nullable', linkedin: 'string nullable', youtube: 'string nullable', pinterest: 'string nullable', avatar: 'string nullable' }
     Page: { title: string, slug: 'string unique', status: 'string default:draft', hero_image: 'string nullable', hero_content: 'mediumtext nullable', content: 'longtext nullable', seo_title: string, seo_description: text, indexable: 'boolean default:true', has_chat: 'boolean default:true' }
+    Post: { title: string, slug: 'string unique', status: 'string default:draft', featured_image: 'string nullable', featured_image_alt: 'mediumtext nullable', content: 'longtext nullable', seo_title: string, seo_description: text, indexable: 'boolean default:true', published_at: 'nullable datetime', relationships: { belongsToMany: Tags, belongsTo: Author } }
+    Tags: { title: string, slug: string, relationships: { belongsToMany: Post } }

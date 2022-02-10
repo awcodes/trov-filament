@@ -1,14 +1,23 @@
 models:
-  Page:
+  Post:
     title: string
     slug: string unique
     status: string default:draft
-    hero_image: string nullable
-    hero_content: mediumtext nullable
+    featured_image: string nullable
+    featured_image_alt: mediumtext nullable
     content: longtext nullable
     seo_title: string
     seo_description: text
     indexable: boolean default:true
-    has_chat: boolean default:true
+    published_at: nullable datetime
+    relationships:
+      belongsToMany: Tags
+      belongsTo: Author
 
-seeders: Page
+  Tags:
+    title: string
+    slug: string
+    relationships:
+      belongsToMany: Post
+
+seeders: Post, Tags

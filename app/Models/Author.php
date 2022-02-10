@@ -2,12 +2,13 @@
 
 namespace App\Models;
 
+use App\Models\Post;
 use Spatie\Sluggable\HasSlug;
 use Spatie\Sluggable\SlugOptions;
-use Filament\Models\Contracts\HasAvatar;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Storage;
+use Filament\Models\Contracts\HasAvatar;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Author extends Model implements HasAvatar
 {
@@ -75,5 +76,10 @@ class Author extends Model implements HasAvatar
     public function getAvatarAttribute($value)
     {
         return $value ? $value : $this->getFilamentAvatarUrl();
+    }
+
+    public function posts()
+    {
+        return $this->hasMany(Post::class);
     }
 }

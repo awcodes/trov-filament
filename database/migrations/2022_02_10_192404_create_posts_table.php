@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreatePagesTable extends Migration
+class CreatePostsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,19 +13,19 @@ class CreatePagesTable extends Migration
      */
     public function up()
     {
-        Schema::create('pages', function (Blueprint $table) {
+        Schema::create('posts', function (Blueprint $table) {
             $table->id();
             $table->string('title');
             $table->string('slug')->unique();
             $table->string('status')->default('draft');
-            $table->string('hero_image')->nullable();
-            $table->string('hero_image_alt')->nullable();
-            $table->mediumText('hero_content')->nullable();
+            $table->foreignId('author_id');
+            $table->string('featured_image')->nullable();
+            $table->mediumText('featured_image_alt')->nullable();
             $table->longText('content')->nullable();
             $table->string('seo_title');
             $table->text('seo_description');
             $table->boolean('indexable')->default(true);
-            $table->boolean('has_chat')->default(true);
+            $table->dateTime('published_at')->nullable();
             $table->timestamps();
         });
     }
@@ -37,6 +37,6 @@ class CreatePagesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('pages');
+        Schema::dropIfExists('posts');
     }
 }

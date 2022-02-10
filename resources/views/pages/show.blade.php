@@ -1,6 +1,6 @@
 <x-dynamic-component :component="$layout . '-layout'" :meta="$meta">
     @section('hero')
-        <x-hero :image="$page->hero_image" :content="$page->hero_content" />
+        <x-hero :image="$page->hero_image_data" :content="$page->hero_content" />
     @endsection
 
     @if ($page->content)

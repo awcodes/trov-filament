@@ -4,6 +4,7 @@ namespace App\Filament\Resources;
 
 use Filament\Forms;
 use App\Models\Page;
+use App\Models\Post;
 use Filament\Tables;
 use Illuminate\Support\Str;
 use Filament\Resources\Form;
@@ -14,7 +15,6 @@ use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Toggle;
 use Filament\Forms\Components\Builder;
 use Filament\Forms\Components\Textarea;
-use Filament\Tables\Columns\IconColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Forms\Components\TextInput;
 use Filament\Tables\Columns\BadgeColumn;
@@ -23,18 +23,23 @@ use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\RichEditor;
 use Filament\Tables\Filters\SelectFilter;
 use Filament\Forms\Components\Placeholder;
-use Filament\Forms\Components\MarkdownEditor;
-use App\Filament\Resources\PageResource\Pages;
-use App\Filament\Resources\PageResource\RelationManagers;
-use Filament\Forms\Components\SpatieMediaLibraryFileUpload;
+use Filament\Forms\Components\Builder\Block;
+use App\Filament\Resources\PostResource\Pages;
+use Filament\Forms\Components\BelongsToSelect;
+use Filament\Forms\Components\SpatieTagsInput;
+use App\Filament\Resources\PostResource\Pages\EditPost;
+use App\Filament\Resources\PostResource\Pages\ListPosts;
+use App\Filament\Resources\PostResource\Pages\CreatePost;
+use App\Filament\Resources\PostResource\RelationManagers;
+use Filament\Forms\Components\DateTimePicker;
 
-class PageResource extends Resource
+class PostResource extends Resource
 {
-    protected static ?string $model = Page::class;
+    protected static ?string $model = Post::class;
 
-    protected static ?string $navigationGroup = 'Site';
+    protected static ?string $navigationGroup = 'Blog';
 
-    protected static ?string $navigationIcon = 'heroicon-s-document';
+    protected static ?string $navigationIcon = 'heroicon-s-newspaper';
 
     public static function form(Form $form): Form
     {
@@ -53,20 +58,17 @@ class PageResource extends Resource
                         TextInput::make('slug')
                             ->disabled()
                             ->required()
-                            ->unique(Page::class, 'slug', fn ($record) => $record),
+                            ->unique(Post::class, 'slug', fn ($record) => $record),
                         TextInput::make('seo_title')->required()->columnSpan([
                             'sm' => 2,
                         ]),
                         Textarea::make('seo_description')->rows(3)->required()->columnSpan([
                             'sm' => 2,
                         ]),
-                        FileUpload::make('hero_image')->disk('images')->columnSpan([
+                        FileUpload::make('featured_image')->disk('images')->columnSpan([
                             'sm' => 2,
                         ]),
-                        TextInput::make('hero_image_alt')->required()->columnSpan([
-                            'sm' => 2,
-                        ]),
-                        Textarea::make('hero_content')->rows(3)->columnSpan([
+                        TextInput::make('featured_image_alt')->columnSpan([
                             'sm' => 2,
                         ]),
                         Builder::make('content')->blocks([
@@ -125,18 +127,20 @@ class PageResource extends Resource
                     ->schema([
                         Placeholder::make('created_at')
                             ->label('Created at')
-                            ->content(fn (?Page $record): string => $record ? $record->created_at->diffForHumans() : '-'),
+                            ->content(fn (?Post $record): string => $record ? $record->created_at->diffForHumans() : '-'),
                         Placeholder::make('updated_at')
                             ->label('Last modified at')
-                            ->content(fn (?Page $record): string => $record ? $record->updated_at->diffForHumans() : '-'),
+                            ->content(fn (?Post $record): string => $record ? $record->updated_at->diffForHumans() : '-'),
                         Select::make('status')
                             ->options([
                                 'draft' => 'Draft',
                                 'review' => 'In review',
                                 'published' => 'Published',
                             ])->required(),
+                        DateTimePicker::make('published_at')->label('Publish Date')->withoutSeconds(),
                         Toggle::make('indexable'),
-                        Toggle::make('has_chat')
+                        BelongsToSelect::make('author_id')->relationship('author', 'name')->required(),
+                        SpatieTagsInput::make('tags'),
                     ])
                     ->columnSpan(1),
             ])
@@ -150,14 +154,14 @@ class PageResource extends Resource
     {
         return $table
             ->columns([
-                ImageColumn::make('hero_image')->disk('images'),
+                ImageColumn::make('featured_image')->disk('images'),
                 TextColumn::make('title')->searchable()->sortable(),
                 BadgeColumn::make('status')->enum([
                     'draft' => 'Draft',
                     'review' => 'In Review',
                     'published' => 'Published',
                 ])->colors(['primary', 'danger' => 'draft', 'warning' => 'review', 'success' => 'published']),
-                TextColumn::make('updated_at')->label('Last Updated')->date()->sortable(),
+                TextColumn::make('published_at')->label('Published At')->date()->sortable(),
             ])
             ->filters([
                 SelectFilter::make('status')
@@ -179,9 +183,9 @@ class PageResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListPages::route('/'),
-            'create' => Pages\CreatePage::route('/create'),
-            'edit' => Pages\EditPage::route('/{record}/edit'),
+            'index' => Pages\ListPosts::route('/'),
+            'create' => Pages\CreatePost::route('/create'),
+            'edit' => Pages\EditPost::route('/{record}/edit'),
         ];
     }
 }

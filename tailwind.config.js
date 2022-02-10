@@ -9,6 +9,11 @@ module.exports = {
     ],
 
     theme: {
+        screens: {
+            sm: "568px",
+            md: "768px",
+            lg: "1024px",
+        },
         container: {
             center: true,
             padding: "1.5rem",

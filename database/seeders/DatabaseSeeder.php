@@ -26,15 +26,16 @@ class DatabaseSeeder extends Seeder
                 'name' => 'Scott Kublin',
                 'email' => 'scott.kublin@titlemax.com'
             ])->assignRole('Admin')->givePermissionTo([
-                'manage users', 'manage authors', 'manage pages', 'manage posts', 'manage articles', 'manage resources'
+                'manage users', 'manage authors', 'manage pages', 'manage posts',
             ]);
 
             $d = '/public/images';
             Storage::deleteDirectory($d);
             Storage::makeDirectory($d);
 
-            $this->call(AuthorSeeder::class);
             $this->call(PageSeeder::class);
+            $this->call(AuthorSeeder::class);
+            $this->call(PostSeeder::class);
         }
     }
 }
