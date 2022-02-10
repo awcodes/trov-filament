@@ -2,14 +2,20 @@
 
 namespace App\Filament\Resources;
 
+use Closure;
 use Filament\Forms;
 use Filament\Tables;
 use App\Models\Author;
+use Livewire\Component;
+use Illuminate\Support\Str;
 use Filament\Resources\Form;
 use Filament\Resources\Table;
 use Filament\Resources\Resource;
 use Filament\Forms\Components\Card;
 use Filament\Forms\Components\Group;
+use Illuminate\Support\Facades\Route;
+use Filament\Forms\Components\TextInput;
+use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\RichEditor;
 use App\Filament\Resources\AuthorResource\Pages;
 use App\Filament\Resources\AuthorResource\RelationManagers;
@@ -26,29 +32,48 @@ class AuthorResource extends Resource
     {
         return $form
             ->schema([
-                Card::make()->schema([
-                    Group::make()->schema([
-                        Forms\Components\TextInput::make('name')->required(),
-                        Forms\Components\TextInput::make('slug'),
-                    ])->columns(2),
-                    Group::make()->schema([
-                        Forms\Components\RichEditor::make('bio')->disableToolbarButtons(['attachFiles', 'h2', 'h3', 'blockquote', 'codeBlock', 'strike']),
-                    ]),
-                    Group::make()->schema([
-                        Forms\Components\TextInput::make('facebook_handle'),
-                        Forms\Components\TextInput::make('twitter_handle'),
-                        Forms\Components\TextInput::make('instagram_handle'),
-                        Forms\Components\TextInput::make('linkedin_handle'),
-                        Forms\Components\TextInput::make('youtube_handle'),
-                        Forms\Components\TextInput::make('pinterest_handle'),
-                    ])->columns(2)
-                ])->columnSpan(2),
-                Card::make()->schema([
-                    Group::make()->schema([
-                        Forms\Components\FileUpload::make('avatar')->disk('avatars')->image()->imagePreviewHeight('250')->maxFiles(1)->maxSize(512)
+                Card::make()
+                    ->schema([
+                        TextInput::make('name')
+                            ->required()
+                            ->reactive()
+                            ->afterStateUpdated(function ($state, callable $set, $record) {
+                                if (!$record) {
+                                    return $set('slug', Str::slug($state));
+                                }
+                            }),
+                        TextInput::make('slug')
+                            ->disabled()
+                            ->required()
+                            ->unique(Author::class, 'slug', fn ($record) => $record),
+                        RichEditor::make('bio')
+                            ->disableToolbarButtons(['attachFiles', 'h2', 'h3', 'blockquote', 'codeBlock', 'strike'])
+                            ->columnSpan(['sm' => 2]),
+                        Group::make()->schema([
+                            TextInput::make('facebook_handle'),
+                            TextInput::make('twitter_handle'),
+                            TextInput::make('instagram_handle'),
+                            TextInput::make('linkedin_handle'),
+                            TextInput::make('youtube_handle'),
+                            TextInput::make('pinterest_handle'),
+                        ])->columns(2)->columnSpan(['sm' => 2])
                     ])
-                ])->columnSpan(1)
-            ])->columns(3);
+                    ->columns([
+                        'sm' => 2,
+                    ])
+                    ->columnSpan([
+                        'sm' => 2,
+                    ]),
+                Card::make()
+                    ->schema([
+                        FileUpload::make('avatar')->disk('avatars')->image()->imagePreviewHeight('250')->maxFiles(1)->maxSize(512)
+                    ])
+                    ->columnSpan(1),
+            ])
+            ->columns([
+                'sm' => 3,
+                'lg' => null,
+            ]);
     }
 
     public static function table(Table $table): Table

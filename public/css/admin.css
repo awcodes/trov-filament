@@ -4436,6 +4436,11 @@ select{
   color: rgb(59 130 246 / var(--tw-text-opacity));
 }
 
+.text-yellow-500{
+  --tw-text-opacity: 1;
+  color: rgb(234 179 8 / var(--tw-text-opacity));
+}
+
 .text-white{
   --tw-text-opacity: 1;
   color: rgb(255 255 255 / var(--tw-text-opacity));

@@ -5,6 +5,7 @@ namespace App\Filament\Resources;
 use Filament\Forms;
 use App\Models\Page;
 use Filament\Tables;
+use Illuminate\Support\Str;
 use Filament\Resources\Form;
 use Filament\Resources\Table;
 use Filament\Resources\Resource;
@@ -13,11 +14,14 @@ use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Toggle;
 use Filament\Forms\Components\Builder;
 use Filament\Forms\Components\Textarea;
+use Filament\Tables\Columns\IconColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Forms\Components\TextInput;
+use Filament\Tables\Columns\BadgeColumn;
 use Filament\Tables\Columns\ImageColumn;
 use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\RichEditor;
+use Filament\Tables\Filters\SelectFilter;
 use Filament\Forms\Components\Placeholder;
 use Filament\Forms\Components\MarkdownEditor;
 use App\Filament\Resources\PageResource\Pages;
@@ -41,7 +45,11 @@ class PageResource extends Resource
                         TextInput::make('title')
                             ->required()
                             ->reactive()
-                            ->afterStateUpdated(fn ($state, callable $set) => $set('slug', Str::slug($state))),
+                            ->afterStateUpdated(function ($state, callable $set, $record) {
+                                if (!$record) {
+                                    return $set('slug', Str::slug($state));
+                                }
+                            }),
                         TextInput::make('slug')
                             ->disabled()
                             ->required()
@@ -123,7 +131,7 @@ class PageResource extends Resource
                                 'draft' => 'Draft',
                                 'review' => 'In review',
                                 'published' => 'Published',
-                            ]),
+                            ])->required(),
                         Toggle::make('indexable'),
                         Toggle::make('has_chat')
                     ])
@@ -141,15 +149,20 @@ class PageResource extends Resource
             ->columns([
                 ImageColumn::make('hero_image')->disk('images'),
                 TextColumn::make('title')->searchable()->sortable(),
-                TextColumn::make('status')->enum([
+                BadgeColumn::make('status')->enum([
                     'draft' => 'Draft',
                     'review' => 'In Review',
                     'published' => 'Published',
-                ]),
-                TextColumn::make('updated_at')->label('Last Updated')->date()
+                ])->colors(['primary', 'danger' => 'draft', 'warning' => 'review', 'success' => 'published']),
+                TextColumn::make('updated_at')->label('Last Updated')->date()->sortable(),
             ])
             ->filters([
-                //
+                SelectFilter::make('status')
+                    ->options([
+                        'draft' => 'Draft',
+                        'review' => 'In Review',
+                        'published' => 'Published',
+                    ])
             ]);
     }
 

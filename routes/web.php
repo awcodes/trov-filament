@@ -23,5 +23,5 @@ Route::middleware('forceslash')->group(function () {
         return view('welcome');
     });
 
-    Route::name('page.show')->get('/{page:slug}', [PageController::class, 'show']);
+    Route::name('pages.show')->get('/{page:slug}', [PageController::class, 'show']);
 });

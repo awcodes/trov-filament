@@ -13,7 +13,7 @@ class EditPage extends EditRecord
     protected function getActions(): array
     {
         return array_merge(parent::getActions(), [
-            ButtonAction::make('view-page')->url(route('page.show', $this->record))->openUrlInNewTab(),
+            ButtonAction::make('view-page')->url(route('pages.show', $this->record))->openUrlInNewTab(),
         ]);
     }
 }

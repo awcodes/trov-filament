@@ -23,10 +23,11 @@ class AuthorFactory extends Factory
     public function definition()
     {
         $handle = $this->faker->userName;
+        $name = $this->faker->name;
 
         return [
-            'name' => $this->faker->name,
-            'slug' => $this->faker->slug,
+            'name' => $name,
+            'slug' => Str::slug($name),
             'bio' => $this->faker->text,
             'facebook_handle' => $handle,
             'twitter_handle' => $handle,

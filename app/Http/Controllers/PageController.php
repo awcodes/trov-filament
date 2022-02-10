@@ -9,7 +9,7 @@ class PageController extends Controller
 {
     public function show(Page $page)
     {
-        abort_unless($page->status == 'published', 404);
+        abort_unless($page->status == 'published' || auth()->user(), 404);
 
         return view('pages.show', [
             'page' => $page,
