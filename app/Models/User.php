@@ -10,6 +10,7 @@ use Illuminate\Notifications\Notifiable;
 use Laravel\Fortify\TwoFactorAuthenticatable;
 use Laravel\Jetstream\HasProfilePhoto;
 use Laravel\Sanctum\HasApiTokens;
+use Spatie\Permission\Traits\HasRoles;
 
 class User extends Authenticatable implements FilamentUser
 {
@@ -18,10 +19,11 @@ class User extends Authenticatable implements FilamentUser
     use HasProfilePhoto;
     use Notifiable;
     use TwoFactorAuthenticatable;
+    use HasRoles;
 
     public function canAccessFilament(): bool
     {
-        return str_ends_with($this->email, '@titlemax.com') && $this->hasVerifiedEmail();
+        return str_ends_with($this->email, '@titlemax.com') && $this->hasVerifiedEmail() && $this->getRoleNames()->isNotEmpty();
     }
 
     /**

@@ -5,6 +5,15 @@ namespace App;
 class Helpers
 {
     /**
+     * Generate password
+     */
+    public static function generatePassword()
+    {
+        $characters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*_-+=";
+        return substr(str_shuffle($characters), 0, 12);
+    }
+
+    /**
      * Stolen from wpautop.
      * https://developer.wordpress.org/reference/functions/wpautop/
      */
