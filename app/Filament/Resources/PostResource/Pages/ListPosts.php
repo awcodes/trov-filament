@@ -20,7 +20,7 @@ class ListPosts extends ListRecords
                 ->url(fn (Post $record): string => route('posts.show', $record))
                 ->openUrlInNewTab(),
             IconButtonAction::make('edit')
-                ->label('Edit post')
+                ->label('Edit Post')
                 ->url(fn (Post $record): string => route('filament.resources.posts.edit', $record))
                 ->icon('heroicon-o-pencil')
         ];

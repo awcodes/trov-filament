@@ -31,7 +31,7 @@ class ManageSite extends SettingsPage
                     TextInput::make('gtm_id')
                         ->label('Google Tag Manager ID')->default(''),
                 ]),
-                Section::make('Google Tag Manager')->schema([
+                Section::make('Skin')->schema([
                     Select::make('current_skin')->options([
                         'default' => 'Default',
                         'winter' => 'Winter'

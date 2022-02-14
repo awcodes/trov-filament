@@ -3,9 +3,9 @@
 namespace App\Filament\Resources;
 
 use Filament\Forms;
-use App\Models\Page;
 use App\Models\Post;
 use Filament\Tables;
+use App\Models\Article;
 use Illuminate\Support\Str;
 use Filament\Resources\Form;
 use Filament\Resources\Table;
@@ -18,29 +18,25 @@ use Filament\Forms\Components\Textarea;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Forms\Components\TextInput;
 use Filament\Tables\Columns\BadgeColumn;
-use Filament\Tables\Columns\ImageColumn;
 use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\RichEditor;
 use Filament\Tables\Filters\SelectFilter;
 use Filament\Forms\Components\Placeholder;
 use Filament\Forms\Components\Builder\Block;
-use Filament\Forms\Components\DateTimePicker;
-use App\Filament\Resources\PostResource\Pages;
 use Filament\Forms\Components\BelongsToSelect;
-use Filament\Forms\Components\SpatieTagsInput;
-use App\Filament\Resources\PostResource\Pages\EditPost;
-use App\Filament\Resources\PostResource\Pages\ListPosts;
-use App\Filament\Resources\PostResource\Pages\CreatePost;
-use App\Filament\Resources\PostResource\RelationManagers;
-use Filament\Tables\Filters\Filter;
+use App\Filament\Resources\ArticleResource\Pages;
+use App\Filament\Resources\ArticleResource\RelationManagers;
+use App\Filament\Resources\ArticleResource\Pages\EditArticle;
+use App\Filament\Resources\ArticleResource\Pages\ListArticles;
+use App\Filament\Resources\ArticleResource\Pages\CreateArticle;
 
-class PostResource extends Resource
+class ArticleResource extends Resource
 {
-    protected static ?string $model = Post::class;
+    protected static ?string $model = Article::class;
 
     protected static ?string $navigationGroup = 'Blog';
 
-    protected static ?string $navigationIcon = 'heroicon-s-newspaper';
+    protected static ?string $navigationIcon = 'heroicon-o-collection';
 
     public static function form(Form $form): Form
     {
@@ -64,12 +60,6 @@ class PostResource extends Resource
                             'sm' => 2,
                         ]),
                         Textarea::make('seo_description')->rows(3)->required()->columnSpan([
-                            'sm' => 2,
-                        ]),
-                        FileUpload::make('featured_image')->disk('images')->columnSpan([
-                            'sm' => 2,
-                        ]),
-                        TextInput::make('featured_image_alt')->columnSpan([
                             'sm' => 2,
                         ]),
                         Builder::make('content')->blocks([
@@ -128,20 +118,18 @@ class PostResource extends Resource
                     ->schema([
                         Placeholder::make('created_at')
                             ->label('Created at')
-                            ->content(fn (?Post $record): string => $record ? $record->created_at->diffForHumans() : '-'),
+                            ->content(fn (?Article $record): string => $record ? $record->created_at->diffForHumans() : '-'),
                         Placeholder::make('updated_at')
                             ->label('Last modified at')
-                            ->content(fn (?Post $record): string => $record ? $record->updated_at->diffForHumans() : '-'),
+                            ->content(fn (?Article $record): string => $record ? $record->updated_at->diffForHumans() : '-'),
                         Select::make('status')
                             ->options([
                                 'draft' => 'Draft',
                                 'review' => 'In review',
                                 'published' => 'Published',
                             ])->required(),
-                        DateTimePicker::make('published_at')->label('Publish Date')->withoutSeconds(),
                         Toggle::make('indexable'),
                         BelongsToSelect::make('author_id')->relationship('author', 'name')->required(),
-                        SpatieTagsInput::make('tags'),
                     ])
                     ->columnSpan(1),
             ])
@@ -155,7 +143,6 @@ class PostResource extends Resource
     {
         return $table
             ->columns([
-                ImageColumn::make('featured_image')->disk('images'),
                 TextColumn::make('title')->searchable()->sortable(),
                 BadgeColumn::make('status')->enum([
                     'draft' => 'Draft',
@@ -184,9 +171,9 @@ class PostResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListPosts::route('/'),
-            'create' => Pages\CreatePost::route('/create'),
-            'edit' => Pages\EditPost::route('/{record}/edit'),
+            'index' => Pages\ListArticles::route('/'),
+            'create' => Pages\CreateArticle::route('/create'),
+            'edit' => Pages\EditArticle::route('/{record}/edit'),
         ];
     }
 }

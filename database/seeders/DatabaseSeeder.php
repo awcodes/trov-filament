@@ -33,9 +33,12 @@ class DatabaseSeeder extends Seeder
             Storage::deleteDirectory($d);
             Storage::makeDirectory($d);
 
+            $this->call(DisclaimerSeeder::class);
+
             $this->call(PageSeeder::class);
             $this->call(AuthorSeeder::class);
             $this->call(PostSeeder::class);
+            $this->call(ArticleSeeder::class);
         }
     }
 }

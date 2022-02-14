@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PageController;
 use App\Http\Controllers\PostController;
+use App\Http\Controllers\ArticleController;
 
 /*
 |--------------------------------------------------------------------------
@@ -24,6 +25,7 @@ Route::middleware('forceslash')->group(function () {
         return view('welcome');
     });
 
+    Route::name('articles.show')->get('/articles/{article:slug}', [ArticleController::class, 'show']);
     Route::name('posts.show')->get('/blog/{post:slug}', [PostController::class, 'show']);
 
     // this needs to be last !!!!!!!!!!!!!!

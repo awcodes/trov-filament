@@ -1,23 +1,7 @@
 models:
-  Post:
+  Disclaimer:
     title: string
     slug: string unique
-    status: string default:draft
-    featured_image: string nullable
-    featured_image_alt: mediumtext nullable
     content: longtext nullable
-    seo_title: string
-    seo_description: text
-    indexable: boolean default:true
-    published_at: nullable datetime
-    relationships:
-      belongsToMany: Tags
-      belongsTo: Author
 
-  Tags:
-    title: string
-    slug: string
-    relationships:
-      belongsToMany: Post
-
-seeders: Post, Tags
+seeders: Disclaimer
