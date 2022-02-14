@@ -1,7 +1,7 @@
 models:
-  Disclaimer:
-    title: string
+  Faq:
+    question: string
     slug: string unique
-    content: longtext nullable
+    answer: longtext nullable
 
-seeders: Disclaimer
+seeders: Faq

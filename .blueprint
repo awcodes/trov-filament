@@ -1,8 +1,8 @@
 created:
-    - database/factories/DisclaimerFactory.php
-    - database/migrations/2022_02_14_170816_create_disclaimers_table.php
-    - app/Models/Disclaimer.php
-    - database/seeders/DisclaimerSeeder.php
+    - database/factories/FaqFactory.php
+    - database/migrations/2022_02_14_180121_create_faqs_table.php
+    - app/Models/Faq.php
+    - database/seeders/FaqSeeder.php
 models:
     User: { name: string, email: string, email_verified_at: 'datetime nullable', password: string, remember_token: 'string nullable', current_team_id: 'integer nullable', profile_photo_path: 'string nullable', two_factor_secret: 'text nullable', two_factor_recovery_codes: 'text nullable' }
     Author: { name: string, slug: 'string unique', bio: 'longtext nullable', facebook: 'string nullable', twitter: 'string nullable', instagram: 'string nullable', linkedin: 'string nullable', youtube: 'string nullable', pinterest: 'string nullable', avatar: 'string nullable' }
@@ -12,3 +12,4 @@ models:
     Article: { title: string, slug: 'string unique', status: 'string default:draft', content: 'longtext nullable', seo_title: string, seo_description: text, indexable: 'boolean default:true', published_at: 'nullable datetime', relationships: { belongsTo: Author } }
     Resource: { title: string, slug: 'string unique', status: 'string default:draft', content: 'longtext nullable', seo_title: string, seo_description: text, indexable: 'boolean default:true', published_at: 'nullable datetime', relationships: { belongsTo: Author } }
     Disclaimer: { title: string, slug: 'string unique', content: 'longtext nullable' }
+    Faq: { question: string, slug: 'string unique', answer: 'longtext nullable' }

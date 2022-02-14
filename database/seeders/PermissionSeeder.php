@@ -18,11 +18,11 @@ class PermissionSeeder extends Seeder
         app()[\Spatie\Permission\PermissionRegistrar::class]->forgetCachedPermissions();
 
         $permissions = [
-            'create' => ['users', 'authors', 'pages', 'posts', 'articles'],
-            'read' => ['users', 'authors', 'pages', 'posts', 'articles'],
-            'edit' => ['users', 'authors', 'pages', 'posts', 'articles'],
-            'delete' => ['users', 'authors', 'pages', 'posts', 'articles'],
-            'manage' => ['users', 'authors', 'pages', 'posts', 'articles']
+            'create' => ['users', 'authors', 'pages', 'posts', 'articles', 'faqs'],
+            'read' => ['users', 'authors', 'pages', 'posts', 'articles', 'faqs'],
+            'edit' => ['users', 'authors', 'pages', 'posts', 'articles', 'faqs'],
+            'delete' => ['users', 'authors', 'pages', 'posts', 'articles', 'faqs'],
+            'manage' => ['users', 'authors', 'pages', 'posts', 'articles', 'faqs']
         ];
 
         foreach ($permissions as $permission => $models) {
