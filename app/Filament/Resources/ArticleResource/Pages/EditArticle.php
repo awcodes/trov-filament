@@ -13,7 +13,7 @@ class EditArticle extends EditRecord
     protected function getActions(): array
     {
         return array_merge(parent::getActions(), [
-            ButtonAction::make('view-article')->url(route('articles.show', $this->record))->openUrlInNewTab(),
+            ButtonAction::make('view')->url(route('articles.show', $this->record))->openUrlInNewTab(),
         ]);
     }
 }

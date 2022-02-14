@@ -116,7 +116,7 @@ class FaqResource extends Resource
                         'review' => 'In Review',
                         'published' => 'Published',
                     ])
-            ]);
+            ])->defaultSort('updated_at', 'desc');
     }
 
     public static function getRelations(): array

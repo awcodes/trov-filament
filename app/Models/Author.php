@@ -3,7 +3,9 @@
 namespace App\Models;
 
 use App\Models\Post;
+use App\Models\Article;
 use Spatie\Sluggable\HasSlug;
+use App\Models\DiscoveryArticle;
 use Spatie\Sluggable\SlugOptions;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Storage;
@@ -81,5 +83,15 @@ class Author extends Model implements HasAvatar
     public function posts()
     {
         return $this->hasMany(Post::class);
+    }
+
+    public function articles()
+    {
+        return $this->hasMany(Article::class);
+    }
+
+    public function discoveryArticles()
+    {
+        return $this->hasMany(DiscoveryArticle::class);
     }
 }

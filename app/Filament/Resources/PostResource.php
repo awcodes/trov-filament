@@ -155,7 +155,7 @@ class PostResource extends Resource
     {
         return $table
             ->columns([
-                ImageColumn::make('featured_image')->disk('images'),
+                ImageColumn::make('featured_image')->label('Thumb')->width(36)->height(36)->disk('images'),
                 TextColumn::make('title')->searchable()->sortable(),
                 BadgeColumn::make('status')->enum([
                     'draft' => 'Draft',
@@ -171,7 +171,7 @@ class PostResource extends Resource
                         'review' => 'In Review',
                         'published' => 'Published',
                     ])
-            ]);
+            ])->defaultSort('published_at', 'desc');
     }
 
     public static function getRelations(): array

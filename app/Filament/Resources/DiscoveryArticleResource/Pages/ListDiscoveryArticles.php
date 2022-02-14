@@ -1,16 +1,16 @@
 <?php
 
-namespace App\Filament\Resources\ArticleResource\Pages;
+namespace App\Filament\Resources\DiscoveryArticleResource\Pages;
 
-use App\Models\Article;
+use App\Models\DiscoveryArticle;
 use Filament\Pages\Actions\ButtonAction;
 use Filament\Resources\Pages\ListRecords;
-use App\Filament\Resources\ArticleResource;
 use Filament\Tables\Actions\IconButtonAction;
+use App\Filament\Resources\DiscoveryArticleResource;
 
-class ListArticles extends ListRecords
+class ListDiscoveryArticles extends ListRecords
 {
-    protected static string $resource = ArticleResource::class;
+    protected static string $resource = DiscoveryArticleResource::class;
 
     protected function getActions(): array
     {
@@ -29,11 +29,11 @@ class ListArticles extends ListRecords
             IconButtonAction::make('preview')
                 ->label('Preview Article')
                 ->icon('heroicon-s-eye')
-                ->url(fn (Article $record): string => route('articles.show', $record))
+                ->url(fn (DiscoveryArticle $record): string => route('discovery-articles.show', $record))
                 ->openUrlInNewTab(),
             IconButtonAction::make('edit')
                 ->label('Edit Article')
-                ->url(fn (Article $record): string => route('filament.resources.articles.edit', $record))
+                ->url(fn (DiscoveryArticle $record): string => route('filament.resources.discovery-articles.edit', $record))
                 ->icon('heroicon-o-pencil')
         ];
     }

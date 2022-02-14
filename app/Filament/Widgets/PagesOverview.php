@@ -3,8 +3,8 @@
 namespace App\Filament\Widgets;
 
 use App\Models\Page;
-use App\Models\User;
-use App\Models\Author;
+use App\Models\Article;
+use App\Models\Faq;
 use App\Models\Post;
 use Filament\Widgets\StatsOverviewWidget\Card;
 use Filament\Widgets\StatsOverviewWidget as BaseWidget;
@@ -15,9 +15,9 @@ class PagesOverview extends BaseWidget
     {
         return [
             Card::make('Pages', Page::all()->count()),
-            Card::make('Authors', Author::all()->count()),
-            Card::make('Users', User::all()->count()),
-            Card::make('Post', Post::all()->count()),
+            Card::make('Posst', Post::all()->count()),
+            Card::make('Faqs', Faq::all()->count()),
+            Card::make('Articles', Article::all()->count()),
         ];
     }
 }

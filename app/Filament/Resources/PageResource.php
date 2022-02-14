@@ -150,7 +150,7 @@ class PageResource extends Resource
     {
         return $table
             ->columns([
-                ImageColumn::make('hero_image')->disk('images'),
+                ImageColumn::make('hero_image')->label('Hero')->width(36)->height(36)->disk('images'),
                 TextColumn::make('title')->searchable()->sortable(),
                 BadgeColumn::make('status')->enum([
                     'draft' => 'Draft',
@@ -166,7 +166,7 @@ class PageResource extends Resource
                         'review' => 'In Review',
                         'published' => 'Published',
                     ])
-            ]);
+            ])->defaultSort('title', 'asc');
     }
 
     public static function getRelations(): array

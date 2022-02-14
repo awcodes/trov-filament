@@ -5,10 +5,10 @@ namespace App\Filament\Resources;
 use Filament\Forms;
 use App\Models\Post;
 use Filament\Tables;
-use App\Models\Article;
 use Illuminate\Support\Str;
 use Filament\Resources\Form;
 use Filament\Resources\Table;
+use App\Models\DiscoveryTopic;
 use Filament\Resources\Resource;
 use Filament\Forms\Components\Card;
 use Filament\Forms\Components\Select;
@@ -18,23 +18,28 @@ use Filament\Forms\Components\Textarea;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Forms\Components\TextInput;
 use Filament\Tables\Columns\BadgeColumn;
+use Filament\Tables\Columns\ImageColumn;
 use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\RichEditor;
 use Filament\Tables\Filters\SelectFilter;
 use Filament\Forms\Components\Placeholder;
 use Filament\Forms\Components\Builder\Block;
+use Filament\Forms\Components\DateTimePicker;
 use Filament\Forms\Components\BelongsToSelect;
-use App\Filament\Resources\ArticleResource\Pages;
-use App\Filament\Resources\ArticleResource\RelationManagers;
-use App\Filament\Resources\ArticleResource\Pages\EditArticle;
-use App\Filament\Resources\ArticleResource\Pages\ListArticles;
-use App\Filament\Resources\ArticleResource\Pages\CreateArticle;
+use Filament\Forms\Components\SpatieTagsInput;
+use App\Filament\Resources\DiscoveryTopicResource\Pages;
+use App\Filament\Resources\DiscoveryTopicResource\RelationManagers;
+use App\Filament\Resources\DiscoveryTopicResource\Pages\EditDiscoveryTopic;
+use App\Filament\Resources\DiscoveryTopicResource\Pages\ListDiscoveryTopics;
+use App\Filament\Resources\DiscoveryTopicResource\Pages\CreateDiscoveryTopic;
 
-class ArticleResource extends Resource
+class DiscoveryTopicResource extends Resource
 {
-    protected static ?string $model = Article::class;
+    protected static ?string $model = DiscoveryTopic::class;
 
-    protected static ?string $navigationGroup = 'Blog';
+    protected static ?string $navigationLabel = 'Topics';
+
+    protected static ?string $navigationGroup = 'Discovery Center';
 
     protected static ?string $navigationIcon = 'heroicon-o-collection';
 
@@ -55,11 +60,17 @@ class ArticleResource extends Resource
                         TextInput::make('slug')
                             ->disabled()
                             ->required()
-                            ->unique(Post::class, 'slug', fn ($record) => $record),
+                            ->unique(DiscoveryTopic::class, 'slug', fn ($record) => $record),
                         TextInput::make('seo_title')->required()->columnSpan([
                             'sm' => 2,
                         ]),
                         Textarea::make('seo_description')->rows(3)->required()->columnSpan([
+                            'sm' => 2,
+                        ]),
+                        FileUpload::make('featured_image')->disk('images')->columnSpan([
+                            'sm' => 2,
+                        ]),
+                        TextInput::make('featured_image_alt')->columnSpan([
                             'sm' => 2,
                         ]),
                         Builder::make('content')->blocks([
@@ -118,18 +129,18 @@ class ArticleResource extends Resource
                     ->schema([
                         Placeholder::make('created_at')
                             ->label('Created at')
-                            ->content(fn (?Article $record): string => $record ? $record->created_at->diffForHumans() : '-'),
+                            ->content(fn (?DiscoveryTopic $record): string => $record ? $record->created_at->diffForHumans() : '-'),
                         Placeholder::make('updated_at')
                             ->label('Last modified at')
-                            ->content(fn (?Article $record): string => $record ? $record->updated_at->diffForHumans() : '-'),
+                            ->content(fn (?DiscoveryTopic $record): string => $record ? $record->updated_at->diffForHumans() : '-'),
                         Select::make('status')
                             ->options([
                                 'draft' => 'Draft',
                                 'review' => 'In review',
                                 'published' => 'Published',
                             ])->required(),
+                        DateTimePicker::make('published_at')->label('Publish Date')->withoutSeconds(),
                         Toggle::make('indexable'),
-                        BelongsToSelect::make('author_id')->relationship('author', 'name')->required(),
                     ])
                     ->columnSpan(1),
             ])
@@ -143,6 +154,7 @@ class ArticleResource extends Resource
     {
         return $table
             ->columns([
+                ImageColumn::make('featured_image')->label('Thumb')->width(36)->height(36)->disk('images'),
                 TextColumn::make('title')->searchable()->sortable(),
                 BadgeColumn::make('status')->enum([
                     'draft' => 'Draft',
@@ -171,9 +183,9 @@ class ArticleResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListArticles::route('/'),
-            'create' => Pages\CreateArticle::route('/create'),
-            'edit' => Pages\EditArticle::route('/{record}/edit'),
+            'index' => Pages\ListDiscoveryTopics::route('/'),
+            'create' => Pages\CreateDiscoveryTopic::route('/create'),
+            'edit' => Pages\EditDiscoveryTopic::route('/{record}/edit'),
         ];
     }
 }

@@ -50,7 +50,7 @@ class UserResource extends Resource
             ])
             ->filters([
                 //
-            ]);
+            ])->defaultSort('name', 'asc');
     }
 
     public static function getRelations(): array

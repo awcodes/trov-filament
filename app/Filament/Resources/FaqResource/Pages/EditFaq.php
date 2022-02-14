@@ -13,7 +13,7 @@ class EditFaq extends EditRecord
     protected function getActions(): array
     {
         return array_merge(parent::getActions(), [
-            ButtonAction::make('view-faq')->label('View FAQ')->url(route('faqs.show', $this->record))->openUrlInNewTab(),
+            ButtonAction::make('view')->url(route('faqs.show', $this->record))->openUrlInNewTab(),
         ]);
     }
 }

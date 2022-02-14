@@ -82,12 +82,12 @@ class AuthorResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\ImageColumn::make('avatar')->disk('avatars'),
-                Tables\Columns\TextColumn::make('name'),
+                Tables\Columns\ImageColumn::make('avatar')->width(36)->height(36)->disk('avatars'),
+                Tables\Columns\TextColumn::make('name')->sortable()->searchable(),
             ])
             ->filters([
                 //
-            ]);
+            ])->defaultSort('name', 'asc');
     }
 
     public static function getRelations(): array
