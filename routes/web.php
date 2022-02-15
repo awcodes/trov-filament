@@ -5,6 +5,7 @@ use App\Http\Controllers\FaqController;
 use App\Http\Controllers\PageController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\ArticleController;
+use App\Http\Controllers\LandingPageController;
 use App\Http\Controllers\DiscoveryTopicController;
 use App\Http\Controllers\DiscoveryArticleController;
 
@@ -32,7 +33,8 @@ Route::middleware('forceslash')->group(function () {
     Route::name('faqs.show')->get('/faqs/{faq:slug}', [FaqController::class, 'show']);
     Route::name('posts.show')->get('/blog/{post:slug}', [PostController::class, 'show']);
     Route::name('discovery-topics.show')->get('/discover/topics/{topic:slug}', [DiscoveryTopicController::class, 'show']);
-    Route::name('discovery-articles.show')->get('/discover/articles/{topic:slug}', [DiscoveryArticleController::class, 'show']);
+    Route::name('discovery-articles.show')->get('/discover/articles/{article:slug}', [DiscoveryArticleController::class, 'show']);
+    Route::name('landing-pages.show')->get('/loans/{page:slug}', [LandingPageController::class, 'show']);
 
     // this needs to be last !!!!!!!!!!!!!!
     Route::name('pages.show')->get('/{page:slug}', [PageController::class, 'show']);

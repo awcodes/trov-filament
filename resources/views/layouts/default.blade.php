@@ -26,9 +26,7 @@
     </header>
     <main id="site-main">
         @yield('hero')
-        <div class="container py-8 lg:py-12">
-            {{ $slot }}
-        </div>
+        {{ $slot }}
     </main>
     <footer>
 

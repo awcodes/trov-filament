@@ -18,11 +18,11 @@ class PermissionSeeder extends Seeder
         app()[\Spatie\Permission\PermissionRegistrar::class]->forgetCachedPermissions();
 
         $permissions = [
-            'create' => ['users', 'authors', 'pages', 'posts', 'articles', 'faqs', 'discovery topics', 'discovery articles'],
-            'read' => ['users', 'authors', 'pages', 'posts', 'articles', 'faqs', 'discovery topics', 'discovery articles'],
-            'edit' => ['users', 'authors', 'pages', 'posts', 'articles', 'faqs', 'discovery topics', 'discovery articles'],
-            'delete' => ['users', 'authors', 'pages', 'posts', 'articles', 'faqs', 'discovery topics', 'discovery articles'],
-            'manage' => ['users', 'authors', 'pages', 'posts', 'articles', 'faqs', 'discovery topics', 'discovery articles']
+            'create' => ['users', 'authors', 'pages', 'posts', 'articles', 'faqs', 'discovery topics', 'discovery articles', 'landing pages'],
+            'read' => ['users', 'authors', 'pages', 'posts', 'articles', 'faqs', 'discovery topics', 'discovery articles', 'landing pages'],
+            'edit' => ['users', 'authors', 'pages', 'posts', 'articles', 'faqs', 'discovery topics', 'discovery articles', 'landing pages'],
+            'delete' => ['users', 'authors', 'pages', 'posts', 'articles', 'faqs', 'discovery topics', 'discovery articles', 'landing pages'],
+            'manage' => ['users', 'authors', 'pages', 'posts', 'articles', 'faqs', 'discovery topics', 'discovery articles', 'landing pages']
         ];
 
         foreach ($permissions as $permission => $models) {
