@@ -41,7 +41,7 @@ class DiscoveryTopicResource extends Resource
 
     protected static ?string $navigationGroup = 'Discovery Center';
 
-    protected static ?string $navigationIcon = 'heroicon-o-collection';
+    protected static ?string $navigationIcon = 'heroicon-s-light-bulb';
 
     public static function form(Form $form): Form
     {

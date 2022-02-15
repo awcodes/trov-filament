@@ -35,7 +35,7 @@ class LandingPageResource extends Resource
 
     protected static ?string $navigationGroup = 'Site';
 
-    protected static ?string $navigationIcon = 'heroicon-o-collection';
+    protected static ?string $navigationIcon = 'heroicon-s-paper-airplane';
 
     public static function form(Form $form): Form
     {

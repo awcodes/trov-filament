@@ -36,7 +36,7 @@ class ArticleResource extends Resource
 
     protected static ?string $navigationGroup = 'Blog';
 
-    protected static ?string $navigationIcon = 'heroicon-o-collection';
+    protected static ?string $navigationIcon = 'heroicon-s-collection';
 
     public static function form(Form $form): Form
     {
