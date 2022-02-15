@@ -170,7 +170,8 @@ class PostResource extends Resource
                         'draft' => 'Draft',
                         'review' => 'In Review',
                         'published' => 'Published',
-                    ])
+                    ]),
+                SelectFilter::make('author_id')->label('Author')->relationship('author', 'name'),
             ])->defaultSort('published_at', 'desc');
     }
 

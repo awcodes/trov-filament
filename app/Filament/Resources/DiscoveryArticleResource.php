@@ -172,8 +172,8 @@ class DiscoveryArticleResource extends Resource
                         'review' => 'In Review',
                         'published' => 'Published',
                     ]),
-                SelectFilter::make('discovery_topic_id')->relationship('topic', 'title'),
-                SelectFilter::make('author_id')->relationship('author', 'name'),
+                SelectFilter::make('discovery_topic_id')->label('Topic')->relationship('topic', 'title'),
+                SelectFilter::make('author_id')->label('Author')->relationship('author', 'name'),
             ])->defaultSort('published_at', 'desc');
     }
 
