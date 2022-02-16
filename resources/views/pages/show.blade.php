@@ -1,7 +1,7 @@
 <x-dynamic-component :component="$layout . '-layout'" :meta="$meta">
 
     @section('hero')
-        <x-hero :image="$page->hero_image_data" :content="$page->hero_content" />
+        <x-hero :media="$page->getMedia('hero_images')" :content="$page->hero_content" />
     @endsection
 
     <div class="container py-8 lg:py-12">

@@ -26,7 +26,9 @@ use Filament\Forms\Components\Placeholder;
 use Filament\Forms\Components\MarkdownEditor;
 use App\Filament\Resources\PageResource\Pages;
 use App\Filament\Resources\PageResource\RelationManagers;
+use Filament\Tables\Columns\SpatieMediaLibraryImageColumn;
 use Filament\Forms\Components\SpatieMediaLibraryFileUpload;
+use App\Forms\Fields\MediaLibrary;
 
 class PageResource extends Resource
 {
@@ -51,7 +53,6 @@ class PageResource extends Resource
                                 }
                             }),
                         TextInput::make('slug')
-                            ->disabled()
                             ->required()
                             ->unique(Page::class, 'slug', fn ($record) => $record),
                         TextInput::make('seo_title')->required()->columnSpan([
@@ -60,9 +61,7 @@ class PageResource extends Resource
                         Textarea::make('seo_description')->rows(3)->required()->columnSpan([
                             'sm' => 2,
                         ]),
-                        FileUpload::make('hero_image')->disk('images')->columnSpan([
-                            'sm' => 2,
-                        ]),
+                        MediaLibrary::make('hero_image'),
                         TextInput::make('hero_image_alt')->required()->columnSpan([
                             'sm' => 2,
                         ]),
@@ -150,7 +149,6 @@ class PageResource extends Resource
     {
         return $table
             ->columns([
-                ImageColumn::make('hero_image')->label('Hero')->width(36)->height(36)->disk('images'),
                 TextColumn::make('title')->searchable()->sortable(),
                 BadgeColumn::make('status')->enum([
                     'draft' => 'Draft',

@@ -56,7 +56,6 @@ class PageFactory extends Factory
             'title' => $this->faker->sentence(4),
             'slug' => Str::slug($title),
             'status' => 'draft',
-            'hero_image' => $this->faker->image(storage_path('app/public/images'), 1024, 576, 'nature', false, true, null),
             'hero_image_alt' => $this->faker->text,
             'hero_content' => $this->faker->text,
             'content' => [

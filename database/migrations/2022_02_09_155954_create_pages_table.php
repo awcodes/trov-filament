@@ -18,7 +18,7 @@ class CreatePagesTable extends Migration
             $table->string('title');
             $table->string('slug')->unique();
             $table->string('status')->default('draft');
-            $table->string('hero_image')->nullable();
+            // $table->string('hero_image')->nullable();
             $table->string('hero_image_alt')->nullable();
             $table->mediumText('hero_content')->nullable();
             $table->longText('content')->nullable();

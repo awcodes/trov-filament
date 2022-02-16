@@ -42,6 +42,8 @@ class DatabaseSeeder extends Seeder
             $this->call(FaqSeeder::class);
             $this->call(DiscoveryTopicSeeder::class);
             $this->call(DiscoveryArticleSeeder::class);
+
+            $this->call(MediaSeeder::class);
         }
     }
 }
