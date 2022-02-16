@@ -4,7 +4,11 @@ namespace Database\Seeders;
 
 use Faker\Factory;
 use App\Models\Page;
+use App\Models\Media;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Storage;
+use Intervention\Image\Facades\Image;
 
 class MediaSeeder extends Seeder
 {
@@ -26,12 +30,26 @@ class MediaSeeder extends Seeder
             'v2osk-1Z2niiBPg5A-unsplash.jpg',
         ];
 
-        $pages = Page::all()->each(function ($page) use ($sourceImages, $faker) {
-            $page
-                ->addMedia(__DIR__ . '/trov-seed-images/' . $sourceImages[rand(0, 5)])
-                ->preservingOriginal()
-                ->withCustomProperties(['alt' => $faker->text])
-                ->toMediaCollection();
-        });
+        foreach ($sourceImages as $image) {
+            $file = Image::make(database_path('seeders/trov-seed-images/' . $image))->encode(null, 80);
+            Storage::disk('images')->put($image, $file);
+
+            $thumb = Image::make(database_path('seeders/trov-seed-images/' . $image))->crop(150, 150)->encode('jpg', 60);
+            Storage::disk('images')->put('/thumbs/' . $image, $thumb);
+
+            Media::create([
+                'collection_name' => '',
+                'name' => $file->filename,
+                'file_name' => $file->basename,
+                'mime_type' => $file->mime,
+                'alt_text' => $faker->text,
+                'title' => '',
+                'description' => '',
+                'width' => $file->getWidth(),
+                'height' => $file->getHeight(),
+                'disk' => 'images',
+                'size' => $file->filesize(),
+            ]);
+        }
     }
 }

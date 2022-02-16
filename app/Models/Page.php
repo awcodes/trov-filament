@@ -40,8 +40,7 @@ class Page extends Model
         'title',
         'slug',
         'status',
-        // 'hero_image',
-        'hero_alt',
+        'hero_image',
         'hero_content',
         'content',
         'seo_title',
@@ -62,16 +61,8 @@ class Page extends Model
         'content' => 'array',
     ];
 
-    // public function getHeroImageDataAttribute()
-    // {
-    //     $imageData = Storage::disk('images')->path($this->hero_image);
-    //     $size = getimagesize($imageData);
-
-    //     return [
-    //         'url' => Storage::disk('images')->url($this->hero_image),
-    //         'alt' => $this->hero_image_alt,
-    //         'width' => $size[0],
-    //         'height' => $size[1],
-    //     ];
-    // }
+    public function heroImage()
+    {
+        return $this->hasOne(Media::class, 'id', 'hero_image');
+    }
 }

@@ -29,6 +29,7 @@ use App\Filament\Resources\PageResource\RelationManagers;
 use Filament\Tables\Columns\SpatieMediaLibraryImageColumn;
 use Filament\Forms\Components\SpatieMediaLibraryFileUpload;
 use App\Forms\Fields\MediaLibrary;
+use App\Models\Media;
 
 class PageResource extends Resource
 {
@@ -61,10 +62,9 @@ class PageResource extends Resource
                         Textarea::make('seo_description')->rows(3)->required()->columnSpan([
                             'sm' => 2,
                         ]),
-                        MediaLibrary::make('hero_image'),
-                        TextInput::make('hero_image_alt')->required()->columnSpan([
-                            'sm' => 2,
-                        ]),
+                        MediaLibrary::make('hero_image')->afterStateHydrated(function (MediaLibrary $component, Media $media, $state) {
+                            $component->state($media->where('id', $state)->first());
+                        })->dehydrateStateUsing(fn ($state) => $state['id'])->columnSpan(['sm' => 2]),
                         Textarea::make('hero_content')->rows(3)->columnSpan([
                             'sm' => 2,
                         ]),
@@ -149,6 +149,7 @@ class PageResource extends Resource
     {
         return $table
             ->columns([
+                ImageColumn::make('heroImage.thumb')->label('Hero')->disk('images'),
                 TextColumn::make('title')->searchable()->sortable(),
                 BadgeColumn::make('status')->enum([
                     'draft' => 'Draft',

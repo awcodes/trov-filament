@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\Media;
 use App\Models\Page;
 use Illuminate\Support\Str;
 use Illuminate\Database\Eloquent\Factories\Factory;
@@ -56,7 +57,7 @@ class PageFactory extends Factory
             'title' => $this->faker->sentence(4),
             'slug' => Str::slug($title),
             'status' => 'draft',
-            'hero_image_alt' => $this->faker->text,
+            'hero_image' => Media::inRandomOrder()->limit(1)->first(),
             'hero_content' => $this->faker->text,
             'content' => [
                 [

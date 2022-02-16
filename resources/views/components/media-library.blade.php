@@ -1,5 +1,5 @@
-<div x-data="{ isOpen: false }" x-on:open-media-library.window="isOpen = true; $dispatch('fetch-media')"
-    aria-labelledby="modal-header" role="dialog" aria-modal="true" class="filament-modal">
+<div x-data="mediaLibrary" x-on:open-media-library.window="isOpen = true; fetchMedia();" aria-labelledby="modal-header"
+    role="dialog" aria-modal="true" class="filament-modal">
     <div x-show="isOpen" x-transition:enter="ease duration-300" x-transition:enter-start="opacity-0"
         x-transition:enter-end="opacity-100" x-transition:leave="ease duration-300"
         x-transition:leave-start="opacity-100" x-transition:leave-end="opacity-0" style="display: none;"
@@ -26,25 +26,22 @@
                     <div class="flex-1 space-y-2 filament-modal-content">
                         <div class="flex h-full">
                             <div class="flex-1 p-4">
-                                <div x-data="mediaLibrary" x-on:fetch-media.window="fetchMedia">
-                                    <div class="grid grid-cols-8 gap-4">
-                                        <template x-for="file in files">
-                                            <div class="border-2"
+                                <div class="grid grid-cols-8 gap-4">
+                                    <template x-for="file in files">
+                                        <div>
+                                            <button type="button" x-on:click="addToSelection(file)"
+                                                class="h-full bg-gray-700 focus:outline-none focus:ring-offset-1 focus:ring-offset-gray-700 focus:ring focus:ring-primary-500"
                                                 x-bind:class="{
-                                                    'border-primary-500': selected.includes(file.id),
-                                                    'border-transparent': !selected.includes(file.id)
-                                                }">
-                                                <button type="button" class="h-full bg-gray-700"
-                                                    x-on:click="addToSelection(file.id)">
-                                                    <img x-bind:src="file.thumb" x-bind:alt="file.alt" width="150"
-                                                        height="150" class="block object-cover h-full" />
-                                                </button>
-                                            </div>
-                                        </template>
-                                    </div>
-                                    <p x-text="message"></p>
-                                    <button type="button" x-on:click="fetchMedia()">Fetch Media</button>
+                                                        'ring-offset-1 ring-offset-gray-700 ring ring-primary-500': selected && selected.id === file.id,
+                                                    }">
+                                                <img x-bind:src="file.thumb" x-bind:alt="file.alt" width="150"
+                                                    height="150" class="block object-cover h-full" />
+                                            </button>
+                                        </div>
+                                    </template>
                                 </div>
+                                <p x-text="message"></p>
+                                <button type="button" x-on:click="fetchMedia()">Fetch Media</button>
                             </div>
                             <div class="w-full max-w-sm p-4">
                                 <livewire:add-media-to-library />
@@ -55,7 +52,7 @@
                     <x-filament::hr />
 
                     <div class="flex justify-end px-4 py-2 filament-modal-footer">
-                        <x-filament::button type="button" x-on:click="">Use Selected Image
+                        <x-filament::button type="button" x-on:click="handleSelect">Use Selected Image
                         </x-filament::button>
                     </div>
                 </form>
@@ -66,8 +63,9 @@
     <script>
         document.addEventListener("alpine:init", () => {
             Alpine.data("mediaLibrary", () => ({
+                isOpen: false,
                 files: [],
-                selected: [],
+                selected: null,
                 message: 'Loading media...',
                 fetchMedia: async function() {
                     if (this.files.length < 1) {
@@ -81,12 +79,15 @@
                         }
                     }
                 },
-                addToSelection: function(id) {
-                    if (this.selected.includes(id)) {
-                        this.selected = this.selected.filter(item => item !== id);
-                    } else {
-                        this.selected.push(id);
-                    }
+                addToSelection: function(file) {
+                    this.selected = file;
+                },
+                handleSelect() {
+                    this.$dispatch('update-media-image', {
+                        media: this.selected
+                    });
+                    this.isOpen = false;
+                    this.selected = false;
                 }
             }));
         });
