@@ -18,6 +18,6 @@ class CreatePage extends CreateRecord
 
     protected function getFooter(): ?View
     {
-        return view('components.media-library-modal');
+        return view('media-library');
     }
 }

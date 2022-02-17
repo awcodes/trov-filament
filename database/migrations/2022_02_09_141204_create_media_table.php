@@ -11,11 +11,11 @@ class CreateMediaTable extends Migration
         Schema::create('media', function (Blueprint $table) {
             $table->bigIncrements('id');
 
-            $table->string('collection_name');
+            $table->string('public_id');
             $table->string('name');
-            $table->string('file_name');
-            $table->string('mime_type')->nullable();
-            $table->string('alt_text')->nullable();
+            $table->string('ext');
+            $table->string('type')->nullable();
+            $table->string('alt')->nullable();
             $table->string('title')->nullable();
             $table->text('description')->nullable();
             $table->unsignedInteger('width')->nullable();

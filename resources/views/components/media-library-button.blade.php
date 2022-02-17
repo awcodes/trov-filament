@@ -8,7 +8,7 @@
         </x-filament::button>
         <div x-show="state"
             class="relative block w-full h-64 overflow-hidden transition duration-75 border border-gray-300 rounded-lg shadow-sm dark:bg-gray-700 dark:border-gray-600 dark:text-white">
-            <img x-bind:src="state?.url" x-bind:alt="state?.alt" x-bind:width="state?.width"
+            <img x-bind:src="state?.large" x-bind:alt="state?.alt" x-bind:width="state?.width"
                 x-bind:height="state?.height" class="object-cover h-full" />
             <button type="button" x-on:click="state = null"
                 class="absolute flex items-center justify-center w-10 h-10 text-white rounded-full top-4 left-4 bg-black/75">

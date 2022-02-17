@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Helpers;
+use HasCloudinaryUrls;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -10,13 +11,14 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 class Media extends Model
 {
     use HasFactory;
+    use HasCloudinaryUrls;
 
     protected $fillable = [
-        'collection_name',
+        'public_id',
         'name',
-        'file_name',
-        'mime_type',
-        'alt_text',
+        'ext',
+        'type',
+        'alt',
         'title',
         'description',
         'width',
@@ -32,16 +34,8 @@ class Media extends Model
 
     protected $appends = [
         'url',
+        'large',
+        'medium',
         'thumb',
     ];
-
-    public function getUrlAttribute()
-    {
-        return Helpers::cloudinary($this->file_name);
-    }
-
-    public function getThumbAttribute()
-    {
-        return Helpers::cloudinary($this->file_name, 'f_auto,q_auto,w_150,h_150,c_crop');
-    }
 }

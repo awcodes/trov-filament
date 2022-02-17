@@ -2,14 +2,16 @@
 
 namespace App;
 
+use App\Models\Media;
+
 class Helpers
 {
     /**
      * Cloudinary URL
      */
-    public static function cloudinary($file = '', $transforms = 'f_auto,q_auto')
+    public static function cloudinary(Media $media, $transforms = 'f_auto,q_auto')
     {
-        return 'https://res.cloudinary.com/' . config('filesystems.disks.cloudinary.cloud_name') . '/image/upload/' . $transforms . '/' . config('filesystems.disks.cloudinary.folder') . '/' . $file;
+        return 'https://res.cloudinary.com/' . config('cloudinary.cloud_name') . '/image/upload/' . $transforms . '/' . $media->public_id . '.' . $media->ext;
     }
 
     /**

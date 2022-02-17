@@ -1,4 +1,4 @@
-<div class="w-full max-w-sm p-4">
+<div class="w-full max-w-sm">
 
     <x-filament::modal.heading class="mb-4">
         Upload New Image
