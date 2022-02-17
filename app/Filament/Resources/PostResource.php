@@ -6,11 +6,14 @@ use Filament\Forms;
 use App\Models\Page;
 use App\Models\Post;
 use Filament\Tables;
+use App\Models\Media;
 use Illuminate\Support\Str;
 use Filament\Resources\Form;
 use Filament\Resources\Table;
 use Filament\Resources\Resource;
+use App\Forms\Fields\MediaLibrary;
 use Filament\Forms\Components\Card;
+use Filament\Tables\Filters\Filter;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Toggle;
 use Filament\Forms\Components\Builder;
@@ -32,11 +35,12 @@ use App\Filament\Resources\PostResource\Pages\EditPost;
 use App\Filament\Resources\PostResource\Pages\ListPosts;
 use App\Filament\Resources\PostResource\Pages\CreatePost;
 use App\Filament\Resources\PostResource\RelationManagers;
-use Filament\Tables\Filters\Filter;
 
 class PostResource extends Resource
 {
     protected static ?string $model = Post::class;
+
+    protected static ?string $label = 'Post';
 
     protected static ?string $navigationGroup = 'Blog';
 
@@ -66,12 +70,9 @@ class PostResource extends Resource
                         Textarea::make('seo_description')->rows(3)->required()->columnSpan([
                             'sm' => 2,
                         ]),
-                        FileUpload::make('featured_image')->disk('images')->columnSpan([
-                            'sm' => 2,
-                        ]),
-                        TextInput::make('featured_image_alt')->columnSpan([
-                            'sm' => 2,
-                        ]),
+                        MediaLibrary::make('featured_image')->afterStateHydrated(function (MediaLibrary $component, Media $media, $state) {
+                            $component->state($media->where('id', $state)->first());
+                        })->dehydrateStateUsing(fn ($state) => $state['id'])->columnSpan(['sm' => 2]),
                         Builder::make('content')->blocks([
                             Builder\Block::make('heading')
                                 ->schema([
@@ -126,23 +127,34 @@ class PostResource extends Resource
                     ]),
                 Card::make()
                     ->schema([
+                        Select::make('status')
+                            ->options([
+                                'draft' => 'Draft',
+                                'review' => 'In review',
+                                'published' => 'Published',
+                            ])
+                            ->required()
+                            ->columnSpan(2),
+                        DateTimePicker::make('published_at')
+                            ->label('Publish Date')
+                            ->withoutSeconds()
+                            ->columnSpan(2),
+                        Toggle::make('indexable')
+                            ->columnSpan(2),
+                        BelongsToSelect::make('author_id')
+                            ->relationship('author', 'name')
+                            ->required()
+                            ->columnSpan(2),
+                        SpatieTagsInput::make('tags')
+                            ->columnSpan(2),
                         Placeholder::make('created_at')
                             ->label('Created at')
                             ->content(fn (?Post $record): string => $record ? $record->created_at->diffForHumans() : '-'),
                         Placeholder::make('updated_at')
                             ->label('Last modified at')
                             ->content(fn (?Post $record): string => $record ? $record->updated_at->diffForHumans() : '-'),
-                        Select::make('status')
-                            ->options([
-                                'draft' => 'Draft',
-                                'review' => 'In review',
-                                'published' => 'Published',
-                            ])->required(),
-                        DateTimePicker::make('published_at')->label('Publish Date')->withoutSeconds(),
-                        Toggle::make('indexable'),
-                        BelongsToSelect::make('author_id')->relationship('author', 'name')->required(),
-                        SpatieTagsInput::make('tags'),
                     ])
+                    ->columns(2)
                     ->columnSpan(1),
             ])
             ->columns([
@@ -155,7 +167,7 @@ class PostResource extends Resource
     {
         return $table
             ->columns([
-                ImageColumn::make('featured_image')->label('Thumb')->width(36)->height(36)->disk('images'),
+                ImageColumn::make('featuredImage.thumb')->label('Thumb')->width(36)->height(36),
                 TextColumn::make('title')->searchable()->sortable(),
                 BadgeColumn::make('status')->enum([
                     'draft' => 'Draft',

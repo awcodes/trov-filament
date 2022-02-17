@@ -61,6 +61,11 @@ class Page extends Model
         'content' => 'array',
     ];
 
+    public function getPublicUrl()
+    {
+        return route('pages.show', $this);
+    }
+
     public function heroImage()
     {
         return $this->hasOne(Media::class, 'id', 'hero_image');

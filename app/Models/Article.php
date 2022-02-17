@@ -59,6 +59,11 @@ class Article extends Model
         'content' => 'array',
     ];
 
+    public function getPublicUrl()
+    {
+        return route('articles.show', $this);
+    }
+
     public function author()
     {
         return $this->belongsTo(Author::class);

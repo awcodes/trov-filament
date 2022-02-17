@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Traits\HasCloudinaryUrls;
 use Spatie\Sluggable\SlugOptions;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -10,6 +11,7 @@ use Illuminate\Database\Eloquent\Model;
 class LandingPage extends Model
 {
     use HasFactory;
+    use HasCloudinaryUrls;
 
     protected static function booted()
     {
@@ -58,4 +60,9 @@ class LandingPage extends Model
         'has_chat' => 'boolean',
         'content' => 'array',
     ];
+
+    public function getPublicUrl()
+    {
+        return route('landing-pages.show', $this);
+    }
 }

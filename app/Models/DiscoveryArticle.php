@@ -2,8 +2,10 @@
 
 namespace App\Models;
 
+use App\Models\Media;
 use App\Models\Author;
 use App\Models\DiscoveryTopic;
+use App\Traits\HasCloudinaryUrls;
 use Spatie\Sluggable\SlugOptions;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Storage;
@@ -12,6 +14,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 class DiscoveryArticle extends Model
 {
     use HasFactory;
+    use HasCloudinaryUrls;
 
     protected static function booted()
     {
@@ -44,7 +47,6 @@ class DiscoveryArticle extends Model
         'status',
         'author_id',
         'featured_image',
-        'featured_image_alt',
         'content',
         'seo_title',
         'seo_description',
@@ -77,6 +79,11 @@ class DiscoveryArticle extends Model
         ];
     }
 
+    public function getPublicUrl()
+    {
+        return route('discovery-articles.show', $this);
+    }
+
     public function topic()
     {
         return $this->belongsTo(DiscoveryTopic::class, 'discovery_topic_id', 'id');
@@ -85,5 +92,10 @@ class DiscoveryArticle extends Model
     public function author()
     {
         return $this->belongsTo(Author::class);
+    }
+
+    public function featuredImage()
+    {
+        return $this->hasOne(Media::class, 'id', 'featured_image');
     }
 }

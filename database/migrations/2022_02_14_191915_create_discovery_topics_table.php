@@ -18,8 +18,7 @@ class CreateDiscoveryTopicsTable extends Migration
             $table->string('title');
             $table->string('slug')->unique();
             $table->string('status')->default('draft');
-            $table->string('featured_image')->nullable();
-            $table->mediumText('featured_image_alt')->nullable();
+            $table->foreignId('featured_image')->nullable();
             $table->longText('content')->nullable();
             $table->string('seo_title');
             $table->text('seo_description');

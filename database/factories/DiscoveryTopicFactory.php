@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\Media;
 use Illuminate\Support\Str;
 use App\Models\DiscoveryTopic;
 use Illuminate\Database\Eloquent\Factories\Factory;
@@ -56,8 +57,7 @@ class DiscoveryTopicFactory extends Factory
             'title' => $title,
             'slug' => Str::slug($title),
             'status' => 'draft',
-            'featured_image' => $this->faker->image(storage_path('app/public/images'), 1024, 576, 'nature', false, true, null),
-            'featured_image_alt' => $this->faker->text,
+            'featured_image' => Media::inRandomOrder()->limit(1)->first(),
             'content' => [
                 [
                     "type" => "rich-text",

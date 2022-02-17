@@ -35,6 +35,8 @@ class PageResource extends Resource
 {
     protected static ?string $model = Page::class;
 
+    protected static ?string $label = 'Page';
+
     protected static ?string $navigationGroup = 'Site';
 
     protected static ?string $navigationIcon = 'heroicon-s-document';
@@ -122,21 +124,26 @@ class PageResource extends Resource
                     ]),
                 Card::make()
                     ->schema([
+                        Select::make('status')
+                            ->options([
+                                'draft' => 'Draft',
+                                'review' => 'In review',
+                                'published' => 'Published',
+                            ])
+                            ->required()
+                            ->columnSpan(2),
+                        Toggle::make('indexable')
+                            ->columnSpan(2),
+                        Toggle::make('has_chat')
+                            ->columnSpan(2),
                         Placeholder::make('created_at')
                             ->label('Created at')
                             ->content(fn (?Page $record): string => $record ? $record->created_at->diffForHumans() : '-'),
                         Placeholder::make('updated_at')
                             ->label('Last modified at')
                             ->content(fn (?Page $record): string => $record ? $record->updated_at->diffForHumans() : '-'),
-                        Select::make('status')
-                            ->options([
-                                'draft' => 'Draft',
-                                'review' => 'In review',
-                                'published' => 'Published',
-                            ])->required(),
-                        Toggle::make('indexable'),
-                        Toggle::make('has_chat')
                     ])
+                    ->columns(2)
                     ->columnSpan(1),
             ])
             ->columns([

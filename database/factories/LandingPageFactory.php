@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\Media;
 use App\Models\LandingPage;
 use Illuminate\Support\Str;
 use Illuminate\Database\Eloquent\Factories\Factory;
@@ -60,7 +61,7 @@ class LandingPageFactory extends Factory
                 [
                     "type" => "hero",
                     "data" => [
-                        "url" => $this->faker->image(storage_path('app/public/images'), 1024, 576, 'nature', false, true, null),
+                        "url" => Media::inRandomOrder()->limit(1)->first(),
                         'alt' => $this->faker->text,
                         'content' => $this->faker->text,
                     ]

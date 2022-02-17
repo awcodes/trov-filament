@@ -3,7 +3,7 @@
 namespace App\Models;
 
 use App\Helpers;
-use HasCloudinaryUrls;
+use App\Traits\HasCloudinaryUrls;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Database\Eloquent\Factories\HasFactory;

@@ -2,7 +2,9 @@
 
 namespace App\Models;
 
+use App\Models\Media;
 use Spatie\Tags\HasTags;
+use App\Traits\HasCloudinaryUrls;
 use Spatie\Sluggable\SlugOptions;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Storage;
@@ -12,6 +14,7 @@ class Post extends Model
 {
     use HasFactory;
     use HasTags;
+    use HasCloudinaryUrls;
 
     protected static function booted()
     {
@@ -44,7 +47,6 @@ class Post extends Model
         'status',
         'author_id',
         'featured_image',
-        'featured_image_alt',
         'content',
         'seo_title',
         'seo_description',
@@ -77,8 +79,18 @@ class Post extends Model
         ];
     }
 
+    public function getPublicUrl()
+    {
+        return route('posts.show', $this);
+    }
+
     public function author()
     {
         return $this->belongsTo(Author::class);
+    }
+
+    public function featuredImage()
+    {
+        return $this->hasOne(Media::class, 'id', 'featured_image');
     }
 }

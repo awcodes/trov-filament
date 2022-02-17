@@ -2,22 +2,22 @@
 
 namespace App\Filament\Resources\PermissionResource\Pages;
 
-use Filament\Pages\Actions\ButtonAction;
+use App\Models\Permission;
 use Filament\Resources\Pages\ListRecords;
+use Filament\Tables\Actions\IconButtonAction;
 use App\Filament\Resources\PermissionResource;
 
 class ListPermissions extends ListRecords
 {
     protected static string $resource = PermissionResource::class;
 
-    protected function getActions(): array
+    protected function getTableActions(): array
     {
-        $resource = static::getResource();
-
         return [
-            ButtonAction::make('create')
-                ->label(__('filament::resources/pages/list-records.actions.create.label', ['label' => 'Permission']))
-                ->url(fn () => $resource::getUrl('create'))
+            IconButtonAction::make('edit')
+                ->label('Edit Permission')
+                ->url(fn (Permission $record): string => route('filament.resources.permissions.edit', $record))
+                ->icon('heroicon-o-pencil')
         ];
     }
 }

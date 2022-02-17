@@ -2,18 +2,16 @@
 
 namespace App\Filament\Resources\DiscoveryArticleResource\Pages;
 
+use App\Traits\HasViewButton;
+use App\Traits\HasMediaLibrary;
 use Filament\Pages\Actions\ButtonAction;
 use Filament\Resources\Pages\EditRecord;
 use App\Filament\Resources\DiscoveryArticleResource;
 
 class EditDiscoveryArticle extends EditRecord
 {
-    protected static string $resource = DiscoveryArticleResource::class;
+    use HasViewButton;
+    use HasMediaLibrary;
 
-    protected function getActions(): array
-    {
-        return array_merge(parent::getActions(), [
-            ButtonAction::make('view')->url(route('discovery-articles.show', $this->record))->openUrlInNewTab(),
-        ]);
-    }
+    protected static string $resource = DiscoveryArticleResource::class;
 }

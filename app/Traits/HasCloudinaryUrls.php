@@ -1,5 +1,7 @@
 <?php
 
+namespace App\Traits;
+
 use App\Helpers;
 
 trait HasCloudinaryUrls

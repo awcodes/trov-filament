@@ -33,9 +33,14 @@ class LandingPageResource extends Resource
 {
     protected static ?string $model = LandingPage::class;
 
+    protected static ?string $label = 'Landing Page';
+
     protected static ?string $navigationGroup = 'Site';
 
     protected static ?string $navigationIcon = 'heroicon-s-paper-airplane';
+
+    protected static ?string $navigationLabel = 'Airport';
+
 
     public static function form(Form $form): Form
     {
@@ -94,13 +99,9 @@ class LandingPageResource extends Resource
                                 ]),
                             Builder\Block::make('hero')
                                 ->schema([
-                                    FileUpload::make('url')
-                                        ->disk('images')
+                                    FileUpload::make('hero_image')
                                         ->label('Image')
                                         ->image()
-                                        ->required(),
-                                    TextInput::make('alt')
-                                        ->label('Alt text')
                                         ->required(),
                                     Textarea::make('hero_content')
                                         ->rows(3),
@@ -117,21 +118,26 @@ class LandingPageResource extends Resource
                     ]),
                 Card::make()
                     ->schema([
+                        Select::make('status')
+                            ->options([
+                                'draft' => 'Draft',
+                                'review' => 'In review',
+                                'published' => 'Published',
+                            ])
+                            ->required()
+                            ->columnSpan(2),
+                        Toggle::make('indexable')
+                            ->columnSpan(2),
+                        Toggle::make('has_chat')
+                            ->columnSpan(2),
                         Placeholder::make('created_at')
                             ->label('Created at')
                             ->content(fn (?LandingPage $record): string => $record ? $record->created_at->diffForHumans() : '-'),
                         Placeholder::make('updated_at')
                             ->label('Last modified at')
                             ->content(fn (?LandingPage $record): string => $record ? $record->updated_at->diffForHumans() : '-'),
-                        Select::make('status')
-                            ->options([
-                                'draft' => 'Draft',
-                                'review' => 'In review',
-                                'published' => 'Published',
-                            ])->required(),
-                        Toggle::make('indexable'),
-                        Toggle::make('has_chat')
                     ])
+                    ->columns(2)
                     ->columnSpan(1),
             ])
             ->columns([

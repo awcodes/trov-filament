@@ -12,17 +12,6 @@ class ListAuthors extends ListRecords
 {
     protected static string $resource = AuthorResource::class;
 
-    protected function getActions(): array
-    {
-        $resource = static::getResource();
-
-        return [
-            ButtonAction::make('create')
-                ->label(__('filament::resources/pages/list-records.actions.create.label', ['label' => 'Author']))
-                ->url(fn () => $resource::getUrl('create'))
-        ];
-    }
-
     protected function getTableActions(): array
     {
         return [

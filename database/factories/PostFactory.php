@@ -2,9 +2,10 @@
 
 namespace Database\Factories;
 
-use Illuminate\Database\Eloquent\Factories\Factory;
-use Illuminate\Support\Str;
 use App\Models\Post;
+use App\Models\Media;
+use Illuminate\Support\Str;
+use Illuminate\Database\Eloquent\Factories\Factory;
 
 class PostFactory extends Factory
 {
@@ -57,8 +58,7 @@ class PostFactory extends Factory
             'slug' => Str::slug($title),
             'status' => 'draft',
             'author_id' => rand(1, 5),
-            'featured_image' => $this->faker->image(storage_path('app/public/images'), 1024, 576, 'nature', false, true, null),
-            'featured_image_alt' => $this->faker->text,
+            'featured_image' => Media::inRandomOrder()->limit(1)->first(),
             'content' => [
                 [
                     "type" => "rich-text",

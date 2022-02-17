@@ -26,7 +26,7 @@ class DatabaseSeeder extends Seeder
                 'name' => 'Scott Kublin',
                 'email' => 'scott.kublin@titlemax.com'
             ])->assignRole('Admin')->givePermissionTo([
-                'manage users', 'manage authors', 'manage pages', 'manage posts',
+                'manage users', 'manage authors', 'manage pages', 'manage posts', 'manage discovery articles', 'manage discovery topics', 'manage faqs', 'manage landing pages', 'manage articles',
             ]);
 
             $d = '/public/images';
@@ -36,14 +36,13 @@ class DatabaseSeeder extends Seeder
 
             $this->call(MediaSeeder::class);
             $this->call(PageSeeder::class);
-            // $this->call(LandingPageSeeder::class);
-            // $this->call(AuthorSeeder::class);
-            // $this->call(PostSeeder::class);
-            // $this->call(ArticleSeeder::class);
-            // $this->call(FaqSeeder::class);
-            // $this->call(DiscoveryTopicSeeder::class);
-            // $this->call(DiscoveryArticleSeeder::class);
-
+            $this->call(LandingPageSeeder::class);
+            $this->call(AuthorSeeder::class);
+            $this->call(PostSeeder::class);
+            $this->call(ArticleSeeder::class);
+            $this->call(FaqSeeder::class);
+            $this->call(DiscoveryTopicSeeder::class);
+            $this->call(DiscoveryArticleSeeder::class);
         }
     }
 }

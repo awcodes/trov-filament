@@ -27,9 +27,13 @@ class FaqResource extends Resource
 
     protected static ?string $label = 'FAQ';
 
+    protected static ?string $pluralLabel = 'FAQs';
+
     protected static ?string $navigationGroup = 'Site';
 
     protected static ?string $navigationIcon = 'heroicon-s-question-mark-circle';
+
+    protected static ?string $navigationLabel = 'FAQs';
 
     public static function form(Form $form): Form
     {
@@ -75,20 +79,24 @@ class FaqResource extends Resource
                     ]),
                 Card::make()
                     ->schema([
+                        Select::make('status')
+                            ->options([
+                                'draft' => 'Draft',
+                                'review' => 'In review',
+                                'published' => 'Published',
+                            ])
+                            ->required()
+                            ->columnSpan(2),
+                        SpatieTagsInput::make('tags')
+                            ->columnspan(2),
                         Placeholder::make('created_at')
                             ->label('Created at')
                             ->content(fn (?Faq $record): string => $record ? $record->created_at->diffForHumans() : '-'),
                         Placeholder::make('updated_at')
                             ->label('Last modified at')
                             ->content(fn (?Faq $record): string => $record ? $record->updated_at->diffForHumans() : '-'),
-                        Select::make('status')
-                            ->options([
-                                'draft' => 'Draft',
-                                'review' => 'In review',
-                                'published' => 'Published',
-                            ])->required(),
-                        SpatieTagsInput::make('tags'),
                     ])
+                    ->columns(2)
                     ->columnSpan(1),
             ])
             ->columns([

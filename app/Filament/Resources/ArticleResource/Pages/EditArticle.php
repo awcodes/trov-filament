@@ -3,17 +3,13 @@
 namespace App\Filament\Resources\ArticleResource\Pages;
 
 use App\Filament\Resources\ArticleResource;
+use App\Traits\HasViewButton;
 use Filament\Pages\Actions\ButtonAction;
 use Filament\Resources\Pages\EditRecord;
 
 class EditArticle extends EditRecord
 {
-    protected static string $resource = ArticleResource::class;
+    use HasViewButton;
 
-    protected function getActions(): array
-    {
-        return array_merge(parent::getActions(), [
-            ButtonAction::make('view')->url(route('articles.show', $this->record))->openUrlInNewTab(),
-        ]);
-    }
+    protected static string $resource = ArticleResource::class;
 }

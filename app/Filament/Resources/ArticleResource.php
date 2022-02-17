@@ -34,6 +34,8 @@ class ArticleResource extends Resource
 {
     protected static ?string $model = Article::class;
 
+    protected static ?string $label = 'Article';
+
     protected static ?string $navigationGroup = 'Blog';
 
     protected static ?string $navigationIcon = 'heroicon-s-collection';
@@ -116,21 +118,27 @@ class ArticleResource extends Resource
                     ]),
                 Card::make()
                     ->schema([
+                        Select::make('status')
+                            ->options([
+                                'draft' => 'Draft',
+                                'review' => 'In review',
+                                'published' => 'Published',
+                            ])
+                            ->required()
+                            ->columnSpan(2),
+                        Toggle::make('indexable'),
+                        BelongsToSelect::make('author_id')
+                            ->relationship('author', 'name')
+                            ->required()
+                            ->columnSpan(2),
                         Placeholder::make('created_at')
                             ->label('Created at')
                             ->content(fn (?Article $record): string => $record ? $record->created_at->diffForHumans() : '-'),
                         Placeholder::make('updated_at')
                             ->label('Last modified at')
                             ->content(fn (?Article $record): string => $record ? $record->updated_at->diffForHumans() : '-'),
-                        Select::make('status')
-                            ->options([
-                                'draft' => 'Draft',
-                                'review' => 'In review',
-                                'published' => 'Published',
-                            ])->required(),
-                        Toggle::make('indexable'),
-                        BelongsToSelect::make('author_id')->relationship('author', 'name')->required(),
                     ])
+                    ->columns(2)
                     ->columnSpan(1),
             ])
             ->columns([

@@ -46,6 +46,11 @@ class Faq extends Model
         'seo_description',
     ];
 
+    public function getPublicUrl()
+    {
+        return route('faqs.show', $this);
+    }
+
     /**
      * The attributes that should be cast to native types.
      *
