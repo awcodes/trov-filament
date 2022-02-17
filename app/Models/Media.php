@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Helpers;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -36,11 +37,11 @@ class Media extends Model
 
     public function getUrlAttribute()
     {
-        return Storage::disk($this->disk)->url($this->file_name);
+        return Helpers::cloudinary($this->file_name);
     }
 
     public function getThumbAttribute()
     {
-        return Storage::disk($this->disk)->url('/thumbs/' . $this->file_name);
+        return Helpers::cloudinary($this->file_name, 'f_auto,q_auto,w_150,h_150,c_crop');
     }
 }

@@ -149,7 +149,7 @@ class PageResource extends Resource
     {
         return $table
             ->columns([
-                ImageColumn::make('heroImage.thumb')->label('Hero')->disk('images'),
+                ImageColumn::make('heroImage.thumb')->label('Hero'),
                 TextColumn::make('title')->searchable()->sortable(),
                 BadgeColumn::make('status')->enum([
                     'draft' => 'Draft',

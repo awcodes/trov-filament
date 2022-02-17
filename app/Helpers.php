@@ -5,6 +5,14 @@ namespace App;
 class Helpers
 {
     /**
+     * Cloudinary URL
+     */
+    public static function cloudinary($file = '', $transforms = 'f_auto,q_auto')
+    {
+        return 'https://res.cloudinary.com/' . config('filesystems.disks.cloudinary.cloud_name') . '/image/upload/' . $transforms . '/' . config('filesystems.disks.cloudinary.folder') . '/' . $file;
+    }
+
+    /**
      * Generate password
      */
     public static function generatePassword()
