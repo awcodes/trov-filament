@@ -9,6 +9,7 @@
     "license": "MIT",
     "require": {
         "php": "^7.3|^8.0",
+        "codebar-ag/laravel-flysystem-cloudinary": "^1.0",
         "filament/filament": "^2.0",
         "filament/spatie-laravel-media-library-plugin": "^2.0",
         "filament/spatie-laravel-settings-plugin": "^2.0",
