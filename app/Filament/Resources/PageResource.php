@@ -30,6 +30,8 @@ use Filament\Forms\Components\MarkdownEditor;
 use App\Filament\Resources\PageResource\Pages;
 use App\Filament\Resources\PageResource\Pages\EditPage;
 use App\Filament\Resources\PageResource\RelationManagers;
+use Filament\Forms\Components\Group;
+use Filament\Forms\Components\Section;
 use Filament\Tables\Columns\SpatieMediaLibraryImageColumn;
 use Filament\Forms\Components\SpatieMediaLibraryFileUpload;
 
@@ -47,99 +49,125 @@ class PageResource extends Resource
     {
         return $form
             ->schema([
-                Card::make()
+                Group::make()
                     ->schema([
                         TextInput::make('title')
                             ->required()
                             ->reactive()
+                            ->disableLabel()
+                            ->extraInputAttributes(['class' => 'text-2xl'])
                             ->afterStateUpdated(function ($state, callable $set, $livewire) {
                                 if ($livewire instanceof CreatePage) {
                                     return $set('slug', Str::slug($state));
                                 }
                             }),
-                        SlugInput::make('slug')
-                            ->mode(fn ($livewire) => $livewire instanceof EditPage ? 'edit' : 'create')
-                            ->required()
-                            ->unique(Page::class, 'slug', fn ($record) => $record),
-                        TextInput::make('seo_title')
-                            ->required(),
-                        Textarea::make('seo_description')
-                            ->rows(3)
-                            ->required(),
-                        MediaLibrary::make('hero_image')->afterStateHydrated(function (MediaLibrary $component, Media $media, $state) {
-                            $component->state($media->where('id', $state)->first());
-                        })->dehydrateStateUsing(fn ($state) => $state['id']),
-                        Textarea::make('hero_content')
-                            ->rows(3),
-                        Builder::make('content')->blocks([
-                            Builder\Block::make('heading')
-                                ->schema([
-                                    TextInput::make('content')
-                                        ->label('Heading')
-                                        ->required(),
-                                    Select::make('level')
-                                        ->options([
-                                            'h1' => 'Heading 1',
-                                            'h2' => 'Heading 2',
-                                            'h3' => 'Heading 3',
-                                            'h4' => 'Heading 4',
-                                            'h5' => 'Heading 5',
-                                            'h6' => 'Heading 6',
-                                        ])
-                                        ->required(),
-                                ]),
-                            Builder\Block::make('rich-text')
-                                ->schema([
-                                    RichEditor::make('content')
-                                        ->label('Rich Text')
-                                        ->disableToolbarButtons([
-                                            'blockquote',
-                                            'codeBlock',
-                                            'attachFiles',
-                                            'strike',
-                                            'h2',
-                                            'h3',
-                                        ])
-                                        ->required(),
-                                ]),
-                            Builder\Block::make('image')
-                                ->schema([
-                                    FileUpload::make('url')
-                                        ->disk('images')
-                                        ->label('Image')
-                                        ->image()
-                                        ->required(),
-                                    TextInput::make('alt')
-                                        ->label('Alt text')
-                                        ->required(),
-                                ]),
-                        ]),
+                        Section::make('Meta Information')->extraAttributes(['class' => 'bg-gray-800'])
+                            ->schema([
+
+                                SlugInput::make('slug')
+                                    ->mode(fn ($livewire) => $livewire instanceof EditPage ? 'edit' : 'create')
+                                    ->required()
+                                    ->unique(Page::class, 'slug', fn ($record) => $record),
+
+                            ]),
+                        Section::make('Hero')->extraAttributes(['class' => 'bg-gray-800'])
+                            ->schema([
+                                MediaLibrary::make('hero_image')
+                                    ->label('Image')
+                                    ->afterStateHydrated(function (MediaLibrary $component, Media $media, $state) {
+                                        $component->state($media->where('id', $state)->first());
+                                    })
+                                    ->dehydrateStateUsing(fn ($state) => $state['id']),
+                                Textarea::make('hero_content')
+                                    ->label('Call Out')
+                                    ->rows(3),
+                            ]),
+                        Section::make('Page Content')->extraAttributes(['class' => 'bg-gray-800'])
+                            ->schema([
+                                Builder::make('content')
+                                    ->label('Blocks')
+                                    ->blocks([
+                                        Builder\Block::make('heading')
+                                            ->schema([
+                                                TextInput::make('content')
+                                                    ->label('Heading')
+                                                    ->required(),
+                                                Select::make('level')
+                                                    ->options([
+                                                        'h1' => 'Heading 1',
+                                                        'h2' => 'Heading 2',
+                                                        'h3' => 'Heading 3',
+                                                        'h4' => 'Heading 4',
+                                                        'h5' => 'Heading 5',
+                                                        'h6' => 'Heading 6',
+                                                    ])
+                                                    ->required(),
+                                            ]),
+                                        Builder\Block::make('rich-text')
+                                            ->schema([
+                                                RichEditor::make('content')
+                                                    ->label('Rich Text')
+                                                    ->disableToolbarButtons([
+                                                        'blockquote',
+                                                        'codeBlock',
+                                                        'attachFiles',
+                                                        'strike',
+                                                        'h2',
+                                                        'h3',
+                                                    ])
+                                                    ->required(),
+                                            ]),
+                                        Builder\Block::make('image')
+                                            ->schema([
+                                                FileUpload::make('url')
+                                                    ->disk('images')
+                                                    ->label('Image')
+                                                    ->image()
+                                                    ->required(),
+                                                TextInput::make('alt')
+                                                    ->label('Alt text')
+                                                    ->required(),
+                                            ]),
+                                    ]),
+                            ])
                     ])
                     ->columnSpan([
                         'sm' => 2,
                     ]),
-                Card::make()
+                Group::make()
                     ->schema([
-                        Select::make('status')
-                            ->options([
-                                'draft' => 'Draft',
-                                'review' => 'In review',
-                                'published' => 'Published',
+                        Section::make('Details')->extraAttributes(['class' => 'bg-gray-800'])
+                            ->schema([
+                                Select::make('status')
+                                    ->options([
+                                        'draft' => 'Draft',
+                                        'review' => 'In review',
+                                        'published' => 'Published',
+                                    ])
+                                    ->required()
+                                    ->columnSpan(2),
+
+                                Toggle::make('has_chat')
+                                    ->columnSpan(2),
+                                Placeholder::make('created_at')
+                                    ->label('Created at')
+                                    ->content(fn (?Page $record): string => $record ? $record->created_at->diffForHumans() : '-'),
+                                Placeholder::make('updated_at')
+                                    ->label('Last modified at')
+                                    ->content(fn (?Page $record): string => $record ? $record->updated_at->diffForHumans() : '-'),
+                            ]),
+                        Section::make('SEO')->extraAttributes(['class' => 'bg-gray-800'])
+                            ->schema([
+                                TextInput::make('seo_title')
+                                    ->label('Title')
+                                    ->required(),
+                                Textarea::make('seo_description')
+                                    ->label('Description')
+                                    ->rows(3)
+                                    ->required(),
+                                Toggle::make('indexable'),
                             ])
-                            ->required()
-                            ->columnSpan(2),
-                        Toggle::make('indexable')
-                            ->columnSpan(2),
-                        Toggle::make('has_chat')
-                            ->columnSpan(2),
-                        Placeholder::make('created_at')
-                            ->label('Created at')
-                            ->content(fn (?Page $record): string => $record ? $record->created_at->diffForHumans() : '-'),
-                        Placeholder::make('updated_at')
-                            ->label('Last modified at')
-                            ->content(fn (?Page $record): string => $record ? $record->updated_at->diffForHumans() : '-'),
                     ])
-                    ->columns(2)
                     ->columnSpan(1),
             ])
             ->columns([
