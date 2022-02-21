@@ -6,11 +6,11 @@ use Filament\Pages\Actions\ButtonAction;
 use Filament\Resources\Pages\EditRecord;
 use App\Filament\Resources\LandingPageResource;
 use App\Traits\HasMediaLibrary;
-use App\Traits\HasViewButton;
+use App\Traits\HasViewAndSaveButtons;
 
 class EditLandingPage extends EditRecord
 {
-    use HasViewButton;
+    use HasViewAndSaveButtons;
     use HasMediaLibrary;
 
     protected static string $resource = LandingPageResource::class;
