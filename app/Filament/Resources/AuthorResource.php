@@ -18,6 +18,7 @@ use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\RichEditor;
 use App\Filament\Resources\AuthorResource\Pages;
+use App\Filament\Resources\AuthorResource\Pages\CreateAuthor;
 use App\Filament\Resources\AuthorResource\RelationManagers;
 
 class AuthorResource extends Resource
@@ -39,13 +40,12 @@ class AuthorResource extends Resource
                         TextInput::make('name')
                             ->required()
                             ->reactive()
-                            ->afterStateUpdated(function ($state, callable $set, $record) {
-                                if (!$record) {
+                            ->afterStateUpdated(function ($state, callable $set, $livewire) {
+                                if ($livewire instanceof CreateAuthor) {
                                     return $set('slug', Str::slug($state));
                                 }
                             }),
                         TextInput::make('slug')
-                            ->disabled()
                             ->required()
                             ->unique(Author::class, 'slug', fn ($record) => $record),
                         RichEditor::make('bio')

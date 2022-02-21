@@ -18,6 +18,7 @@ use Filament\Forms\Components\RichEditor;
 use Filament\Tables\Filters\SelectFilter;
 use Filament\Forms\Components\Placeholder;
 use App\Filament\Resources\FaqResource\Pages;
+use App\Filament\Resources\FaqResource\Pages\CreateFaq;
 use Filament\Forms\Components\SpatieTagsInput;
 use App\Filament\Resources\FaqResource\RelationManagers;
 
@@ -44,13 +45,12 @@ class FaqResource extends Resource
                         TextInput::make('question')
                             ->required()
                             ->reactive()
-                            ->afterStateUpdated(function ($state, callable $set, $record) {
-                                if (!$record) {
+                            ->afterStateUpdated(function ($state, callable $set, $livewire) {
+                                if ($livewire instanceof CreateFaq) {
                                     return $set('slug', Str::slug($state));
                                 }
                             }),
                         TextInput::make('slug')
-                            ->disabled()
                             ->required()
                             ->unique(Faq::class, 'slug', fn ($record) => $record),
                         TextInput::make('seo_title')->required()->columnSpan([

@@ -55,13 +55,12 @@ class DiscoveryArticleResource extends Resource
                         TextInput::make('title')
                             ->required()
                             ->reactive()
-                            ->afterStateUpdated(function ($state, callable $set, $record) {
-                                if (!$record) {
+                            ->afterStateUpdated(function ($state, callable $set, $livewire) {
+                                if ($livewire instanceof CreateDiscoveryArticle) {
                                     return $set('slug', Str::slug($state));
                                 }
                             }),
                         TextInput::make('slug')
-                            ->disabled()
                             ->required()
                             ->unique(DiscoveryArticle::class, 'slug', fn ($record) => $record),
                         TextInput::make('seo_title')->required()->columnSpan([

@@ -50,8 +50,8 @@ class PageResource extends Resource
                         TextInput::make('title')
                             ->required()
                             ->reactive()
-                            ->afterStateUpdated(function ($state, callable $set, $record) {
-                                if (!$record) {
+                            ->afterStateUpdated(function ($state, callable $set, $livewire) {
+                                if ($livewire instanceof CreatePage) {
                                     return $set('slug', Str::slug($state));
                                 }
                             }),
