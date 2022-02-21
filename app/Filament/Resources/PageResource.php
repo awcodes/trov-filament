@@ -13,9 +13,12 @@ use App\Forms\Fields\SlugInput;
 use Filament\Resources\Resource;
 use App\Forms\Fields\MediaLibrary;
 use Filament\Forms\Components\Card;
+use Filament\Forms\Components\Group;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Toggle;
+use App\Forms\Components\MutedSection;
 use Filament\Forms\Components\Builder;
+use App\Forms\Components\Section;
 use Filament\Forms\Components\Textarea;
 use Filament\Tables\Columns\IconColumn;
 use Filament\Tables\Columns\TextColumn;
@@ -30,8 +33,6 @@ use Filament\Forms\Components\MarkdownEditor;
 use App\Filament\Resources\PageResource\Pages;
 use App\Filament\Resources\PageResource\Pages\EditPage;
 use App\Filament\Resources\PageResource\RelationManagers;
-use Filament\Forms\Components\Group;
-use Filament\Forms\Components\Section;
 use Filament\Tables\Columns\SpatieMediaLibraryImageColumn;
 use Filament\Forms\Components\SpatieMediaLibraryFileUpload;
 
@@ -61,7 +62,7 @@ class PageResource extends Resource
                                     return $set('slug', Str::slug($state));
                                 }
                             }),
-                        Section::make('Meta Information')->extraAttributes(['class' => 'bg-gray-800'])
+                        Section::make('Meta Information')
                             ->schema([
 
                                 SlugInput::make('slug')
@@ -70,7 +71,7 @@ class PageResource extends Resource
                                     ->unique(Page::class, 'slug', fn ($record) => $record),
 
                             ]),
-                        Section::make('Hero')->extraAttributes(['class' => 'bg-gray-800'])
+                        Section::make('Hero')
                             ->schema([
                                 MediaLibrary::make('hero_image')
                                     ->label('Image')
@@ -82,7 +83,7 @@ class PageResource extends Resource
                                     ->label('Call Out')
                                     ->rows(3),
                             ]),
-                        Section::make('Page Content')->extraAttributes(['class' => 'bg-gray-800'])
+                        Section::make('Page Content')
                             ->schema([
                                 Builder::make('content')
                                     ->label('Blocks')
@@ -136,7 +137,7 @@ class PageResource extends Resource
                     ]),
                 Group::make()
                     ->schema([
-                        Section::make('Details')->extraAttributes(['class' => 'bg-gray-800'])
+                        Section::make('Details')
                             ->schema([
                                 Select::make('status')
                                     ->options([
@@ -156,7 +157,7 @@ class PageResource extends Resource
                                     ->label('Last modified at')
                                     ->content(fn (?Page $record): string => $record ? $record->updated_at->diffForHumans() : '-'),
                             ]),
-                        Section::make('SEO')->extraAttributes(['class' => 'bg-gray-800'])
+                        Section::make('SEO')
                             ->schema([
                                 TextInput::make('seo_title')
                                     ->label('Title')
