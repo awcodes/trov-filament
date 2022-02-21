@@ -7,6 +7,7 @@ use Filament\Forms;
 use Filament\Tables;
 use Filament\Resources\Form;
 use Filament\Resources\Table;
+use App\Forms\Fields\SlugInput;
 use Filament\Resources\Resource;
 use Filament\Forms\Components\Card;
 use Filament\Forms\Components\Select;
@@ -18,8 +19,9 @@ use Filament\Forms\Components\RichEditor;
 use Filament\Tables\Filters\SelectFilter;
 use Filament\Forms\Components\Placeholder;
 use App\Filament\Resources\FaqResource\Pages;
-use App\Filament\Resources\FaqResource\Pages\CreateFaq;
 use Filament\Forms\Components\SpatieTagsInput;
+use App\Filament\Resources\FaqResource\Pages\EditFaq;
+use App\Filament\Resources\FaqResource\Pages\CreateFaq;
 use App\Filament\Resources\FaqResource\RelationManagers;
 
 class FaqResource extends Resource
@@ -50,15 +52,15 @@ class FaqResource extends Resource
                                     return $set('slug', Str::slug($state));
                                 }
                             }),
-                        TextInput::make('slug')
+                        SlugInput::make('slug')
+                            ->mode(fn ($livewire) => $livewire instanceof EditFaq ? 'edit' : 'create')
                             ->required()
                             ->unique(Faq::class, 'slug', fn ($record) => $record),
-                        TextInput::make('seo_title')->required()->columnSpan([
-                            'sm' => 2,
-                        ]),
-                        Textarea::make('seo_description')->rows(3)->required()->columnSpan([
-                            'sm' => 2,
-                        ]),
+                        TextInput::make('seo_title')
+                            ->required(),
+                        Textarea::make('seo_description')
+                            ->rows(3)
+                            ->required(),
                         RichEditor::make('answer')
                             ->label('Rich Text')
                             ->disableToolbarButtons([
@@ -67,12 +69,7 @@ class FaqResource extends Resource
                                 'attachFiles',
                                 'strike',
                             ])
-                            ->required()->columnSpan([
-                                'sm' => 2,
-                            ]),
-                    ])
-                    ->columns([
-                        'sm' => 2,
+                            ->required(),
                     ])
                     ->columnSpan([
                         'sm' => 2,

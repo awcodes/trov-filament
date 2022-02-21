@@ -5,10 +5,13 @@ namespace App\Filament\Resources;
 use Filament\Forms;
 use App\Models\Page;
 use Filament\Tables;
+use App\Models\Media;
 use Illuminate\Support\Str;
 use Filament\Resources\Form;
 use Filament\Resources\Table;
+use App\Forms\Fields\SlugInput;
 use Filament\Resources\Resource;
+use App\Forms\Fields\MediaLibrary;
 use Filament\Forms\Components\Card;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Toggle;
@@ -25,11 +28,10 @@ use Filament\Tables\Filters\SelectFilter;
 use Filament\Forms\Components\Placeholder;
 use Filament\Forms\Components\MarkdownEditor;
 use App\Filament\Resources\PageResource\Pages;
+use App\Filament\Resources\PageResource\Pages\EditPage;
 use App\Filament\Resources\PageResource\RelationManagers;
 use Filament\Tables\Columns\SpatieMediaLibraryImageColumn;
 use Filament\Forms\Components\SpatieMediaLibraryFileUpload;
-use App\Forms\Fields\MediaLibrary;
-use App\Models\Media;
 
 class PageResource extends Resource
 {
@@ -55,21 +57,20 @@ class PageResource extends Resource
                                     return $set('slug', Str::slug($state));
                                 }
                             }),
-                        TextInput::make('slug')
+                        SlugInput::make('slug')
+                            ->mode(fn ($livewire) => $livewire instanceof EditPage ? 'edit' : 'create')
                             ->required()
                             ->unique(Page::class, 'slug', fn ($record) => $record),
-                        TextInput::make('seo_title')->required()->columnSpan([
-                            'sm' => 2,
-                        ]),
-                        Textarea::make('seo_description')->rows(3)->required()->columnSpan([
-                            'sm' => 2,
-                        ]),
+                        TextInput::make('seo_title')
+                            ->required(),
+                        Textarea::make('seo_description')
+                            ->rows(3)
+                            ->required(),
                         MediaLibrary::make('hero_image')->afterStateHydrated(function (MediaLibrary $component, Media $media, $state) {
                             $component->state($media->where('id', $state)->first());
-                        })->dehydrateStateUsing(fn ($state) => $state['id'])->columnSpan(['sm' => 2]),
-                        Textarea::make('hero_content')->rows(3)->columnSpan([
-                            'sm' => 2,
-                        ]),
+                        })->dehydrateStateUsing(fn ($state) => $state['id']),
+                        Textarea::make('hero_content')
+                            ->rows(3),
                         Builder::make('content')->blocks([
                             Builder\Block::make('heading')
                                 ->schema([
@@ -112,12 +113,7 @@ class PageResource extends Resource
                                         ->label('Alt text')
                                         ->required(),
                                 ]),
-                        ])->columnSpan([
-                            'sm' => 2,
                         ]),
-                    ])
-                    ->columns([
-                        'sm' => 2,
                     ])
                     ->columnSpan([
                         'sm' => 2,

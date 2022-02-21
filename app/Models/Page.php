@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Spatie\Sluggable\HasSlug;
 use Spatie\Sluggable\SlugOptions;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Storage;
@@ -10,23 +11,12 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 class Page extends Model
 {
     use HasFactory;
-
-    protected static function booted()
-    {
-        static::updating(function ($page) {
-            $oldSlug = $page->getOriginal()['slug'];
-            $newSlug = $page->getAttributes()['slug'];
-
-            if ($oldSlug !== $newSlug) {
-                $page->generateSlug();
-            }
-        });
-    }
+    use HasSlug;
 
     public function getSlugOptions(): SlugOptions
     {
         return SlugOptions::create()
-            ->generateSlugsFrom('name')
+            ->generateSlugsFrom('title')
             ->saveSlugsTo('slug')
             ->doNotGenerateSlugsOnUpdate();
     }

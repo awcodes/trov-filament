@@ -6,28 +6,18 @@ use Spatie\Tags\HasTags;
 use Spatie\Sluggable\SlugOptions;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Spatie\Sluggable\HasSlug;
 
 class Faq extends Model
 {
     use HasFactory;
     use HasTags;
-
-    protected static function booted()
-    {
-        static::updating(function ($page) {
-            $oldSlug = $page->getOriginal()['slug'];
-            $newSlug = $page->getAttributes()['slug'];
-
-            if ($oldSlug !== $newSlug) {
-                $page->generateSlug();
-            }
-        });
-    }
+    use HasSlug;
 
     public function getSlugOptions(): SlugOptions
     {
         return SlugOptions::create()
-            ->generateSlugsFrom('name')
+            ->generateSlugsFrom('question')
             ->saveSlugsTo('slug')
             ->doNotGenerateSlugsOnUpdate();
     }

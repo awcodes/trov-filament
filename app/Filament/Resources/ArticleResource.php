@@ -9,6 +9,7 @@ use App\Models\Article;
 use Illuminate\Support\Str;
 use Filament\Resources\Form;
 use Filament\Resources\Table;
+use App\Forms\Fields\SlugInput;
 use Filament\Resources\Resource;
 use Filament\Forms\Components\Card;
 use Filament\Forms\Components\Select;
@@ -54,15 +55,15 @@ class ArticleResource extends Resource
                                     return $set('slug', Str::slug($state));
                                 }
                             }),
-                        TextInput::make('slug')
+                        SlugInput::make('slug')
+                            ->mode(fn ($livewire) => $livewire instanceof EditArticle ? 'edit' : 'create')
                             ->required()
-                            ->unique(Post::class, 'slug', fn ($record) => $record),
-                        TextInput::make('seo_title')->required()->columnSpan([
-                            'sm' => 2,
-                        ]),
-                        Textarea::make('seo_description')->rows(3)->required()->columnSpan([
-                            'sm' => 2,
-                        ]),
+                            ->unique(Article::class, 'slug', fn ($record) => $record),
+                        TextInput::make('seo_title')
+                            ->required(),
+                        Textarea::make('seo_description')
+                            ->rows(3)
+                            ->required(),
                         Builder::make('content')->blocks([
                             Builder\Block::make('heading')
                                 ->schema([
@@ -105,12 +106,7 @@ class ArticleResource extends Resource
                                         ->label('Alt text')
                                         ->required(),
                                 ]),
-                        ])->columnSpan([
-                            'sm' => 2,
                         ]),
-                    ])
-                    ->columns([
-                        'sm' => 2,
                     ])
                     ->columnSpan([
                         'sm' => 2,

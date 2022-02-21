@@ -7,28 +7,18 @@ use Spatie\Sluggable\SlugOptions;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Spatie\Sluggable\HasSlug;
 
 class LandingPage extends Model
 {
     use HasFactory;
     use HasCloudinaryUrls;
-
-    protected static function booted()
-    {
-        static::updating(function ($page) {
-            $oldSlug = $page->getOriginal()['slug'];
-            $newSlug = $page->getAttributes()['slug'];
-
-            if ($oldSlug !== $newSlug) {
-                $page->generateSlug();
-            }
-        });
-    }
+    use HasSlug;
 
     public function getSlugOptions(): SlugOptions
     {
         return SlugOptions::create()
-            ->generateSlugsFrom('name')
+            ->generateSlugsFrom('title')
             ->saveSlugsTo('slug')
             ->doNotGenerateSlugsOnUpdate();
     }

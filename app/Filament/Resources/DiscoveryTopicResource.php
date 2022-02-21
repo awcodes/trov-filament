@@ -10,6 +10,7 @@ use Illuminate\Support\Str;
 use Filament\Resources\Form;
 use Filament\Resources\Table;
 use App\Models\DiscoveryTopic;
+use App\Forms\Fields\SlugInput;
 use Filament\Resources\Resource;
 use App\Forms\Fields\MediaLibrary;
 use Filament\Forms\Components\Card;
@@ -61,18 +62,18 @@ class DiscoveryTopicResource extends Resource
                                     return $set('slug', Str::slug($state));
                                 }
                             }),
-                        TextInput::make('slug')
+                        SlugInput::make('slug')
+                            ->mode(fn ($livewire) => $livewire instanceof EditDiscoveryTopic ? 'edit' : 'create')
                             ->required()
                             ->unique(DiscoveryTopic::class, 'slug', fn ($record) => $record),
-                        TextInput::make('seo_title')->required()->columnSpan([
-                            'sm' => 2,
-                        ]),
-                        Textarea::make('seo_description')->rows(3)->required()->columnSpan([
-                            'sm' => 2,
-                        ]),
+                        TextInput::make('seo_title')
+                            ->required(),
+                        Textarea::make('seo_description')
+                            ->rows(3)
+                            ->required(),
                         MediaLibrary::make('featured_image')->afterStateHydrated(function (MediaLibrary $component, Media $media, $state) {
                             $component->state($media->where('id', $state)->first());
-                        })->dehydrateStateUsing(fn ($state) => $state['id'])->columnSpan(['sm' => 2]),
+                        })->dehydrateStateUsing(fn ($state) => $state['id']),
                         Builder::make('content')->blocks([
                             Builder\Block::make('heading')
                                 ->schema([
@@ -115,12 +116,7 @@ class DiscoveryTopicResource extends Resource
                                         ->label('Alt text')
                                         ->required(),
                                 ]),
-                        ])->columnSpan([
-                            'sm' => 2,
                         ]),
-                    ])
-                    ->columns([
-                        'sm' => 2,
                     ])
                     ->columnSpan([
                         'sm' => 2,

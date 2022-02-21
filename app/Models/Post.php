@@ -9,29 +9,19 @@ use Spatie\Sluggable\SlugOptions;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Spatie\Sluggable\HasSlug;
 
 class Post extends Model
 {
     use HasFactory;
     use HasTags;
+    use HasSlug;
     use HasCloudinaryUrls;
-
-    protected static function booted()
-    {
-        static::updating(function ($page) {
-            $oldSlug = $page->getOriginal()['slug'];
-            $newSlug = $page->getAttributes()['slug'];
-
-            if ($oldSlug !== $newSlug) {
-                $page->generateSlug();
-            }
-        });
-    }
 
     public function getSlugOptions(): SlugOptions
     {
         return SlugOptions::create()
-            ->generateSlugsFrom('name')
+            ->generateSlugsFrom('title')
             ->saveSlugsTo('slug')
             ->doNotGenerateSlugsOnUpdate();
     }
