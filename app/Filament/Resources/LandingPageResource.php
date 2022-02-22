@@ -13,17 +13,13 @@ use Filament\Resources\Resource;
 use Filament\Forms\Components\Card;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Toggle;
-use Filament\Forms\Components\Builder;
+use App\Forms\Components\BlockContent;
 use Filament\Forms\Components\Textarea;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Forms\Components\TextInput;
 use Filament\Tables\Columns\BadgeColumn;
-use Filament\Tables\Columns\ImageColumn;
-use Filament\Forms\Components\FileUpload;
-use Filament\Forms\Components\RichEditor;
 use Filament\Tables\Filters\SelectFilter;
 use Filament\Forms\Components\Placeholder;
-use Filament\Forms\Components\Builder\Block;
 use App\Filament\Resources\LandingPageResource\Pages;
 use App\Filament\Resources\LandingPageResource\RelationManagers;
 use App\Filament\Resources\LandingPageResource\Pages\EditLandingPage;
@@ -66,47 +62,7 @@ class LandingPageResource extends Resource
                         Textarea::make('seo_description')
                             ->rows(3)
                             ->required(),
-                        Builder::make('content')->blocks([
-                            Builder\Block::make('heading')
-                                ->schema([
-                                    TextInput::make('content')
-                                        ->label('Heading')
-                                        ->required(),
-                                    Select::make('level')
-                                        ->options([
-                                            'h1' => 'Heading 1',
-                                            'h2' => 'Heading 2',
-                                            'h3' => 'Heading 3',
-                                            'h4' => 'Heading 4',
-                                            'h5' => 'Heading 5',
-                                            'h6' => 'Heading 6',
-                                        ])
-                                        ->required(),
-                                ]),
-                            Builder\Block::make('rich-text')
-                                ->schema([
-                                    RichEditor::make('content')
-                                        ->label('Rich Text')
-                                        ->disableToolbarButtons([
-                                            'blockquote',
-                                            'codeBlock',
-                                            'attachFiles',
-                                            'strike',
-                                            'h2',
-                                            'h3',
-                                        ])
-                                        ->required(),
-                                ]),
-                            Builder\Block::make('hero')
-                                ->schema([
-                                    FileUpload::make('hero_image')
-                                        ->label('Image')
-                                        ->image()
-                                        ->required(),
-                                    Textarea::make('hero_content')
-                                        ->rows(3),
-                                ]),
-                        ]),
+                        BlockContent::make('content')
                     ])
                     ->columnSpan([
                         'sm' => 2,

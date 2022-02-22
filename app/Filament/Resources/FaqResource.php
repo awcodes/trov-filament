@@ -9,7 +9,6 @@ use Filament\Resources\Form;
 use Filament\Resources\Table;
 use App\Forms\Fields\SlugInput;
 use Filament\Resources\Resource;
-use Filament\Forms\Components\Card;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Textarea;
 use Filament\Tables\Columns\TextColumn;
@@ -64,7 +63,7 @@ class FaqResource extends Resource
                                     ->required()
                                     ->unique(Faq::class, 'slug', fn ($record) => $record),
                             ]),
-                        Section::make('FAQ Content')
+                        Section::make('Answer')
                             ->schema([
                                 RichEditor::make('answer')
                                     ->label('Rich Text')

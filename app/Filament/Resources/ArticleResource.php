@@ -12,20 +12,16 @@ use Filament\Resources\Table;
 use App\Forms\Fields\SlugInput;
 use Filament\Resources\Resource;
 use App\Forms\Components\Section;
-use Filament\Forms\Components\Card;
 use Filament\Forms\Components\Group;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Toggle;
-use Filament\Forms\Components\Builder;
+use App\Forms\Components\BlockContent;
 use Filament\Forms\Components\Textarea;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Forms\Components\TextInput;
 use Filament\Tables\Columns\BadgeColumn;
-use Filament\Forms\Components\FileUpload;
-use Filament\Forms\Components\RichEditor;
 use Filament\Tables\Filters\SelectFilter;
 use Filament\Forms\Components\Placeholder;
-use Filament\Forms\Components\Builder\Block;
 use Filament\Forms\Components\DateTimePicker;
 use Filament\Forms\Components\BelongsToSelect;
 use App\Filament\Resources\ArticleResource\Pages;
@@ -70,49 +66,7 @@ class ArticleResource extends Resource
                             ]),
                         Section::make('Page Content')
                             ->schema([
-                                Builder::make('content')->blocks([
-                                    Builder\Block::make('heading')
-                                        ->schema([
-                                            TextInput::make('content')
-                                                ->label('Heading')
-                                                ->required(),
-                                            Select::make('level')
-                                                ->options([
-                                                    'h1' => 'Heading 1',
-                                                    'h2' => 'Heading 2',
-                                                    'h3' => 'Heading 3',
-                                                    'h4' => 'Heading 4',
-                                                    'h5' => 'Heading 5',
-                                                    'h6' => 'Heading 6',
-                                                ])
-                                                ->required(),
-                                        ]),
-                                    Builder\Block::make('rich-text')
-                                        ->schema([
-                                            RichEditor::make('content')
-                                                ->label('Rich Text')
-                                                ->disableToolbarButtons([
-                                                    'blockquote',
-                                                    'codeBlock',
-                                                    'attachFiles',
-                                                    'strike',
-                                                    'h2',
-                                                    'h3',
-                                                ])
-                                                ->required(),
-                                        ]),
-                                    Builder\Block::make('image')
-                                        ->schema([
-                                            FileUpload::make('url')
-                                                ->disk('images')
-                                                ->label('Image')
-                                                ->image()
-                                                ->required(),
-                                            TextInput::make('alt')
-                                                ->label('Alt text')
-                                                ->required(),
-                                        ]),
-                                ]),
+                                BlockContent::make('content')
                             ])
                     ])
                     ->columnSpan([

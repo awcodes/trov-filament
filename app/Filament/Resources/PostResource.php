@@ -3,7 +3,6 @@
 namespace App\Filament\Resources;
 
 use Filament\Forms;
-use App\Models\Page;
 use App\Models\Post;
 use Filament\Tables;
 use App\Models\Media;
@@ -12,22 +11,20 @@ use Filament\Resources\Form;
 use Filament\Resources\Table;
 use App\Forms\Fields\SlugInput;
 use Filament\Resources\Resource;
+use App\Forms\Components\Section;
 use App\Forms\Fields\MediaLibrary;
-use Filament\Forms\Components\Card;
 use Filament\Tables\Filters\Filter;
+use Filament\Forms\Components\Group;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Toggle;
-use Filament\Forms\Components\Builder;
+use App\Forms\Components\BlockContent;
 use Filament\Forms\Components\Textarea;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Forms\Components\TextInput;
 use Filament\Tables\Columns\BadgeColumn;
 use Filament\Tables\Columns\ImageColumn;
-use Filament\Forms\Components\FileUpload;
-use Filament\Forms\Components\RichEditor;
 use Filament\Tables\Filters\SelectFilter;
 use Filament\Forms\Components\Placeholder;
-use Filament\Forms\Components\Builder\Block;
 use Filament\Forms\Components\DateTimePicker;
 use App\Filament\Resources\PostResource\Pages;
 use Filament\Forms\Components\BelongsToSelect;
@@ -36,8 +33,6 @@ use App\Filament\Resources\PostResource\Pages\EditPost;
 use App\Filament\Resources\PostResource\Pages\ListPosts;
 use App\Filament\Resources\PostResource\Pages\CreatePost;
 use App\Filament\Resources\PostResource\RelationManagers;
-use App\Forms\Components\Section;
-use Filament\Forms\Components\Group;
 
 class PostResource extends Resource
 {
@@ -82,49 +77,7 @@ class PostResource extends Resource
                                         $component->state($media->where('id', $state)->first());
                                     })
                                     ->dehydrateStateUsing(fn ($state) => $state['id']),
-                                Builder::make('content')->blocks([
-                                    Builder\Block::make('heading')
-                                        ->schema([
-                                            TextInput::make('content')
-                                                ->label('Heading')
-                                                ->required(),
-                                            Select::make('level')
-                                                ->options([
-                                                    'h1' => 'Heading 1',
-                                                    'h2' => 'Heading 2',
-                                                    'h3' => 'Heading 3',
-                                                    'h4' => 'Heading 4',
-                                                    'h5' => 'Heading 5',
-                                                    'h6' => 'Heading 6',
-                                                ])
-                                                ->required(),
-                                        ]),
-                                    Builder\Block::make('rich-text')
-                                        ->schema([
-                                            RichEditor::make('content')
-                                                ->label('Rich Text')
-                                                ->disableToolbarButtons([
-                                                    'blockquote',
-                                                    'codeBlock',
-                                                    'attachFiles',
-                                                    'strike',
-                                                    'h2',
-                                                    'h3',
-                                                ])
-                                                ->required(),
-                                        ]),
-                                    Builder\Block::make('image')
-                                        ->schema([
-                                            FileUpload::make('url')
-                                                ->disk('images')
-                                                ->label('Image')
-                                                ->image()
-                                                ->required(),
-                                            TextInput::make('alt')
-                                                ->label('Alt text')
-                                                ->required(),
-                                        ]),
-                                ]),
+                                BlockContent::make('content')
                             ])
                     ])
                     ->columnSpan([

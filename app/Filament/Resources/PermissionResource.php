@@ -12,7 +12,6 @@ use Filament\Tables\Columns\TextColumn;
 use App\Filament\Resources\PermissionResource\Pages;
 use App\Filament\Resources\PermissionResource\RelationManagers;
 use Filament\Forms\Components\Card;
-use Filament\Forms\Components\CheckboxList;
 use Filament\Forms\Components\TextInput;
 
 class PermissionResource extends Resource
