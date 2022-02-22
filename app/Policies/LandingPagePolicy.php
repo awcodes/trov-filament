@@ -18,7 +18,7 @@ class LandingPagePolicy
      */
     public function viewAny(User $user)
     {
-        return $user->hasAnyPermission(['read landing pages', 'manage landing pages']);
+        return $user->can('Read Landing Pages');
     }
 
     /**
@@ -30,7 +30,7 @@ class LandingPagePolicy
      */
     public function view(User $user, LandingPage $model)
     {
-        return $user->hasAnyPermission(['read landing pages', 'manage landing pages']);
+        return $user->can('Read Landing Pages');
     }
 
     /**
@@ -41,7 +41,7 @@ class LandingPagePolicy
      */
     public function create(User $user)
     {
-        return $user->hasAnyPermission(['create landing pages', 'manage landing pages']);
+        return $user->can('Create Landing Pages');
     }
 
     /**
@@ -53,7 +53,7 @@ class LandingPagePolicy
      */
     public function update(User $user, LandingPage $model)
     {
-        return $user->hasAnyPermission(['edit landing pages', 'manage landing pages']);
+        return $user->can('Edit Landing Pages');
     }
 
     /**
@@ -65,7 +65,7 @@ class LandingPagePolicy
      */
     public function delete(User $user, LandingPage $model)
     {
-        return $user->hasAnyPermission(['delete landing pages', 'manage landing pages']);
+        return $user->can('Delete Landing Pages');
     }
 
     /**
@@ -77,7 +77,7 @@ class LandingPagePolicy
      */
     public function restore(User $user, LandingPage $model)
     {
-        return $user->hasAnyPermission(['delete landing pages', 'manage landing pages']);
+        return $user->can('Delete Landing Pages');
     }
 
     /**
@@ -89,6 +89,6 @@ class LandingPagePolicy
      */
     public function forceDelete(User $user, LandingPage $model)
     {
-        return $user->hasAnyPermission(['delete landing pages', 'manage landing pages']);
+        return $user->can('Delete Landing Pages');
     }
 }

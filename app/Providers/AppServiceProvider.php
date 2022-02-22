@@ -28,7 +28,7 @@ class AppServiceProvider extends ServiceProvider
     {
         Filament::registerNavigationGroups([
             'Site',
-            'Blog',
+            'Airport',
             'Discovery Center',
             'Users',
         ]);

@@ -18,7 +18,7 @@ class ArticlePolicy
      */
     public function viewAny(User $user)
     {
-        return $user->hasAnyPermission(['read articles', 'manage articles']);
+        return $user->can('Read Articles');
     }
 
     /**
@@ -30,7 +30,7 @@ class ArticlePolicy
      */
     public function view(User $user, Article $model)
     {
-        return $user->hasAnyPermission(['read articles', 'manage articles']);
+        return $user->can('Read Articles');
     }
 
     /**
@@ -41,7 +41,7 @@ class ArticlePolicy
      */
     public function create(User $user)
     {
-        return $user->hasAnyPermission(['create articles', 'manage articles']);
+        return $user->can('Create Articles');
     }
 
     /**
@@ -53,7 +53,7 @@ class ArticlePolicy
      */
     public function update(User $user, Article $model)
     {
-        return $user->hasAnyPermission(['edit articles', 'manage articles']);
+        return $user->can('Edit Articles');
     }
 
     /**
@@ -65,7 +65,7 @@ class ArticlePolicy
      */
     public function delete(User $user, Article $model)
     {
-        return $user->hasAnyPermission(['delete articles', 'manage articles']);
+        return $user->can('Delete Articles');
     }
 
     /**
@@ -77,7 +77,7 @@ class ArticlePolicy
      */
     public function restore(User $user, Article $model)
     {
-        return $user->hasAnyPermission(['delete articles', 'manage articles']);
+        return $user->can('Delete Articles');
     }
 
     /**
@@ -89,6 +89,6 @@ class ArticlePolicy
      */
     public function forceDelete(User $user, Article $model)
     {
-        return $user->hasAnyPermission(['delete articles', 'manage articles']);
+        return $user->can('Delete Articles');
     }
 }

@@ -17,23 +17,12 @@ class DatabaseSeeder extends Seeder
         $this->call(PermissionSeeder::class);
 
         if (!app()->environment('production')) {
-            \App\Models\User::factory()->create([
-                'name' => 'Adam Weston',
-                'email' => 'adam.weston@titlemax.com'
-            ])->assignRole('Titan');
-
-            \App\Models\User::factory()->create([
-                'name' => 'Scott Kublin',
-                'email' => 'scott.kublin@titlemax.com'
-            ])->assignRole('Admin')->givePermissionTo([
-                'manage users', 'manage authors', 'manage pages', 'manage posts', 'manage discovery articles', 'manage discovery topics', 'manage faqs', 'manage landing pages', 'manage articles',
-            ]);
 
             $d = '/public/images';
             Storage::deleteDirectory($d);
             Storage::makeDirectory($d);
 
-
+            $this->call(UserSeeder::class);
             $this->call(MediaSeeder::class);
             $this->call(PageSeeder::class);
             $this->call(LandingPageSeeder::class);

@@ -18,7 +18,7 @@ class FaqPolicy
      */
     public function viewAny(User $user)
     {
-        return $user->hasAnyPermission(['read faqs', 'manage faqs']);
+        return $user->can('Read Faqs');
     }
 
     /**
@@ -30,7 +30,7 @@ class FaqPolicy
      */
     public function view(User $user, Faq $model)
     {
-        return $user->hasAnyPermission(['read faqs', 'manage faqs']);
+        return $user->can('Read Faqs');
     }
 
     /**
@@ -41,7 +41,7 @@ class FaqPolicy
      */
     public function create(User $user)
     {
-        return $user->hasAnyPermission(['create faqs', 'manage faqs']);
+        return $user->can('Create Faqs');
     }
 
     /**
@@ -53,7 +53,7 @@ class FaqPolicy
      */
     public function update(User $user, Faq $model)
     {
-        return $user->hasAnyPermission(['edit faqs', 'manage faqs']);
+        return $user->can('Edit Faqs');
     }
 
     /**
@@ -65,7 +65,7 @@ class FaqPolicy
      */
     public function delete(User $user, Faq $model)
     {
-        return $user->hasAnyPermission(['delete faqs', 'manage faqs']);
+        return $user->can('Delete Faqs');
     }
 
     /**
@@ -77,7 +77,7 @@ class FaqPolicy
      */
     public function restore(User $user, Faq $model)
     {
-        return $user->hasAnyPermission(['delete faqs', 'manage faqs']);
+        return $user->can('Delete Faqs');
     }
 
     /**
@@ -89,6 +89,6 @@ class FaqPolicy
      */
     public function forceDelete(User $user, Faq $model)
     {
-        return $user->hasAnyPermission(['delete faqs', 'manage faqs']);
+        return $user->can('Delete Faqs');
     }
 }

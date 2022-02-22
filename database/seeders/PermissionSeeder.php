@@ -17,23 +17,33 @@ class PermissionSeeder extends Seeder
     {
         app()[\Spatie\Permission\PermissionRegistrar::class]->forgetCachedPermissions();
 
+        $models = ['Users', 'Authors', 'Pages', 'Posts', 'Articles', 'Faqs', 'Discovery Center', 'Landing Pages'];
+
         $permissions = [
-            'create' => ['users', 'authors', 'pages', 'posts', 'articles', 'faqs', 'discovery topics', 'discovery articles', 'landing pages', 'permissions'],
-            'read' => ['users', 'authors', 'pages', 'posts', 'articles', 'faqs', 'discovery topics', 'discovery articles', 'landing pages', 'permissions'],
-            'edit' => ['users', 'authors', 'pages', 'posts', 'articles', 'faqs', 'discovery topics', 'discovery articles', 'landing pages', 'permissions'],
-            'delete' => ['users', 'authors', 'pages', 'posts', 'articles', 'faqs', 'discovery topics', 'discovery articles', 'landing pages', 'permissions'],
-            'manage' => ['users', 'authors', 'pages', 'posts', 'articles', 'faqs', 'discovery topics', 'discovery articles', 'landing pages', 'permissions']
+            'Create',
+            'Read',
+            'Edit',
+            'Delete',
         ];
 
-        foreach ($permissions as $permission => $models) {
+        // Create Permissions
+        foreach ($permissions as $permission) {
             foreach ($models as $model) {
                 Permission::create(['name' => $permission . ' ' . $model]);
             }
         }
 
-        $role = Role::create(['name' => 'Titan']);
-        $role->givePermissionTo(Permission::all());
+        // Create Roles
+        foreach ($models as $model) {
+            $role = Role::create(['name' => $model . ' Manager']);
+            $role->givePermissionTo([
+                'Create ' . $model,
+                'Read ' . $model,
+                'Edit ' . $model,
+                'Delete ' . $model,
+            ]);
+        }
 
-        $role = Role::create(['name' => 'Admin']);
+        Role::create(['name' => 'ACL Manager']);
     }
 }

@@ -18,7 +18,7 @@ class PagePolicy
      */
     public function viewAny(User $user)
     {
-        return $user->hasAnyPermission(['read pages', 'manage pages']);
+        return $user->can('Read Pages');
     }
 
     /**
@@ -30,7 +30,7 @@ class PagePolicy
      */
     public function view(User $user, Page $model)
     {
-        return $user->hasAnyPermission(['read pages', 'manage pages']);
+        return $user->can('Read Pages');
     }
 
     /**
@@ -41,7 +41,7 @@ class PagePolicy
      */
     public function create(User $user)
     {
-        return $user->hasAnyPermission(['create pages', 'manage pages']);
+        return $user->can('Create Pages');
     }
 
     /**
@@ -53,7 +53,7 @@ class PagePolicy
      */
     public function update(User $user, Page $model)
     {
-        return $user->hasAnyPermission(['edit pages', 'manage pages']);
+        return $user->can('Edit Pages');
     }
 
     /**
@@ -65,7 +65,7 @@ class PagePolicy
      */
     public function delete(User $user, Page $model)
     {
-        return $user->hasAnyPermission(['delete pages', 'manage pages']);
+        return $user->can('Delete Pages');
     }
 
     /**
@@ -77,7 +77,7 @@ class PagePolicy
      */
     public function restore(User $user, Page $model)
     {
-        return $user->hasAnyPermission(['delete pages', 'manage pages']);
+        return $user->can('Delete Pages');
     }
 
     /**
@@ -89,6 +89,6 @@ class PagePolicy
      */
     public function forceDelete(User $user, Page $model)
     {
-        return $user->hasAnyPermission(['delete pages', 'manage pages']);
+        return $user->can('Delete Pages');
     }
 }

@@ -40,7 +40,7 @@ class ArticleResource extends Resource
 
     protected static ?string $label = 'Article';
 
-    protected static ?string $navigationGroup = 'Blog';
+    protected static ?string $navigationGroup = 'Site';
 
     protected static ?string $navigationIcon = 'heroicon-s-collection';
 

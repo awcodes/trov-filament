@@ -6,10 +6,12 @@ use Closure;
 use Filament\Forms;
 use App\Models\User;
 use Filament\Tables;
+use Illuminate\Support\Str;
 use Filament\Resources\Form;
 use Filament\Resources\Table;
 use Filament\Resources\Resource;
 use Filament\Forms\Components\Card;
+use Filament\Forms\Components\Radio;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\CheckboxList;
@@ -17,7 +19,6 @@ use App\Filament\Resources\UserResource\Pages;
 use Filament\Forms\Components\BelongsToSelect;
 use Filament\Forms\Components\BelongsToManyCheckboxList;
 use App\Filament\Resources\UserResource\RelationManagers;
-use Filament\Forms\Components\Radio;
 
 class UserResource extends Resource
 {
@@ -37,7 +38,7 @@ class UserResource extends Resource
                     ->schema([
                         TextInput::make('name')->required(),
                         TextInput::make('email')->required()->email()->unique(User::class, 'email', fn ($record) => $record),
-                        BelongsToManyCheckboxList::make('roles')->relationship('roles', 'name')->columns(4),
+                        BelongsToManyCheckboxList::make('roles')->helperText('Users with resource specific roles have permission to completely manage a resource. To limit a user\'s access to a specific resource disable that role and assign individual permissions below.')->relationship('roles', 'name')->columns(4),
                         BelongsToManyCheckboxList::make('permissions')->relationship('permissions', 'name')->columns(4)
                     ])
             ]);

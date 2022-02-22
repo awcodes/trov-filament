@@ -18,7 +18,7 @@ class PostPolicy
      */
     public function viewAny(User $user)
     {
-        return $user->hasAnyPermission(['read posts', 'manage posts']);
+        return $user->can('Read Posts');
     }
 
     /**
@@ -30,7 +30,7 @@ class PostPolicy
      */
     public function view(User $user, Post $model)
     {
-        return $user->hasAnyPermission(['read posts', 'manage posts']);
+        return $user->can('Read Posts');
     }
 
     /**
@@ -41,7 +41,7 @@ class PostPolicy
      */
     public function create(User $user)
     {
-        return $user->hasAnyPermission(['create posts', 'manage posts']);
+        return $user->can('Create Posts');
     }
 
     /**
@@ -53,7 +53,7 @@ class PostPolicy
      */
     public function update(User $user, Post $model)
     {
-        return $user->hasAnyPermission(['edit posts', 'manage posts']);
+        return $user->can('Edit Posts');
     }
 
     /**
@@ -65,7 +65,7 @@ class PostPolicy
      */
     public function delete(User $user, Post $model)
     {
-        return $user->hasAnyPermission(['delete posts', 'manage posts']);
+        return $user->can('Delete Posts');
     }
 
     /**
@@ -77,7 +77,7 @@ class PostPolicy
      */
     public function restore(User $user, Post $model)
     {
-        return $user->hasAnyPermission(['delete posts', 'manage posts']);
+        return $user->can('Delete Posts');
     }
 
     /**
@@ -89,6 +89,6 @@ class PostPolicy
      */
     public function forceDelete(User $user, Post $model)
     {
-        return $user->hasAnyPermission(['delete posts', 'manage posts']);
+        return $user->can('Delete Posts');
     }
 }

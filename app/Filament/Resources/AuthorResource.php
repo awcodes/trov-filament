@@ -27,7 +27,7 @@ class AuthorResource extends Resource
 
     protected static ?string $label = 'Author';
 
-    protected static ?string $navigationGroup = 'Blog';
+    protected static ?string $navigationGroup = 'Site';
 
     protected static ?string $navigationIcon = 'heroicon-s-user-group';
 

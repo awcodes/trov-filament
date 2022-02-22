@@ -18,7 +18,7 @@ class DiscoveryTopicPolicy
      */
     public function viewAny(User $user)
     {
-        return $user->hasAnyPermission(['read discovery topics', 'manage discovery topics']);
+        return $user->can('Read Discovery Center');
     }
 
     /**
@@ -30,7 +30,7 @@ class DiscoveryTopicPolicy
      */
     public function view(User $user, DiscoveryTopic $model)
     {
-        return $user->hasAnyPermission(['read discovery topics', 'manage discovery topics']);
+        return $user->can('Read Discovery Center');
     }
 
     /**
@@ -41,7 +41,7 @@ class DiscoveryTopicPolicy
      */
     public function create(User $user)
     {
-        return $user->hasAnyPermission(['create discovery topics', 'manage discovery topics']);
+        return $user->can('Create Discovery Center');
     }
 
     /**
@@ -53,7 +53,7 @@ class DiscoveryTopicPolicy
      */
     public function update(User $user, DiscoveryTopic $model)
     {
-        return $user->hasAnyPermission(['edit discovery topics', 'manage discovery topics']);
+        return $user->can('Edit Discovery Center');
     }
 
     /**
@@ -65,7 +65,7 @@ class DiscoveryTopicPolicy
      */
     public function delete(User $user, DiscoveryTopic $model)
     {
-        return $user->hasAnyPermission(['delete discovery topics', 'manage discovery topics']);
+        return $user->can('Delete Discovery Center');
     }
 
     /**
@@ -77,7 +77,7 @@ class DiscoveryTopicPolicy
      */
     public function restore(User $user, DiscoveryTopic $model)
     {
-        return $user->hasAnyPermission(['delete discovery topics', 'manage discovery topics']);
+        return $user->can('Delete Discovery Center');
     }
 
     /**
@@ -89,6 +89,6 @@ class DiscoveryTopicPolicy
      */
     public function forceDelete(User $user, DiscoveryTopic $model)
     {
-        return $user->hasAnyPermission(['delete discovery topics', 'manage discovery topics']);
+        return $user->can('Delete Discovery Center');
     }
 }

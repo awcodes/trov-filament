@@ -2,11 +2,11 @@
 
 namespace App\Policies;
 
-use App\Models\DiscoveryArticle;
+use App\Models\Role;
 use App\Models\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
-class DiscoveryArticlePolicy
+class RolePolicy
 {
     use HandlesAuthorization;
 
@@ -18,19 +18,19 @@ class DiscoveryArticlePolicy
      */
     public function viewAny(User $user)
     {
-        return $user->can('Read Discovery Center');
+        return $user->hasRole('ACL Manager');
     }
 
     /**
      * Determine whether the user can view the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\DiscoveryArticle  $model
+     * @param  \App\Models\Role  $role
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function view(User $user, DiscoveryArticle $model)
+    public function view(User $user, Role $role)
     {
-        return $user->can('Read Discovery Center');
+        return $user->hasRole('ACL Manager');
     }
 
     /**
@@ -41,54 +41,54 @@ class DiscoveryArticlePolicy
      */
     public function create(User $user)
     {
-        return $user->can('Create Discovery Center');
+        return $user->hasRole('ACL Manager');
     }
 
     /**
      * Determine whether the user can update the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\DiscoveryArticle  $model
+     * @param  \App\Models\Role  $role
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function update(User $user, DiscoveryArticle $model)
+    public function update(User $user, Role $role)
     {
-        return $user->can('Edit Discovery Center');
+        return $user->hasRole('ACL Manager');
     }
 
     /**
      * Determine whether the user can delete the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\DiscoveryArticle  $model
+     * @param  \App\Models\Role  $role
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function delete(User $user, DiscoveryArticle $model)
+    public function delete(User $user, Role $role)
     {
-        return $user->can('Delete Discovery Center');
+        return $user->hasRole('ACL Manager');
     }
 
     /**
      * Determine whether the user can restore the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\DiscoveryArticle  $model
+     * @param  \App\Models\Role  $role
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function restore(User $user, DiscoveryArticle $model)
+    public function restore(User $user, Role $role)
     {
-        return $user->can('Delete Discovery Center');
+        return $user->hasRole('ACL Manager');
     }
 
     /**
      * Determine whether the user can permanently delete the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\DiscoveryArticle  $model
+     * @param  \App\Models\Role  $role
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function forceDelete(User $user, DiscoveryArticle $model)
+    public function forceDelete(User $user, Role $role)
     {
-        return $user->can('Delete Discovery Center');
+        return $user->hasRole('ACL Manager');
     }
 }

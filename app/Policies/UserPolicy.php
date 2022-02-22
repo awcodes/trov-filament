@@ -17,7 +17,7 @@ class UserPolicy
      */
     public function viewAny(User $user)
     {
-        return $user->hasAnyPermission(['read users', 'manage users']);
+        return $user->can('Read Users');
     }
 
     /**
@@ -29,7 +29,7 @@ class UserPolicy
      */
     public function view(User $user, User $model)
     {
-        return $user->hasAnyPermission(['read users', 'manage users']);
+        return $user->can('Read Users');
     }
 
     /**
@@ -40,7 +40,7 @@ class UserPolicy
      */
     public function create(User $user)
     {
-        return $user->hasAnyPermission(['create users', 'manage users']);
+        return $user->can('Create Users');
     }
 
     /**
@@ -52,7 +52,7 @@ class UserPolicy
      */
     public function update(User $user, User $model)
     {
-        return $user->hasAnyPermission(['edit users', 'manage users']);
+        return $user->can('Edit Users');
     }
 
     /**
@@ -64,7 +64,7 @@ class UserPolicy
      */
     public function delete(User $user, User $model)
     {
-        return $user->hasAnyPermission(['delete users', 'manage users']);
+        return $user->can('Delete Users');
     }
 
     /**
@@ -76,7 +76,7 @@ class UserPolicy
      */
     public function restore(User $user, User $model)
     {
-        return $user->hasAnyPermission(['delete users', 'manage users']);
+        return $user->can('Delete Users');
     }
 
     /**
@@ -88,6 +88,6 @@ class UserPolicy
      */
     public function forceDelete(User $user, User $model)
     {
-        return $user->hasAnyPermission(['delete users', 'manage users']);
+        return $user->can('Delete Users');
     }
 }

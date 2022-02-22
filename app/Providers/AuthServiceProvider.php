@@ -26,7 +26,7 @@ class AuthServiceProvider extends ServiceProvider
         $this->registerPolicies();
 
         Gate::after(function ($user, $ability) {
-            return $user->hasRole('Titan');
+            return in_array($user->email, config('trov.titans'));
         });
     }
 }

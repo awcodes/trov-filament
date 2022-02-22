@@ -34,13 +34,13 @@ class LandingPageResource extends Resource
 {
     protected static ?string $model = LandingPage::class;
 
-    protected static ?string $label = 'Landing Page';
+    protected static ?string $label = 'Page';
 
-    protected static ?string $navigationGroup = 'Site';
+    protected static ?string $navigationGroup = 'Airport';
 
     protected static ?string $navigationIcon = 'heroicon-s-paper-airplane';
 
-    protected static ?string $navigationLabel = 'Airport';
+    protected static ?string $navigationLabel = 'Pages';
 
 
     public static function form(Form $form): Form
