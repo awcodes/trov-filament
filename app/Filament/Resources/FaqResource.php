@@ -23,6 +23,8 @@ use Filament\Forms\Components\SpatieTagsInput;
 use App\Filament\Resources\FaqResource\Pages\EditFaq;
 use App\Filament\Resources\FaqResource\Pages\CreateFaq;
 use App\Filament\Resources\FaqResource\RelationManagers;
+use App\Forms\Components\Section;
+use Filament\Forms\Components\Group;
 
 class FaqResource extends Resource
 {
@@ -42,59 +44,74 @@ class FaqResource extends Resource
     {
         return $form
             ->schema([
-                Card::make()
+                Group::make()
                     ->schema([
                         TextInput::make('question')
                             ->required()
                             ->reactive()
+                            ->disableLabel()
+                            ->placeholder('Question')
+                            ->extraInputAttributes(['class' => 'text-2xl'])
                             ->afterStateUpdated(function ($state, callable $set, $livewire) {
                                 if ($livewire instanceof CreateFaq) {
                                     return $set('slug', Str::slug($state));
                                 }
                             }),
-                        SlugInput::make('slug')
-                            ->mode(fn ($livewire) => $livewire instanceof EditFaq ? 'edit' : 'create')
-                            ->required()
-                            ->unique(Faq::class, 'slug', fn ($record) => $record),
-                        TextInput::make('seo_title')
-                            ->required(),
-                        Textarea::make('seo_description')
-                            ->rows(3)
-                            ->required(),
-                        RichEditor::make('answer')
-                            ->label('Rich Text')
-                            ->disableToolbarButtons([
-                                'blockquote',
-                                'codeBlock',
-                                'attachFiles',
-                                'strike',
-                            ])
-                            ->required(),
+                        Section::make('Meta Information')
+                            ->schema([
+                                SlugInput::make('slug')
+                                    ->mode(fn ($livewire) => $livewire instanceof EditFaq ? 'edit' : 'create')
+                                    ->required()
+                                    ->unique(Faq::class, 'slug', fn ($record) => $record),
+                            ]),
+                        Section::make('FAQ Content')
+                            ->schema([
+                                RichEditor::make('answer')
+                                    ->label('Rich Text')
+                                    ->disableToolbarButtons([
+                                        'blockquote',
+                                        'codeBlock',
+                                        'attachFiles',
+                                        'strike',
+                                    ])
+                                    ->required(),
+                            ]),
                     ])
                     ->columnSpan([
-                        'sm' => 2,
+                        'sm' => 2
                     ]),
-                Card::make()
+                Group::make()
                     ->schema([
-                        Select::make('status')
-                            ->options([
-                                'draft' => 'Draft',
-                                'review' => 'In review',
-                                'published' => 'Published',
-                            ])
-                            ->required()
-                            ->columnSpan(2),
-                        SpatieTagsInput::make('tags')
-                            ->columnspan(2),
-                        Placeholder::make('created_at')
-                            ->label('Created at')
-                            ->content(fn (?Faq $record): string => $record ? $record->created_at->diffForHumans() : '-'),
-                        Placeholder::make('updated_at')
-                            ->label('Last modified at')
-                            ->content(fn (?Faq $record): string => $record ? $record->updated_at->diffForHumans() : '-'),
+                        Section::make('Details')
+                            ->schema([
+                                Select::make('status')
+                                    ->options([
+                                        'draft' => 'Draft',
+                                        'review' => 'In review',
+                                        'published' => 'Published',
+                                    ])
+                                    ->required()
+                                    ->columnSpan(2),
+                                SpatieTagsInput::make('tags')
+                                    ->columnspan(2),
+                                Placeholder::make('created_at')
+                                    ->label('Created at')
+                                    ->content(fn (?Faq $record): string => $record ? $record->created_at->diffForHumans() : '-'),
+                                Placeholder::make('updated_at')
+                                    ->label('Last modified at')
+                                    ->content(fn (?Faq $record): string => $record ? $record->updated_at->diffForHumans() : '-'),
+                            ]),
+                        Section::make('SEO')
+                            ->schema([
+                                TextInput::make('seo_title')
+                                    ->label('Title')
+                                    ->required(),
+                                Textarea::make('seo_description')
+                                    ->label('Description')
+                                    ->rows(3)
+                                    ->required(),
+                            ]),
                     ])
-                    ->columns(2)
-                    ->columnSpan(1),
             ])
             ->columns([
                 'sm' => 3,

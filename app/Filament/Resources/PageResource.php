@@ -56,6 +56,7 @@ class PageResource extends Resource
                             ->required()
                             ->reactive()
                             ->disableLabel()
+                            ->placeholder('Title')
                             ->extraInputAttributes(['class' => 'text-2xl'])
                             ->afterStateUpdated(function ($state, callable $set, $livewire) {
                                 if ($livewire instanceof CreatePage) {
@@ -147,7 +148,6 @@ class PageResource extends Resource
                                     ])
                                     ->required()
                                     ->columnSpan(2),
-
                                 Toggle::make('has_chat')
                                     ->columnSpan(2),
                                 Placeholder::make('created_at')

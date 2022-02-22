@@ -36,6 +36,8 @@ use App\Filament\Resources\PostResource\Pages\EditPost;
 use App\Filament\Resources\PostResource\Pages\ListPosts;
 use App\Filament\Resources\PostResource\Pages\CreatePost;
 use App\Filament\Resources\PostResource\RelationManagers;
+use App\Forms\Components\Section;
+use Filament\Forms\Components\Group;
 
 class PostResource extends Resource
 {
@@ -51,110 +53,126 @@ class PostResource extends Resource
     {
         return $form
             ->schema([
-                Card::make()
+                Group::make()
                     ->schema([
                         TextInput::make('title')
                             ->required()
                             ->reactive()
+                            ->disableLabel()
+                            ->placeholder('Title')
+                            ->extraInputAttributes(['class' => 'text-2xl'])
                             ->afterStateUpdated(function ($state, callable $set, $livewire) {
                                 if ($livewire instanceof CreatePost) {
                                     return $set('slug', Str::slug($state));
                                 }
                             }),
-                        SlugInput::make('slug')
-                            ->mode(fn ($livewire) => $livewire instanceof EditPost ? 'edit' : 'create')
-                            ->required()
-                            ->unique(Post::class, 'slug', fn ($record) => $record),
-                        TextInput::make('seo_title')
-                            ->required(),
-                        Textarea::make('seo_description')
-                            ->rows(3)
-                            ->required(),
-                        MediaLibrary::make('featured_image')->afterStateHydrated(function (MediaLibrary $component, Media $media, $state) {
-                            $component->state($media->where('id', $state)->first());
-                        })->dehydrateStateUsing(fn ($state) => $state['id']),
-                        Builder::make('content')->blocks([
-                            Builder\Block::make('heading')
-                                ->schema([
-                                    TextInput::make('content')
-                                        ->label('Heading')
-                                        ->required(),
-                                    Select::make('level')
-                                        ->options([
-                                            'h1' => 'Heading 1',
-                                            'h2' => 'Heading 2',
-                                            'h3' => 'Heading 3',
-                                            'h4' => 'Heading 4',
-                                            'h5' => 'Heading 5',
-                                            'h6' => 'Heading 6',
-                                        ])
-                                        ->required(),
+                        Section::make('Meta Information')
+                            ->schema([
+                                SlugInput::make('slug')
+                                    ->mode(fn ($livewire) => $livewire instanceof EditPost ? 'edit' : 'create')
+                                    ->required()
+                                    ->unique(Post::class, 'slug', fn ($record) => $record),
+                            ]),
+                        Section::make('Post Content')
+                            ->schema([
+                                MediaLibrary::make('featured_image')
+                                    ->afterStateHydrated(function (MediaLibrary $component, Media $media, $state) {
+                                        $component->state($media->where('id', $state)->first());
+                                    })
+                                    ->dehydrateStateUsing(fn ($state) => $state['id']),
+                                Builder::make('content')->blocks([
+                                    Builder\Block::make('heading')
+                                        ->schema([
+                                            TextInput::make('content')
+                                                ->label('Heading')
+                                                ->required(),
+                                            Select::make('level')
+                                                ->options([
+                                                    'h1' => 'Heading 1',
+                                                    'h2' => 'Heading 2',
+                                                    'h3' => 'Heading 3',
+                                                    'h4' => 'Heading 4',
+                                                    'h5' => 'Heading 5',
+                                                    'h6' => 'Heading 6',
+                                                ])
+                                                ->required(),
+                                        ]),
+                                    Builder\Block::make('rich-text')
+                                        ->schema([
+                                            RichEditor::make('content')
+                                                ->label('Rich Text')
+                                                ->disableToolbarButtons([
+                                                    'blockquote',
+                                                    'codeBlock',
+                                                    'attachFiles',
+                                                    'strike',
+                                                    'h2',
+                                                    'h3',
+                                                ])
+                                                ->required(),
+                                        ]),
+                                    Builder\Block::make('image')
+                                        ->schema([
+                                            FileUpload::make('url')
+                                                ->disk('images')
+                                                ->label('Image')
+                                                ->image()
+                                                ->required(),
+                                            TextInput::make('alt')
+                                                ->label('Alt text')
+                                                ->required(),
+                                        ]),
                                 ]),
-                            Builder\Block::make('rich-text')
-                                ->schema([
-                                    RichEditor::make('content')
-                                        ->label('Rich Text')
-                                        ->disableToolbarButtons([
-                                            'blockquote',
-                                            'codeBlock',
-                                            'attachFiles',
-                                            'strike',
-                                            'h2',
-                                            'h3',
-                                        ])
-                                        ->required(),
-                                ]),
-                            Builder\Block::make('image')
-                                ->schema([
-                                    FileUpload::make('url')
-                                        ->disk('images')
-                                        ->label('Image')
-                                        ->image()
-                                        ->required(),
-                                    TextInput::make('alt')
-                                        ->label('Alt text')
-                                        ->required(),
-                                ]),
-                        ]),
+                            ])
                     ])
                     ->columnSpan([
-                        'sm' => 2,
+                        'sm' => 2
                     ]),
-                Card::make()
+                Group::make()
                     ->schema([
-                        Select::make('status')
-                            ->options([
-                                'draft' => 'Draft',
-                                'review' => 'In review',
-                                'published' => 'Published',
+                        Section::make('Details')
+                            ->schema([
+                                Select::make('status')
+                                    ->options([
+                                        'draft' => 'Draft',
+                                        'review' => 'In review',
+                                        'published' => 'Published',
+                                    ])
+                                    ->required()
+                                    ->columnSpan(2),
+                                DateTimePicker::make('published_at')
+                                    ->label('Publish Date')
+                                    ->withoutSeconds()
+                                    ->columnSpan(2),
+                                BelongsToSelect::make('author_id')
+                                    ->relationship('author', 'name')
+                                    ->required()
+                                    ->columnSpan(2),
+                                SpatieTagsInput::make('tags')
+                                    ->columnSpan(2),
+                                Placeholder::make('created_at')
+                                    ->label('Created at')
+                                    ->content(fn (?Post $record): string => $record ? $record->created_at->diffForHumans() : '-'),
+                                Placeholder::make('updated_at')
+                                    ->label('Last modified at')
+                                    ->content(fn (?Post $record): string => $record ? $record->updated_at->diffForHumans() : '-'),
+                            ]),
+                        Section::make('SEO')
+                            ->schema([
+                                TextInput::make('seo_title')
+                                    ->label('Title')
+                                    ->required(),
+                                Textarea::make('seo_description')
+                                    ->label('Description')
+                                    ->rows(3)
+                                    ->required(),
+                                Toggle::make('indexable')
                             ])
-                            ->required()
-                            ->columnSpan(2),
-                        DateTimePicker::make('published_at')
-                            ->label('Publish Date')
-                            ->withoutSeconds()
-                            ->columnSpan(2),
-                        Toggle::make('indexable')
-                            ->columnSpan(2),
-                        BelongsToSelect::make('author_id')
-                            ->relationship('author', 'name')
-                            ->required()
-                            ->columnSpan(2),
-                        SpatieTagsInput::make('tags')
-                            ->columnSpan(2),
-                        Placeholder::make('created_at')
-                            ->label('Created at')
-                            ->content(fn (?Post $record): string => $record ? $record->created_at->diffForHumans() : '-'),
-                        Placeholder::make('updated_at')
-                            ->label('Last modified at')
-                            ->content(fn (?Post $record): string => $record ? $record->updated_at->diffForHumans() : '-'),
                     ])
-                    ->columns(2)
-                    ->columnSpan(1),
             ])
             ->columns([
                 'sm' => 3,
-                'lg' => null,
+                'lg' => null
             ]);
     }
 
