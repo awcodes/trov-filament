@@ -2,19 +2,18 @@
 
 namespace App\Filament\Widgets;
 
-use App\Models\Page;
 use Filament\Widgets\Widget;
 use Illuminate\Support\Facades\DB;
 
-class PagesOverview extends Widget
+class PostsOveriew extends Widget
 {
-    public $pages;
+    public $posts;
 
-    protected static string $view = 'filament.widgets.pages-overview';
+    protected static string $view = 'filament.widgets.posts-overiew';
 
     public function mount()
     {
-        $this->pages = DB::table('pages')
+        $this->posts = DB::table('posts')
             ->select('status', DB::raw('count(*) as total'))
             ->groupBy('status')
             ->get();
