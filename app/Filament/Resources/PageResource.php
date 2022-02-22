@@ -58,7 +58,6 @@ class PageResource extends Resource
                             }),
                         Section::make('Meta Information')
                             ->schema([
-
                                 SlugInput::make('slug')
                                     ->mode(fn ($livewire) => $livewire instanceof EditPage ? 'edit' : 'create')
                                     ->required()
@@ -90,6 +89,7 @@ class PageResource extends Resource
                         Section::make('Details')
                             ->schema([
                                 Select::make('status')
+                                    ->default('draft')
                                     ->options([
                                         'draft' => 'Draft',
                                         'review' => 'In review',

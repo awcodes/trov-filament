@@ -70,6 +70,7 @@ class LandingPageResource extends Resource
                 Card::make()
                     ->schema([
                         Select::make('status')
+                            ->default('draft')
                             ->options([
                                 'draft' => 'Draft',
                                 'review' => 'In review',

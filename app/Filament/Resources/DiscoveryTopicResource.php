@@ -85,6 +85,7 @@ class DiscoveryTopicResource extends Resource
                         Section::make('Details')
                             ->schema([
                                 Select::make('status')
+                                    ->default('draft')
                                     ->options([
                                         'draft' => 'Draft',
                                         'review' => 'In review',

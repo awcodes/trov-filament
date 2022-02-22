@@ -59,14 +59,6 @@ class LandingPageFactory extends Factory
             'status' => 'draft',
             'content' => [
                 [
-                    "type" => "hero",
-                    "data" => [
-                        "url" => Media::inRandomOrder()->limit(1)->first(),
-                        'alt' => $this->faker->text,
-                        'content' => $this->faker->text,
-                    ]
-                ],
-                [
                     "type" => "heading",
                     "data" => [
                         "content" => Str::title($this->faker->words(rand(3, 8), true)),
