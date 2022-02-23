@@ -5,6 +5,7 @@ module.exports = {
         "./resources/**/*.blade.php",
         "./vendor/filament/**/*.blade.php",
         "./app/Filament/**/*.php",
+        "./packages/filament-media-library/resources/views/**/*.blade.php",
     ],
     darkMode: "class",
     theme: {

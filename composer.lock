@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "fb2d45bab79c6b5bf406411f7fecc662",
+    "content-hash": "eb63e8159b86cf514d3ab9358046e3f8",
     "packages": [
         {
             "name": "akaunting/laravel-money",
@@ -126,6 +126,55 @@
                 "source": "https://github.com/asm89/stack-cors/tree/v2.1.1"
             },
             "time": "2022-01-18T09:12:03+00:00"
+        },
+        {
+            "name": "awcodes/filament-media-library",
+            "version": "dev-main",
+            "dist": {
+                "type": "path",
+                "url": "packages/filament-media-library",
+                "reference": "09bc8c8e13ecb6850a4660b94f4354ce5fe6b8d0"
+            },
+            "require": {
+                "filament/forms": "^2.0",
+                "illuminate/contracts": "^8.73|^9.0",
+                "php": "^8.0",
+                "spatie/laravel-package-tools": "^1.9.2"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "AWCodes\\FilamentMediaLibrary\\FilamentMediaLibraryServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "AWCodes\\FilamentMediaLibrary\\": "src"
+                }
+            },
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Adam Weston",
+                    "email": "awcodes1@gmail.com",
+                    "role": "Developer"
+                }
+            ],
+            "description": "A media library for filament forms",
+            "keywords": [
+                "filament",
+                "forms",
+                "laravel",
+                "tinyeditor",
+                "tinymce"
+            ],
+            "transport-options": {
+                "relative": true
+            }
         },
         {
             "name": "bacon/bacon-qr-code",
@@ -11190,7 +11239,9 @@
     ],
     "aliases": [],
     "minimum-stability": "dev",
-    "stability-flags": [],
+    "stability-flags": {
+        "awcodes/filament-media-library": 20
+    },
     "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {

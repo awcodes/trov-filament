@@ -12,7 +12,7 @@ use Filament\Resources\Table;
 use App\Forms\Fields\SlugInput;
 use Filament\Resources\Resource;
 use App\Forms\Components\Section;
-use App\Forms\Fields\MediaLibrary;
+use AWCodes\FilamentMediaLibrary\Components\MediaLibrary;
 use Filament\Tables\Filters\Filter;
 use Filament\Forms\Components\Group;
 use Filament\Forms\Components\Select;

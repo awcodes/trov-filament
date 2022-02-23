@@ -11,7 +11,7 @@ use Filament\Resources\Form;
 use Filament\Resources\Table;
 use App\Forms\Fields\SlugInput;
 use Filament\Resources\Resource;
-use App\Forms\Fields\MediaLibrary;
+use AWCodes\FilamentMediaLibrary\Components\MediaLibrary;
 use Filament\Forms\Components\Group;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Toggle;

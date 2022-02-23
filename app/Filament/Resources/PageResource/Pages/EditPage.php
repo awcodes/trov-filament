@@ -3,7 +3,6 @@
 namespace App\Filament\Resources\PageResource\Pages;
 
 use App\Filament\Resources\PageResource;
-use App\Traits\HasMediaLibrary;
 use App\Traits\HasViewAndSaveButtons;
 use Filament\Resources\Pages\EditRecord;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
@@ -13,7 +12,6 @@ use Illuminate\Support\Facades\Blade;
 class EditPage extends EditRecord
 {
     use HasViewAndSaveButtons;
-    use HasMediaLibrary;
 
     protected static string $resource = PageResource::class;
 }
