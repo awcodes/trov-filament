@@ -40,7 +40,7 @@ class MediaLibrary extends Component implements HasForms
 
     public function fetchFiles()
     {
-        $this->files = Media::paginate(25)->toArray()['data'];
+        $this->files = Media::orderBy('created_at', 'desc')->paginate(25)->toArray()['data'];
     }
 
     protected function getForms(): array
@@ -48,10 +48,12 @@ class MediaLibrary extends Component implements HasForms
         return [
             'createForm' => $this->makeForm()
                 ->schema($this->getCreateFormSchema())
-                ->model($this->newMedia),
+                ->model($this->newMedia)
+                ->statePath('createData'),
             'editForm' => $this->makeForm()
                 ->schema($this->getEditFormSchema())
-                ->model($this->selected),
+                ->model($this->selected)
+                ->statePath('editData'),
         ];
     }
 
@@ -64,7 +66,7 @@ class MediaLibrary extends Component implements HasForms
                 ->imageResizeTargetWidth('1920')
                 ->preserveFilenames()
                 ->required(),
-            TextInput::make('alt')->helperText('Describe this image. Leave empty if the image is purely decorative.'),
+            TextInput::make('alt')->label('Alt Text')->helperText('<a href="https://www.w3.org/WAI/tutorials/images/decision-tree/" class="underline" target="_blank">Learn how to describe the purpose of the image</a>. Leave empty if the image is purely decorative.'),
             TextInput::make('title'),
             Textarea::make('description')->rows(3),
         ];
@@ -73,7 +75,7 @@ class MediaLibrary extends Component implements HasForms
     protected function getEditFormSchema(): array
     {
         return [
-            TextInput::make('alt')->helperText('Describe this image. Leave empty if the image is purely decorative.'),
+            TextInput::make('alt')->label('Alt Text')->helperText('<a href="https://www.w3.org/WAI/tutorials/images/decision-tree/" class="underline" target="_blank">Learn how to describe the purpose of the image</a>. Leave empty if the image is purely decorative.'),
             TextInput::make('title'),
             Textarea::make('description')->rows(3),
         ];
@@ -81,8 +83,8 @@ class MediaLibrary extends Component implements HasForms
 
     public function getMediaItem($mediaId = null)
     {
-        if ($this->selected && $this->selected['id'] === $mediaId) {
-            $this->selected = [];
+        if ($this->selected && $this->selected->id === $mediaId) {
+            $this->selected = null;
         } else {
             $this->selected = Media::where('id', $mediaId)->first();
 
@@ -104,28 +106,47 @@ class MediaLibrary extends Component implements HasForms
     {
         $this->validate();
 
-        $data = $this->createForm->getState();
+        foreach ($this->createData['file'] as $file) {
+            $originalName = $file->getClientOriginalName();
+            $basename = pathinfo($originalName, PATHINFO_FILENAME);
+            $result = $file->storeOnCloudinaryAs(env('CLOUDINARY_FOLDER'), $basename);
 
-        $originalName = $data['file']->getClientOriginalName();
-        $basename = pathinfo($originalName, PATHINFO_FILENAME);
-        $result = $data['file']->storeOnCloudinaryAs(env('CLOUDINARY_FOLDER'), $basename);
+            $this->selected = Media::create([
+                'public_id' => $result->getPublicId(),
+                'name' => $result->getFileName() . '.' . $result->getExtension(),
+                'ext' => $result->getExtension(),
+                'type' => $result->getFileType(),
+                'alt' => $this->createData['alt'],
+                'title' => $this->createData['title'],
+                'description' => $this->createData['description'],
+                'width' => $result->getWidth(),
+                'height' => $result->getHeight(),
+                'disk' => env('MEDIA_DRIVER', 'local'),
+                'size' => $result->getSize(),
+            ]);
+        }
 
+        Filament::notify('success', 'Saved');
 
-        // $this->selected = Media::create([
-        //     'public_id' => $result->getPublicId(),
-        //     'name' => $result->getFileName() . '.' . $result->getExtension(),
-        //     'ext' => $result->getExtension(),
-        //     'type' => $result->getFileType(),
-        //     'alt' => $this->data['alt'],
-        //     'title' => $this->data['title'],
-        //     'description' => $this->data['description'],
-        //     'width' => $result->getWidth(),
-        //     'height' => $result->getHeight(),
-        //     'disk' => env('MEDIA_DRIVER', 'local'),
-        //     'size' => $result->getSize(),
-        // ]);
+        $this->fetchFiles();
 
-        // Filament::notify('success', 'Saved');
+        $this->editForm->fill([
+            'alt' => $this->selected->alt,
+            'title' => $this->selected->title,
+            'description' => $this->selected->description,
+        ]);
+    }
+
+    public function destroyFile()
+    {
+        $this->selected->delete();
+        $this->selected = null;
+        $this->fetchFiles();
+    }
+
+    public function clearSelected()
+    {
+        $this->selected = null;
     }
 
     public function render()

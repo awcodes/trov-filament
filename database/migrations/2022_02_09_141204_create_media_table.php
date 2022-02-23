@@ -12,12 +12,13 @@ class CreateMediaTable extends Migration
             $table->bigIncrements('id');
 
             $table->string('public_id');
-            $table->string('name');
+            $table->string('filename');
             $table->string('ext');
             $table->string('type')->nullable();
             $table->string('alt')->nullable();
             $table->string('title')->nullable();
             $table->text('description')->nullable();
+            $table->text('caption')->nullable();
             $table->unsignedInteger('width')->nullable();
             $table->unsignedInteger('height')->nullable();
             $table->string('disk');

@@ -15,12 +15,13 @@ class Media extends Model
 
     protected $fillable = [
         'public_id',
-        'name',
+        'filename',
         'ext',
         'type',
         'alt',
         'title',
         'description',
+        'caption',
         'width',
         'height',
         'disk',
@@ -38,4 +39,15 @@ class Media extends Model
         'medium',
         'thumb',
     ];
+
+    public function sizeForHumans()
+    {
+        $units = ['B', 'KiB', 'MiB', 'GiB', 'TiB', 'PiB'];
+
+        for ($i = 0; $this->size > 1024; $i++) {
+            $this->size /= 1024;
+        }
+
+        return round($this->size, 1) . ' ' . $units[$i];
+    }
 }

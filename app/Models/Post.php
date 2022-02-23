@@ -56,19 +56,6 @@ class Post extends Model
         'content' => 'array',
     ];
 
-    public function getFeaturedImageDataAttribute()
-    {
-        $imageData = Storage::disk('images')->path($this->featured_image);
-        $size = getimagesize($imageData);
-
-        return [
-            'url' => Storage::disk('images')->url($this->featured_image),
-            'alt' => $this->featured_image_alt,
-            'width' => $size[0],
-            'height' => $size[1],
-        ];
-    }
-
     public function getPublicUrl()
     {
         return route('posts.show', $this);

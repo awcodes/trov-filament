@@ -7,5 +7,5 @@ use Filament\Forms\Components\Field;
 
 class MediaLibrary extends Field
 {
-    protected string $view = 'components.media-library-button';
+    protected string $view = 'forms.components.media-library-button';
 }
