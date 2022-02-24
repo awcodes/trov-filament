@@ -3288,6 +3288,10 @@ select{
   width: 0.75rem;
 }
 
+.w-10\/12{
+  width: 83.333333%;
+}
+
 .w-11{
   width: 2.75rem;
 }
@@ -3489,6 +3493,10 @@ select{
 
 .cursor-not-allowed{
   cursor: not-allowed;
+}
+
+.cursor-wait{
+  cursor: wait;
 }
 
 .cursor-default{
@@ -4057,11 +4065,6 @@ select{
   background-color: rgb(55 65 81 / var(--tw-bg-opacity));
 }
 
-.bg-danger-500{
-  --tw-bg-opacity: 1;
-  background-color: rgb(244 63 94 / var(--tw-bg-opacity));
-}
-
 .bg-black\/75{
   background-color: rgb(0 0 0 / 0.75);
 }
@@ -4270,6 +4273,10 @@ select{
 
 .pr-8{
   padding-right: 2rem;
+}
+
+.pl-4{
+  padding-left: 1rem;
 }
 
 .text-left{
@@ -4668,6 +4675,10 @@ select{
 
 .opacity-75{
   opacity: 0.75;
+}
+
+.opacity-70{
+  opacity: 0.7;
 }
 
 .opacity-50{
@@ -5636,6 +5647,11 @@ select{
   border-color: rgb(107 114 128 / var(--tw-border-opacity));
 }
 
+.dark .dark\:border-gray-900{
+  --tw-border-opacity: 1;
+  border-color: rgb(17 24 39 / var(--tw-border-opacity));
+}
+
 .dark .dark\:bg-gray-900{
   --tw-bg-opacity: 1;
   background-color: rgb(17 24 39 / var(--tw-bg-opacity));
@@ -5683,6 +5699,10 @@ select{
 .dark .dark\:bg-gray-600{
   --tw-bg-opacity: 1;
   background-color: rgb(75 85 99 / var(--tw-bg-opacity));
+}
+
+.dark .dark\:bg-white\/10{
+  background-color: rgb(255 255 255 / 0.1);
 }
 
 .dark .dark\:bg-gray-500\/20{
@@ -6290,6 +6310,10 @@ select{
   .sm\:text-xl{
     font-size: 1.25rem;
     line-height: 1.75rem;
+  }
+
+  [dir="rtl"] .sm\:rtl\:space-x-reverse > :not([hidden]) ~ :not([hidden]){
+    --tw-space-x-reverse: 1;
   }
 }
 

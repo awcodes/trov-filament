@@ -8,12 +8,11 @@
     :state-path="$getStatePath()">
 
     <div x-data="{ state: $wire.entangle('{{ $getStatePath() }}') }"
-        x-on:update-media-image.window="state = $event.detail.media"
         class="w-full">
 
         <x-filament::button x-show="!state"
             type="button"
-            x-on:click="$dispatch('open-media-library')">
+            x-on:click="$dispatch('open-modal', {id: 'filament-media-gallery'})">
             Add Media
         </x-filament::button>
 
@@ -38,11 +37,90 @@
                 </svg>
             </button>
         </div>
+
+        <div x-data="{
+            files: [],
+            offset: 0,
+            selected: [],
+            fetchFiles: async function() {
+                let response = await fetch(`/api/media-library/${this.offset}`);
+                let json = await response.json();
+                console.log(json.data);
+                this.files = this.files.concat(json.data);
+                this.offset = json.next;
+            },
+            setSelected: function(file) {
+                if (this.selected && this.selected.id === file.id) {
+                    this.selected = [];
+                } else {
+                    this.selected = file;
+                }
+            }
+        }">
+            <x-filament::modal id="filament-media-gallery"
+                width="7xl">
+
+                <x-slot name="header">
+                    <div class="flex items-center justify-between">
+                        <span>{{ __('Media Library') }}</span>
+                        <x-filament::button type="button"
+                            color="danger"
+                            x-on:click="fetchFiles">
+                            Fetch Media (remove this once working)
+                        </x-filament::button>
+                    </div>
+                </x-slot>
+
+                <div class="flex h-full">
+
+                    <div class="flex-1">
+
+                        <div x-show="files.length > 0"
+                            class="flex flex-wrap gap-4">
+                            <template x-for="file in files">
+                                <button type="button"
+                                    x-on:click="setSelected(file); {{ $setSelected() }}"
+                                    class="overflow-hidden bg-gray-700 focus:outline-none focus:ring-offset-1 focus:ring-offset-gray-700 focus:ring focus:ring-primary-500"
+                                    x-bind:class="{'ring-offset-1 ring-offset-gray-700 ring ring-primary-500': selected && selected.id === file.id}">
+                                    <img x-bind:src="file.thumb"
+                                        x-bind:alt="file.alt"
+                                        width="125"
+                                        height="125"
+                                        class="block object-cover h-full" />
+                                </button>
+                            </template>
+                        </div>
+
+                        <p x-show="!files">No Media in the Library</p>
+
+                    </div>
+
+                    <div class="flex-shrink-0 w-full max-w-xs pl-4 border-l border-gray-300 dark:border-gray-900">
+
+                        <div>
+                            @if ($selected)
+                                <div wire:ignore>
+                                    @livewire('edit-mdia-form')
+                                </div>
+                            @else
+                                <div wire:ignore>
+                                    @livewire('create-media-form')
+                                </div>
+                            @endif
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <x-slot name="footer">
+                    <x-filament::button type="button"
+                        wire:click.prevent="handleSelect()">
+                        Use Selected Image
+                    </x-filament::button>
+                </x-slot>
+
+            </x-filament::modal>
+        </div>
     </div>
 </x-forms::field-wrapper>
-
-@once
-    @push('scripts')
-        @livewire('media-library-modal')
-    @endpush
-@endonce

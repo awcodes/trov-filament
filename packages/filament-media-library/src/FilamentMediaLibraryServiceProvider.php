@@ -3,7 +3,10 @@
 namespace AWCodes\FilamentMediaLibrary;
 
 use Livewire\Livewire;
+use Livewire\Component;
+use Illuminate\Support\Str;
 use Filament\PluginServiceProvider;
+use Illuminate\Filesystem\Filesystem;
 use Spatie\LaravelPackageTools\Package;
 
 class FilamentMediaLibraryServiceProvider extends PluginServiceProvider
@@ -17,18 +20,8 @@ class FilamentMediaLibraryServiceProvider extends PluginServiceProvider
     public function boot()
     {
         parent::boot();
-    }
 
-    public function packageBooted(): void
-    {
-        $this->bootLivewireComponents();
-    }
-
-    protected function bootLivewireComponents(): void
-    {
-
-        Livewire::component('media-libarary-modal', Components\MediaLibraryModal::class);
-
-        // $this->registerLivewireComponentDirectory(config('filament.livewire.path'), config('filament.livewire.namespace'), 'filament.');
+        Livewire::component('create-media-form', Components\CreateMediaForm::class);
+        Livewire::component('edit-media-form', Components\EditMediaForm::class);
     }
 }
