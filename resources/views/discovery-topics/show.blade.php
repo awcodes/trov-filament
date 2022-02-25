@@ -1,6 +1,7 @@
-<x-dynamic-component :component="$layout . '-layout'" :meta="$meta">
+<x-dynamic-component :component="$layout . '-layout'"
+    :meta="$meta">
     @section('hero')
-        <x-hero :image="$topic->featured_image_data" />
+        <x-hero :media="$topic->featuredImage" />
     @endsection
 
     <x-blocks.heading :data="['level' => 'h1', 'content' => $topic->title]" />
@@ -15,7 +16,8 @@
 
     @if ($topic->content)
         @foreach ($topic->content as $block)
-            <x-dynamic-component :component="'blocks.' . $block['type']" :data="$block['data']" />
+            <x-dynamic-component :component="'blocks.' . $block['type']"
+                :data="$block['data']" />
         @endforeach
     @endif
 </x-dynamic-component>

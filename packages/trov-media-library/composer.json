@@ -5,8 +5,7 @@
         "laravel",
         "filament",
         "forms",
-        "tinyeditor",
-        "tinymce"
+        "media library"
     ],
     "license": "MIT",
     "authors": [

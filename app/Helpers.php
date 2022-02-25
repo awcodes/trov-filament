@@ -2,18 +2,8 @@
 
 namespace App;
 
-use Trov\MediaLibrary\Models\Media;
-
 class Helpers
 {
-    /**
-     * Cloudinary URL
-     */
-    public static function cloudinary(Media $media, $transforms = 'f_auto,q_auto')
-    {
-        return 'https://res.cloudinary.com/' . config('cloudinary.cloud_name') . '/image/upload/' . $transforms . '/' . $media->public_id . '.' . $media->ext;
-    }
-
     /**
      * Generate password
      */
