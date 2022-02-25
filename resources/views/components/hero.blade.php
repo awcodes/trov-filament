@@ -3,15 +3,22 @@
     'content' => null,
 ])
 
-@if ($media || $content)
-    <aside class="relative flex items-center justify-center h-96">
-        <img src="{{ $media->url }}" alt="{{ $media->alt }}" width="{{ $media->width }}"
-            height="{{ $media->height }}" srcset="
+<aside class="relative flex items-center justify-center h-96">
+    @if ($media || $content)
+        <img src="{{ $media->url }}"
+            alt="{{ $media->alt }}"
+            width="{{ $media->width }}"
+            height="{{ $media->height }}"
+            srcset="
             {{ $media->url }} 1200w,
             {{ $media->large }} 1024w,
             {{ $media->medium }} 640w
-        " sizes="(max-width: 1200px) 100vw, 1200px" loading="lazy"
+        "
+            sizes="(max-width: 1200px) 100vw, 1200px"
+            loading="lazy"
             class="absolute inset-0 z-0 object-cover w-full h-full" />
         <p class="container z-10 text-4xl font-bold text-white">{{ $content }}</p>
-    </aside>
-@endif
+    @else
+        {{ $slot }}
+    @endif
+</aside>

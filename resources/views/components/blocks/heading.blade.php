@@ -13,6 +13,6 @@
     ],
 ])
 
-<{{ $data['level'] }} class="text-blue-500 {{ $classes[$data['level']] }}">
+<{{ $data['level'] }} class="{{ $classes[$data['level']] }}">
     {{ $data['content'] }}
     </{{ $data['level'] }}>
