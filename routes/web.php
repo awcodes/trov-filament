@@ -9,17 +9,7 @@ use App\Http\Controllers\LandingPageController;
 use App\Http\Controllers\DiscoveryTopicController;
 use App\Http\Controllers\DiscoveryArticleController;
 use App\Http\Controllers\SitemapController;
-
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| contains the "web" middleware group. Now create something great!
-|
-*/
+use App\Http\Controllers\WelcomeController;
 
 Route::get('/admin/login', function () {
     return redirect('/login');
@@ -28,10 +18,7 @@ Route::get('/admin/login', function () {
 Route::name('sitemap')->get('/sitemap.xml', [SitemapController::class, 'index']);
 
 Route::middleware('forceslash')->group(function () {
-    Route::name('welcome')->get('/', function () {
-        return view('welcome');
-    });
-
+    Route::name('welcome')->get('/', [WelcomeController::class, 'show']);
     Route::name('white-pages.show')->get('/{type}/{page:slug}/', [WhitePageController::class, 'show']);
     Route::name('faqs.show')->get('/faqs/{faq:slug}/', [FaqController::class, 'show']);
     Route::name('posts.show')->get('/blog/{post:slug}/', [PostController::class, 'show']);
