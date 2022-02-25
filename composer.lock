@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "61334005eef4dd580bafa149cc5ccb32",
+    "content-hash": "0fbba36f3a9cd644b2ea8b9630c17348",
     "packages": [
         {
             "name": "akaunting/laravel-money",
@@ -126,55 +126,6 @@
                 "source": "https://github.com/asm89/stack-cors/tree/v2.1.1"
             },
             "time": "2022-01-18T09:12:03+00:00"
-        },
-        {
-            "name": "awcodes/filament-media-library",
-            "version": "dev-main",
-            "dist": {
-                "type": "path",
-                "url": "packages/filament-media-library",
-                "reference": "09bc8c8e13ecb6850a4660b94f4354ce5fe6b8d0"
-            },
-            "require": {
-                "filament/forms": "^2.0",
-                "illuminate/contracts": "^8.73|^9.0",
-                "php": "^8.0",
-                "spatie/laravel-package-tools": "^1.9.2"
-            },
-            "type": "library",
-            "extra": {
-                "laravel": {
-                    "providers": [
-                        "AWCodes\\FilamentMediaLibrary\\FilamentMediaLibraryServiceProvider"
-                    ]
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "AWCodes\\FilamentMediaLibrary\\": "src"
-                }
-            },
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Adam Weston",
-                    "email": "awcodes1@gmail.com",
-                    "role": "Developer"
-                }
-            ],
-            "description": "A media library for filament forms",
-            "keywords": [
-                "filament",
-                "forms",
-                "laravel",
-                "tinyeditor",
-                "tinymce"
-            ],
-            "transport-options": {
-                "relative": true
-            }
         },
         {
             "name": "bacon/bacon-qr-code",
@@ -1448,16 +1399,16 @@
         },
         {
             "name": "filament/filament",
-            "version": "v2.10.13",
+            "version": "v2.10.14",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel-filament/admin.git",
-                "reference": "5b87b2f1d138d76b59d995b68521ef730deaad1d"
+                "reference": "f49a4cb47fa43acca0af40ec562a48a4bceb2a18"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel-filament/admin/zipball/5b87b2f1d138d76b59d995b68521ef730deaad1d",
-                "reference": "5b87b2f1d138d76b59d995b68521ef730deaad1d",
+                "url": "https://api.github.com/repos/laravel-filament/admin/zipball/f49a4cb47fa43acca0af40ec562a48a4bceb2a18",
+                "reference": "f49a4cb47fa43acca0af40ec562a48a4bceb2a18",
                 "shasum": ""
             },
             "require": {
@@ -1504,20 +1455,20 @@
                 "issues": "https://github.com/laravel-filament/filament/issues",
                 "source": "https://github.com/laravel-filament/filament"
             },
-            "time": "2022-02-24T12:47:55+00:00"
+            "time": "2022-02-24T21:09:49+00:00"
         },
         {
             "name": "filament/forms",
-            "version": "v2.10.13",
+            "version": "v2.10.14",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel-filament/forms.git",
-                "reference": "2da49d9286a441fc5ac82570d10f652b606531b0"
+                "reference": "bd99515e4368d89b7db4723a6b43bbbcda2a58c4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel-filament/forms/zipball/2da49d9286a441fc5ac82570d10f652b606531b0",
-                "reference": "2da49d9286a441fc5ac82570d10f652b606531b0",
+                "url": "https://api.github.com/repos/laravel-filament/forms/zipball/bd99515e4368d89b7db4723a6b43bbbcda2a58c4",
+                "reference": "bd99515e4368d89b7db4723a6b43bbbcda2a58c4",
                 "shasum": ""
             },
             "require": {
@@ -1560,20 +1511,20 @@
                 "issues": "https://github.com/laravel-filament/filament/issues",
                 "source": "https://github.com/laravel-filament/filament"
             },
-            "time": "2022-02-24T12:47:51+00:00"
+            "time": "2022-02-24T21:09:44+00:00"
         },
         {
             "name": "filament/spatie-laravel-media-library-plugin",
-            "version": "v2.10.13",
+            "version": "v2.10.14",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel-filament/spatie-laravel-media-library-plugin.git",
-                "reference": "844fdf49bc75d1dfb58277e5dc36223117a35ce2"
+                "reference": "9daf78b9a373ed4f59219388849dba928cc44c4a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel-filament/spatie-laravel-media-library-plugin/zipball/844fdf49bc75d1dfb58277e5dc36223117a35ce2",
-                "reference": "844fdf49bc75d1dfb58277e5dc36223117a35ce2",
+                "url": "https://api.github.com/repos/laravel-filament/spatie-laravel-media-library-plugin/zipball/9daf78b9a373ed4f59219388849dba928cc44c4a",
+                "reference": "9daf78b9a373ed4f59219388849dba928cc44c4a",
                 "shasum": ""
             },
             "require": {
@@ -1597,20 +1548,20 @@
                 "issues": "https://github.com/laravel-filament/filament/issues",
                 "source": "https://github.com/laravel-filament/filament"
             },
-            "time": "2022-02-13T11:01:30+00:00"
+            "time": "2022-02-24T21:09:46+00:00"
         },
         {
             "name": "filament/spatie-laravel-settings-plugin",
-            "version": "v2.10.13",
+            "version": "v2.10.14",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel-filament/spatie-laravel-settings-plugin.git",
-                "reference": "3534fca8c78e93a334709885d10f5a49c7012c36"
+                "reference": "893d6bba756db3f43406ba2da0168000db272014"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel-filament/spatie-laravel-settings-plugin/zipball/3534fca8c78e93a334709885d10f5a49c7012c36",
-                "reference": "3534fca8c78e93a334709885d10f5a49c7012c36",
+                "url": "https://api.github.com/repos/laravel-filament/spatie-laravel-settings-plugin/zipball/893d6bba756db3f43406ba2da0168000db272014",
+                "reference": "893d6bba756db3f43406ba2da0168000db272014",
                 "shasum": ""
             },
             "require": {
@@ -1644,11 +1595,11 @@
                 "issues": "https://github.com/laravel-filament/filament/issues",
                 "source": "https://github.com/laravel-filament/filament"
             },
-            "time": "2022-02-03T10:48:24+00:00"
+            "time": "2022-02-24T21:09:43+00:00"
         },
         {
             "name": "filament/spatie-laravel-tags-plugin",
-            "version": "v2.10.13",
+            "version": "v2.10.14",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel-filament/spatie-laravel-tags-plugin.git",
@@ -1685,7 +1636,7 @@
         },
         {
             "name": "filament/tables",
-            "version": "v2.10.13",
+            "version": "v2.10.14",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel-filament/tables.git",
@@ -5875,16 +5826,16 @@
         },
         {
             "name": "spatie/laravel-settings",
-            "version": "2.3.1",
+            "version": "2.3.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spatie/laravel-settings.git",
-                "reference": "d40293c848e8100dcb86b0c727a4f8f865e499ac"
+                "reference": "756768505b37a19d55aa67a64b37bd997e381f73"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spatie/laravel-settings/zipball/d40293c848e8100dcb86b0c727a4f8f865e499ac",
-                "reference": "d40293c848e8100dcb86b0c727a4f8f865e499ac",
+                "url": "https://api.github.com/repos/spatie/laravel-settings/zipball/756768505b37a19d55aa67a64b37bd997e381f73",
+                "reference": "756768505b37a19d55aa67a64b37bd997e381f73",
                 "shasum": ""
             },
             "require": {
@@ -5940,7 +5891,7 @@
             ],
             "support": {
                 "issues": "https://github.com/spatie/laravel-settings/issues",
-                "source": "https://github.com/spatie/laravel-settings/tree/2.3.1"
+                "source": "https://github.com/spatie/laravel-settings/tree/2.3.2"
             },
             "funding": [
                 {
@@ -5952,7 +5903,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2022-02-04T09:01:08+00:00"
+            "time": "2022-02-25T08:52:37+00:00"
         },
         {
             "name": "spatie/laravel-sluggable",
@@ -7256,12 +7207,12 @@
                 }
             },
             "autoload": {
-                "psr-4": {
-                    "Symfony\\Polyfill\\Ctype\\": ""
-                },
                 "files": [
                     "bootstrap.php"
-                ]
+                ],
+                "psr-4": {
+                    "Symfony\\Polyfill\\Ctype\\": ""
+                }
             },
             "notification-url": "https://packagist.org/downloads/",
             "license": [
@@ -8367,12 +8318,12 @@
             },
             "type": "library",
             "autoload": {
-                "psr-4": {
-                    "Symfony\\Component\\String\\": ""
-                },
                 "files": [
                     "Resources/functions.php"
                 ],
+                "psr-4": {
+                    "Symfony\\Component\\String\\": ""
+                },
                 "exclude-from-classmap": [
                     "/Tests/"
                 ]
@@ -8781,6 +8732,55 @@
                 "source": "https://github.com/tijsverkoyen/CssToInlineStyles/tree/2.2.4"
             },
             "time": "2021-12-08T09:12:39+00:00"
+        },
+        {
+            "name": "trov/media-library",
+            "version": "dev-main",
+            "dist": {
+                "type": "path",
+                "url": "packages/trov-media-library",
+                "reference": "a63fedb77a8ae1ab837822fc42e59263ee9ad9ab"
+            },
+            "require": {
+                "filament/forms": "^2.0",
+                "illuminate/contracts": "^8.73|^9.0",
+                "php": "^8.0",
+                "spatie/laravel-package-tools": "^1.9.2"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Trov\\MediaLibrary\\TrovMediaLibraryServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Trov\\MediaLibrary\\": "src"
+                }
+            },
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Adam Weston",
+                    "email": "awcodes1@gmail.com",
+                    "role": "Developer"
+                }
+            ],
+            "description": "A media library for filament forms",
+            "keywords": [
+                "filament",
+                "forms",
+                "laravel",
+                "tinyeditor",
+                "tinymce"
+            ],
+            "transport-options": {
+                "relative": true
+            }
         },
         {
             "name": "vlucas/phpdotenv",
@@ -11825,7 +11825,7 @@
     "aliases": [],
     "minimum-stability": "dev",
     "stability-flags": {
-        "awcodes/filament-media-library": 20
+        "trov/media-library": 20
     },
     "prefer-stable": true,
     "prefer-lowest": false,

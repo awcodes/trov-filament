@@ -2,7 +2,7 @@
 
 namespace Database\Factories;
 
-use App\Models\Media;
+use Trov\MediaLibrary\Models\Media;
 use App\Models\LandingPage;
 use Illuminate\Support\Str;
 use Illuminate\Database\Eloquent\Factories\Factory;

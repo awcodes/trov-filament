@@ -7,6 +7,7 @@ use Spatie\Sluggable\SlugOptions;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Trov\MediaLibrary\Models\Media;
 
 class Page extends Model
 {

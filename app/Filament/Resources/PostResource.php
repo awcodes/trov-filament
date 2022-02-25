@@ -5,14 +5,14 @@ namespace App\Filament\Resources;
 use Filament\Forms;
 use App\Models\Post;
 use Filament\Tables;
-use App\Models\Media;
+use Trov\MediaLibrary\Models\Media;
 use Illuminate\Support\Str;
 use Filament\Resources\Form;
 use Filament\Resources\Table;
 use App\Forms\Fields\SlugInput;
 use Filament\Resources\Resource;
 use App\Forms\Components\Section;
-use AWCodes\FilamentMediaLibrary\Components\MediaLibrary;
+use Trov\MediaLibrary\Components\Fields\MediaLibrary;
 use Filament\Tables\Filters\Filter;
 use Filament\Forms\Components\Group;
 use Filament\Forms\Components\Select;
@@ -73,10 +73,7 @@ class PostResource extends Resource
                         Section::make('Post Content')
                             ->schema([
                                 MediaLibrary::make('featured_image')
-                                    ->afterStateHydrated(function (MediaLibrary $component, Media $media, $state) {
-                                        $component->state($media->where('id', $state)->first());
-                                    })
-                                    ->dehydrateStateUsing(fn ($state) => $state['id']),
+                                    ->label('Featured Image'),
                                 BlockContent::make('content')
                             ])
                     ])

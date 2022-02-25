@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-use App\Traits\HasCloudinaryUrls;
 use Spatie\Sluggable\SlugOptions;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -12,7 +11,6 @@ use Spatie\Sluggable\HasSlug;
 class LandingPage extends Model
 {
     use HasFactory;
-    use HasCloudinaryUrls;
     use HasSlug;
 
     public function getSlugOptions(): SlugOptions

@@ -3,7 +3,7 @@
 namespace Database\Factories;
 
 use App\Models\Post;
-use App\Models\Media;
+use Trov\MediaLibrary\Models\Media;
 use Illuminate\Support\Str;
 use Illuminate\Database\Eloquent\Factories\Factory;
 

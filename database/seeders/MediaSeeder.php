@@ -4,11 +4,11 @@ namespace Database\Seeders;
 
 use Faker\Factory;
 use App\Models\Page;
-use App\Models\Media;
 use Illuminate\Database\Seeder;
+use Trov\MediaLibrary\Models\Media;
 use Illuminate\Support\Facades\File;
-use Illuminate\Support\Facades\Storage;
 use Intervention\Image\Facades\Image;
+use Illuminate\Support\Facades\Storage;
 
 class MediaSeeder extends Seeder
 {
@@ -19,7 +19,7 @@ class MediaSeeder extends Seeder
      */
     public function run()
     {
-        $files = File::files(database_path('seeders/trov-seed-images/'));
+        $files = File::files('vendor/trov/media-library/database/seeders/trov-seed-images/');
 
         if ($files) {
             foreach ($files as $file) {

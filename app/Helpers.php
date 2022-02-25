@@ -2,7 +2,7 @@
 
 namespace App;
 
-use App\Models\Media;
+use Trov\MediaLibrary\Models\Media;
 
 class Helpers
 {

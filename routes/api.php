@@ -18,5 +18,3 @@ use App\Http\Controllers\MediaLibraryController;
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
-
-Route::get('/media-library/{offset?}', [MediaLibraryController::class, 'index']);

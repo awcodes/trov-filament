@@ -3,16 +3,17 @@
 namespace App\Forms\Components;
 
 use Closure;
+use Filament\Forms\Components\Radio;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Builder;
+use Filament\Forms\Components\Repeater;
 use Filament\Forms\Components\Component;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\RichEditor;
-use Filament\Forms\Components\Builder\Block;
 use Filament\Forms\Components\CheckboxList;
-use Filament\Forms\Components\Radio;
-use Filament\Forms\Components\Repeater;
+use Filament\Forms\Components\Builder\Block;
+use Trov\MediaLibrary\Components\Fields\MediaLibrary;
 
 class BlockContent extends Component
 {
@@ -87,6 +88,11 @@ class BlockContent extends Component
                                         ->required(),
                                 ])
                                 ->columns(2)
+                        ]),
+                    Block::make('image')
+                        ->schema([
+                            MediaLibrary::make('image')
+                                ->label('Image'),
                         ]),
                 ]),
         ]);

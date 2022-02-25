@@ -2,9 +2,8 @@
 
 namespace App\Models;
 
-use App\Models\Media;
+use Trov\MediaLibrary\Models\Media;
 use Spatie\Tags\HasTags;
-use App\Traits\HasCloudinaryUrls;
 use Spatie\Sluggable\SlugOptions;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Storage;
@@ -16,7 +15,6 @@ class Post extends Model
     use HasFactory;
     use HasTags;
     use HasSlug;
-    use HasCloudinaryUrls;
 
     public function getSlugOptions(): SlugOptions
     {

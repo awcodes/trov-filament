@@ -2,10 +2,9 @@
 
 namespace App\Models;
 
-use App\Models\Media;
+use Trov\MediaLibrary\Models\Media;
 use App\Models\Author;
 use App\Models\DiscoveryTopic;
-use App\Traits\HasCloudinaryUrls;
 use Spatie\Sluggable\SlugOptions;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Storage;
@@ -15,7 +14,6 @@ use Spatie\Sluggable\HasSlug;
 class DiscoveryArticle extends Model
 {
     use HasFactory;
-    use HasCloudinaryUrls;
     use HasSlug;
 
     public function getSlugOptions(): SlugOptions

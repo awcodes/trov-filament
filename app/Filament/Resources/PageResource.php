@@ -5,13 +5,13 @@ namespace App\Filament\Resources;
 use Filament\Forms;
 use App\Models\Page;
 use Filament\Tables;
-use App\Models\Media;
+use Trov\MediaLibrary\Models\Media;
 use Illuminate\Support\Str;
 use Filament\Resources\Form;
 use Filament\Resources\Table;
 use App\Forms\Fields\SlugInput;
 use Filament\Resources\Resource;
-use AWCodes\FilamentMediaLibrary\Components\MediaLibrary;
+use Trov\MediaLibrary\Components\Fields\MediaLibrary;
 use Filament\Forms\Components\Group;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Toggle;
@@ -67,11 +67,7 @@ class PageResource extends Resource
                         Section::make('Hero')
                             ->schema([
                                 MediaLibrary::make('hero_image')
-                                    ->label('Image')
-                                    ->afterStateHydrated(function (MediaLibrary $component, Media $media, $state) {
-                                        $component->state($media->where('id', $state)->first());
-                                    })
-                                    ->dehydrateStateUsing(fn ($state) => $state['id']),
+                                    ->label('Image'),
                                 Textarea::make('hero_content')
                                     ->label('Call Out')
                                     ->rows(3),

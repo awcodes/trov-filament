@@ -9,7 +9,6 @@
     "license": "MIT",
     "require": {
         "php": "^7.3|^8.0",
-        "awcodes/filament-media-library": "@dev",
         "cloudinary-labs/cloudinary-laravel": "^1.0",
         "filament/filament": "^2.0",
         "filament/spatie-laravel-media-library-plugin": "^2.0",
@@ -28,7 +27,8 @@
         "spatie/laravel-ray": "^1.29",
         "spatie/laravel-settings": "^2.3",
         "spatie/laravel-sluggable": "^3.3",
-        "spatie/laravel-tags": "^4.3"
+        "spatie/laravel-tags": "^4.3",
+        "trov/media-library": "@dev"
     },
     "require-dev": {
         "facade/ignition": "^2.5",
@@ -55,7 +55,7 @@
     "repositories": [
         {
             "type": "path",
-            "url": "packages/filament-media-library"
+            "url": "packages/trov-media-library"
         }
     ],
     "scripts": {

@@ -2,7 +2,7 @@
 
 namespace Database\Factories;
 
-use App\Models\Media;
+use Trov\MediaLibrary\Models\Media;
 use Illuminate\Support\Str;
 use App\Models\DiscoveryArticle;
 use Illuminate\Database\Eloquent\Factories\Factory;
