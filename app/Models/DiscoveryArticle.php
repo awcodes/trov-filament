@@ -69,7 +69,7 @@ class DiscoveryArticle extends Model
 
     public function getPublicUrl()
     {
-        return route('discovery-articles.show', $this);
+        return route('discovery-articles.show', $this) . '/';
     }
 
     public function topic()

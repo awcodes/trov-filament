@@ -56,7 +56,7 @@ class Post extends Model
 
     public function getPublicUrl()
     {
-        return route('posts.show', $this);
+        return route('posts.show', $this) . '/';
     }
 
     public function author()

@@ -38,7 +38,7 @@ class Faq extends Model
 
     public function getPublicUrl()
     {
-        return route('faqs.show', $this);
+        return route('faqs.show', $this) . '/';
     }
 
     /**

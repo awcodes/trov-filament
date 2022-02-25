@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Article;
+use App\Models\WhitePage;
 use App\Models\DiscoveryArticle;
 use App\Models\DiscoveryTopic;
 use App\Models\Faq;
@@ -18,13 +18,13 @@ class SitemapController extends Controller
 
         $pages = Page::select('slug', 'updated_at')->where('indexable', true)->get();
         $posts = Post::select('slug', 'updated_at')->get();
-        $articles = Article::select('slug', 'updated_at')->get();
+        $whitepages = WhitePage::select('slug', 'type', 'updated_at')->get();
         $faqs = Faq::select('slug', 'updated_at')->get();
         $discoveryTopics = DiscoveryTopic::select('slug', 'updated_at')->get();
         $discoveryArticles = DiscoveryArticle::select('slug', 'updated_at')->get();
 
         $links = $pages->concat($posts)
-            ->concat($articles)
+            ->concat($whitepages)
             ->concat($faqs)
             ->concat($discoveryTopics)
             ->concat($discoveryArticles);

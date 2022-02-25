@@ -54,7 +54,7 @@ class Page extends Model
 
     public function getPublicUrl()
     {
-        return route('pages.show', $this);
+        return route('pages.show', $this) . '/';
     }
 
     public function heroImage()

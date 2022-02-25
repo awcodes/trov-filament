@@ -3,7 +3,7 @@
 namespace App\Models;
 
 use App\Models\Post;
-use App\Models\Article;
+use App\Models\WhitePage;
 use Spatie\Sluggable\HasSlug;
 use App\Models\DiscoveryArticle;
 use Spatie\Sluggable\SlugOptions;
@@ -85,9 +85,9 @@ class Author extends Model implements HasAvatar
         return $this->hasMany(Post::class);
     }
 
-    public function articles()
+    public function whitePages()
     {
-        return $this->hasMany(Article::class);
+        return $this->hasMany(WhitePage::class);
     }
 
     public function discoveryArticles()

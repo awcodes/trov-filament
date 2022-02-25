@@ -4,16 +4,16 @@ namespace Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
-use App\Models\Article;
+use App\Models\WhitePage;
 
-class ArticleFactory extends Factory
+class WhitePageFactory extends Factory
 {
     /**
      * The name of the factory's corresponding model.
      *
      * @var string
      */
-    protected $model = Article::class;
+    protected $model = WhitePage::class;
 
     /**
      * Indicate that the page is in review status.
@@ -44,6 +44,20 @@ class ArticleFactory extends Factory
     }
 
     /**
+     * Indicate that the page is a Resource type.
+     *
+     * @return \Illuminate\Database\Eloquent\Factories\Factory
+     */
+    public function isResource()
+    {
+        return $this->state(function (array $attributes) {
+            return [
+                'type' => 'resource',
+            ];
+        });
+    }
+
+    /**
      * Define the model's default state.
      *
      * @return array
@@ -57,6 +71,7 @@ class ArticleFactory extends Factory
             'slug' => Str::slug($title),
             'status' => 'draft',
             'author_id' => rand(1, 5),
+            'type' => 'article',
             'content' => [
                 [
                     "type" => "rich-text",

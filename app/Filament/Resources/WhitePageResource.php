@@ -3,9 +3,8 @@
 namespace App\Filament\Resources;
 
 use Filament\Forms;
-use App\Models\Post;
 use Filament\Tables;
-use App\Models\Article;
+use App\Models\WhitePage;
 use Illuminate\Support\Str;
 use Filament\Resources\Form;
 use Filament\Resources\Table;
@@ -24,17 +23,17 @@ use Filament\Tables\Filters\SelectFilter;
 use Filament\Forms\Components\Placeholder;
 use Filament\Forms\Components\DateTimePicker;
 use Filament\Forms\Components\BelongsToSelect;
-use App\Filament\Resources\ArticleResource\Pages;
-use App\Filament\Resources\ArticleResource\RelationManagers;
-use App\Filament\Resources\ArticleResource\Pages\EditArticle;
-use App\Filament\Resources\ArticleResource\Pages\ListArticles;
-use App\Filament\Resources\ArticleResource\Pages\CreateArticle;
+use App\Filament\Resources\WhitePageResource\Pages;
+use App\Filament\Resources\WhitePageResource\RelationManagers;
+use App\Filament\Resources\WhitePageResource\Pages\EditWhitePage;
+use App\Filament\Resources\WhitePageResource\Pages\ListWhitePages;
+use App\Filament\Resources\WhitePageResource\Pages\CreateWhitePage;
 
-class ArticleResource extends Resource
+class WhitePageResource extends Resource
 {
-    protected static ?string $model = Article::class;
+    protected static ?string $model = WhitePage::class;
 
-    protected static ?string $label = 'Article';
+    protected static ?string $label = 'White Page';
 
     protected static ?string $navigationGroup = 'Site';
 
@@ -85,6 +84,13 @@ class ArticleResource extends Resource
                                     ])
                                     ->required()
                                     ->columnSpan(2),
+                                Select::make('type')
+                                    ->default('article')
+                                    ->options([
+                                        'article' => 'Article',
+                                        'resource' => 'Resource',
+                                    ])->required()
+                                    ->columnSpan(2),
                                 BelongsToSelect::make('author_id')
                                     ->relationship('author', 'name')
                                     ->required()
@@ -95,10 +101,10 @@ class ArticleResource extends Resource
                                     ->columnSpan(2),
                                 Placeholder::make('created_at')
                                     ->label('Created at')
-                                    ->content(fn (?Article $record): string => $record ? $record->created_at->diffForHumans() : '-'),
+                                    ->content(fn (?WhitePage $record): string => $record ? $record->created_at->diffForHumans() : '-'),
                                 Placeholder::make('updated_at')
                                     ->label('Last modified at')
-                                    ->content(fn (?Article $record): string => $record ? $record->updated_at->diffForHumans() : '-'),
+                                    ->content(fn (?WhitePage $record): string => $record ? $record->updated_at->diffForHumans() : '-'),
                             ]),
                         Section::make('SEO')
                             ->schema([
@@ -126,6 +132,10 @@ class ArticleResource extends Resource
                     'review' => 'In Review',
                     'published' => 'Published',
                 ])->colors(['primary', 'danger' => 'draft', 'warning' => 'review', 'success' => 'published']),
+                TextColumn::make('type')->enum([
+                    'article' => 'Article',
+                    'resource' => 'Resource',
+                ]),
                 TextColumn::make('published_at')->label('Published At')->date()->sortable(),
             ])
             ->filters([
@@ -134,7 +144,12 @@ class ArticleResource extends Resource
                         'draft' => 'Draft',
                         'review' => 'In Review',
                         'published' => 'Published',
-                    ])
+                    ]),
+                SelectFilter::make('type')
+                    ->options([
+                        'article' => 'Article',
+                        'resource' => 'Resource',
+                    ]),
             ])->defaultSort('published_at', 'desc');
     }
 
@@ -148,9 +163,9 @@ class ArticleResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListArticles::route('/'),
-            'create' => Pages\CreateArticle::route('/create'),
-            'edit' => Pages\EditArticle::route('/{record}/edit'),
+            'index' => Pages\ListWhitePages::route('/'),
+            'create' => Pages\CreateWhitePage::route('/create'),
+            'edit' => Pages\EditWhitePage::route('/{record}/edit'),
         ];
     }
 }

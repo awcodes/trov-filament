@@ -51,6 +51,6 @@ class LandingPage extends Model
 
     public function getPublicUrl()
     {
-        return route('landing-pages.show', $this);
+        return route('landing-pages.show', $this) . '/';
     }
 }

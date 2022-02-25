@@ -28,7 +28,7 @@ class DatabaseSeeder extends Seeder
             $this->call(LandingPageSeeder::class);
             $this->call(AuthorSeeder::class);
             $this->call(PostSeeder::class);
-            $this->call(ArticleSeeder::class);
+            $this->call(WhitePageSeeder::class);
             $this->call(FaqSeeder::class);
             $this->call(DiscoveryTopicSeeder::class);
             $this->call(DiscoveryArticleSeeder::class);

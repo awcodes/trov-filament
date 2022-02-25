@@ -2,12 +2,13 @@
 
 namespace App\Models;
 
+use App\Models\Author;
 use Spatie\Sluggable\HasSlug;
 use Spatie\Sluggable\SlugOptions;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
-class Article extends Model
+class WhitePage extends Model
 {
     use HasFactory;
     use HasSlug;
@@ -30,6 +31,7 @@ class Article extends Model
         'slug',
         'status',
         'author_id',
+        'type',
         'content',
         'seo_title',
         'seo_description',
@@ -51,7 +53,7 @@ class Article extends Model
 
     public function getPublicUrl()
     {
-        return route('articles.show', $this);
+        return route('white-pages.show', ['type' => $this->type, 'page' => $this]) . '/';
     }
 
     public function author()
