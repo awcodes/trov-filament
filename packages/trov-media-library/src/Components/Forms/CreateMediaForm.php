@@ -83,8 +83,8 @@ class CreateMediaForm extends Component implements HasForms
                 ]),
             TextInput::make('alt')->label('Alt Text')->helperText('<a href="https://www.w3.org/WAI/tutorials/images/decision-tree/" class="underline" target="_blank">Learn how to describe the purpose of the image</a>. Leave empty if the image is purely decorative.'),
             TextInput::make('title'),
-            Textarea::make('caption')->rows(3),
-            Textarea::make('description')->rows(3),
+            Textarea::make('caption')->rows(2),
+            Textarea::make('description')->rows(2),
         ];
     }
 

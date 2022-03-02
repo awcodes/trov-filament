@@ -6,6 +6,7 @@ use Livewire\Livewire;
 use Filament\PluginServiceProvider;
 use Spatie\LaravelPackageTools\Package;
 use Trov\MediaLibrary\Resources\MediaResource;
+use Ideatocode\BladeStacksPusher\Facades\BSP;
 
 class TrovMediaLibraryServiceProvider extends PluginServiceProvider
 {
@@ -25,8 +26,10 @@ class TrovMediaLibraryServiceProvider extends PluginServiceProvider
     {
         parent::boot();
 
-        Livewire::component('media-library', Components\MediaLibrary::class);
+        Livewire::component('media-library', Components\Modal\MediaLibrary::class);
         Livewire::component('create-media-form', Components\Forms\CreateMediaForm::class);
         Livewire::component('edit-media-form', Components\Forms\EditMediaForm::class);
+
+        BSP::push('modals', view('trov-media-library::media-library'));
     }
 }

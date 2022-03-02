@@ -27,6 +27,12 @@
             Delete
         </x-filament::button>
 
+        <x-filament::button type="button"
+            color="gray"
+            wire:click.prevent="$emit('setSelected')">
+            Cancel
+        </x-filament::button>
+
     </div>
 
 </div>

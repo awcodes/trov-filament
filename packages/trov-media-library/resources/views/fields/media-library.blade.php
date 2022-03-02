@@ -31,11 +31,5 @@
                 <x-heroicon-s-x class="w-6 h-6" />
             </button>
         </div>
-
-        @once
-            @push('modals')
-                @livewire('media-library')
-            @endpush
-        @endonce
     </div>
 </x-forms::field-wrapper>
