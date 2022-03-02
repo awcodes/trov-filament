@@ -13,6 +13,7 @@ use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\RichEditor;
 use Filament\Forms\Components\CheckboxList;
 use Filament\Forms\Components\Builder\Block;
+use Filament\Forms\Components\Textarea;
 use Trov\MediaLibrary\Components\Fields\MediaLibrary;
 
 class BlockContent extends Component
@@ -24,7 +25,15 @@ class BlockContent extends Component
         return (new static())->schema([
             Builder::make('content')
                 ->label('Blocks')
+                ->createItemButtonLabel('Add Block')
                 ->blocks([
+                    Block::make('hero')
+                        ->schema([
+                            MediaLibrary::make('image')
+                                ->label('Image'),
+                            Textarea::make('content')
+                                ->label('Call to Action'),
+                        ]),
                     Block::make('heading')
                         ->schema([
                             TextInput::make('content')
@@ -93,6 +102,51 @@ class BlockContent extends Component
                         ->schema([
                             MediaLibrary::make('image')
                                 ->label('Image'),
+                        ]),
+                    Block::make('image-left')
+                        ->label('Image with Text on Right')
+                        ->schema([
+                            MediaLibrary::make('image')
+                                ->label('Image')
+                                ->columnSpan(1),
+                            RichEditor::make('content')
+                                ->label('Rich Text')
+                                ->disableToolbarButtons([
+                                    'blockquote',
+                                    'codeBlock',
+                                    'attachFiles',
+                                    'strike',
+                                    'h2',
+                                    'h3',
+                                ])
+                                ->required()
+                                ->columnSpan(2),
+                        ])->columns(['sm' => 3]),
+                    Block::make('image-right')
+                        ->label('Image with Text on Right')
+                        ->schema([
+                            RichEditor::make('content')
+                                ->label('Rich Text')
+                                ->disableToolbarButtons([
+                                    'blockquote',
+                                    'codeBlock',
+                                    'attachFiles',
+                                    'strike',
+                                    'h2',
+                                    'h3',
+                                ])
+                                ->required()
+                                ->columnSpan(2),
+                            MediaLibrary::make('image')
+                                ->label('Image')
+                                ->columnSpan(1),
+                        ])->columns(['sm' => 3]),
+                    Block::make('infographic')
+                        ->schema([
+                            MediaLibrary::make('image')
+                                ->label('Image'),
+                            Textarea::make('transcript')
+                                ->label('Transcript'),
                         ]),
                 ]),
         ]);

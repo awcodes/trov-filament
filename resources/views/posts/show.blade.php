@@ -1,4 +1,5 @@
-<x-dynamic-component :component="$layout . '-layout'" :meta="$meta">
+<x-dynamic-component :component="$layout . '-layout'"
+    :meta="$meta">
     @section('hero')
         <x-hero :media="$post->featuredImage" />
     @endsection
@@ -15,9 +16,7 @@
         </div>
 
         @if ($post->content)
-            @foreach ($post->content as $block)
-                <x-dynamic-component :component="'blocks.' . $block['type']" :data="$block['data']" />
-            @endforeach
+            <x-block-content :blocks="$post->content" />
         @endif
     </div>
 </x-dynamic-component>

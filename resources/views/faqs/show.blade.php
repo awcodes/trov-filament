@@ -1,7 +1,10 @@
-<x-dynamic-component :component="$layout . '-layout'" :meta="$meta">
+<x-dynamic-component :component="$layout . '-layout'"
+    :meta="$meta">
 
-    <x-blocks.heading :data="['level' => 'h1', 'content' => $faq->question]" />
+    <div class="container py-8 lg:py-12">
+        <x-blocks.heading :data="['level' => 'h1', 'content' => $faq->question]" />
 
-    <x-prose :content="$faq->answer" />
+        <x-prose :content="$faq->answer" />
+    </div>
 
 </x-dynamic-component>
