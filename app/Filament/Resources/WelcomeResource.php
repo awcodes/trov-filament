@@ -101,17 +101,15 @@ class WelcomeResource extends Resource
         return $table
             ->columns([
                 ImageColumn::make('heroImage.thumb')->label('Hero'),
-                TextColumn::make('title')->searchable()->sortable(),
-                TextColumn::make('updated_at')->label('Last Updated')->date()->sortable(),
+                TextColumn::make('title'),
+                TextColumn::make('updated_at')->label('Last Updated')->date(),
             ])
             ->filters([]);
     }
 
-    public static function getRelations(): array
+    public static function canDeleteAny(): bool
     {
-        return [
-            //
-        ];
+        return false;
     }
 
     public static function getPages(): array

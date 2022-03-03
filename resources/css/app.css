@@ -12,6 +12,26 @@
             @apply text-accent-600;
         }
     }
+
+    h1 + *,
+    h2 + *,
+    h3 + *,
+    h4 + *,
+    h5 + *,
+    h6 + * {
+        @apply !mt-2;
+    }
+}
+
+@layer components {
+    .align-full {
+        &.bg-primary-500,
+        &.bg-primary-500 .prose,
+        &.bg-accent-500,
+        &.bg-accent-500 .prose {
+            @apply text-black;
+        }
+    }
 }
 
 @layer utilities {

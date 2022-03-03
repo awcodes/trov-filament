@@ -9,7 +9,6 @@ module.exports = {
         "./storage/framework/views/*.php",
         "./resources/views/!(filament)**/*.blade.php",
     ],
-    darkMode: "class",
     theme: {
         screens: {
             sm: "568px",

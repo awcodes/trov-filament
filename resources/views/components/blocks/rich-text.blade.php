@@ -1,3 +1,3 @@
-<div class="prose max-w-none dark:prose-invert">
+<div class="prose max-w-none">
     {!! Purifier::clean($content) !!}
 </div>

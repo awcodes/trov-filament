@@ -29,7 +29,14 @@ class BlockContent extends Component
                 ->label('Sections')
                 ->createItemButtonLabel('Add Section')
                 ->schema([
-                    Toggle::make('full_width')->default(false)->reactive(),
+                    Toggle::make('full_width')
+                        ->default(false)
+                        ->reactive()
+                        ->afterStateUpdated(function (Closure $set, $state) {
+                            if ($state === false) {
+                                return $set('bg_color', '');
+                            }
+                        }),
                     Select::make('bg_color')->label('Background Color')->hidden(fn (Closure $get) => $get('full_width') === false)->options([
                         'primary' => 'Primary',
                         'secondary' => 'Secondary',

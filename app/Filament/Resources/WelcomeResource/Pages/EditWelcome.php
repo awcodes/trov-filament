@@ -12,10 +12,10 @@ class EditWelcome extends EditRecord
     {
         parent::getActions();
 
-        return array_merge(parent::getActions(), [
+        return [
             ButtonAction::make('view')->color('gray')->url(route('welcome'))->openUrlInNewTab(),
             ButtonAction::make('save')->action('saveFormFromAction'),
-        ]);
+        ];
     }
 
     public function saveFormFromAction(): void
