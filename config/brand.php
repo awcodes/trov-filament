@@ -43,7 +43,6 @@ return [
         ],
     ],
     'additional_images' => [],
-    ],
     'apps' => [
         'portal' => env('CUSTOMER_PORTAL_URL'),
         'ecommerce' => env('ECOMMERCE_APP_URL'),

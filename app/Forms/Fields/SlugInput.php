@@ -13,7 +13,7 @@ use Filament\Forms\Components\TextInput;
 
 class SlugInput extends TextInput
 {
-    protected string $view = 'components.slug-input';
+    protected string $view = 'forms.fields.slug-input';
 
     protected string | Closure | null $mode = 'create';
 
