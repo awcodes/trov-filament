@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Models\Author;
 use Spatie\Sluggable\HasSlug;
 use Spatie\Sluggable\SlugOptions;
+use Trov\MediaLibrary\Models\Media;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
@@ -59,5 +60,10 @@ class WhitePage extends Model
     public function author()
     {
         return $this->belongsTo(Author::class);
+    }
+
+    public function featuredImage()
+    {
+        return $this->hasOne(Media::class, 'id', 'featured_image');
     }
 }

@@ -13,11 +13,12 @@ class FaqController extends Controller
 
         return view('faq', [
             'faq' => $faq,
-            'layout' => 'default',
+            'layout' => 'grid',
             'meta' => [
                 'title' => $faq->seo_title,
                 'description' => $faq->seo_description,
                 'robots' => 'index,follow',
+                'ogImage' => null,
             ],
         ]);
     }

@@ -18,6 +18,7 @@ class LandingPageController extends Controller
                 'title' => $page->seo_title,
                 'description' => $page->seo_description,
                 'robots' => $page->indexable ? 'index,follow' : 'noindex,nofollow',
+                'ogImage' => null,
             ],
         ]);
     }

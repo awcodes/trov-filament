@@ -10,12 +10,14 @@ class BaseLayout extends Component
     public $title;
     public $description;
     public $robots;
+    public $ogImage;
 
     public function __construct($meta)
     {
         $this->title = isset($meta['title']) ? $meta['title'] . ' | ' . config('app.name') : config('app.name');
         $this->description = isset($meta['description']) ? $meta['description'] : config('app.description');
         $this->robots = isset($meta['robots']) ? $meta['robots'] : 'index,follow';
+        $this->ogImage = isset($meta['ogImage']) ? $meta['ogImage'] : null;
     }
 
     /**

@@ -13,11 +13,12 @@ class PageController extends Controller
 
         return view('page', [
             'page' => $page,
-            'layout' => 'default',
+            'layout' => 'grid',
             'meta' => [
                 'title' => $page->seo_title,
                 'description' => $page->seo_description,
                 'robots' => $page->indexable ? 'index,follow' : 'noindex,nofollow',
+                'ogImage' => $page->heroImage,
             ],
         ]);
     }

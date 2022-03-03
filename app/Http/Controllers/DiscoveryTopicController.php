@@ -13,11 +13,12 @@ class DiscoveryTopicController extends Controller
 
         return view('discovery-topic', [
             'topic' => $topic,
-            'layout' => 'default',
+            'layout' => 'grid',
             'meta' => [
                 'title' => $topic->seo_title,
                 'description' => $topic->seo_description,
                 'robots' => $topic->indexable ? 'index,follow' : 'noindex,nofollow',
+                'ogImage' => $topic->featuredImage,
             ],
         ]);
     }

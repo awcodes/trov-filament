@@ -13,11 +13,12 @@ class PostController extends Controller
 
         return view('post', [
             'post' => $post,
-            'layout' => 'default',
+            'layout' => 'grid',
             'meta' => [
                 'title' => $post->seo_title,
                 'description' => $post->seo_description,
                 'robots' => $post->indexable ? 'index,follow' : 'noindex,nofollow',
+                'ogImage' => $post->featuredImage,
             ],
         ]);
     }

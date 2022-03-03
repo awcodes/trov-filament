@@ -31,4 +31,9 @@ trait HasCloudinaryUrls
     {
         return $this->cloudinary($this, 'f_auto,q_auto,w_150,h_150,c_fill,g_face');
     }
+
+    public function getOpenGraphAttribute()
+    {
+        return $this->cloudinary($this, 'f_jpg,q_auto,w_1200,h_630,c_fill');
+    }
 }

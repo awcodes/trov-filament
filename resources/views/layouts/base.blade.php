@@ -15,6 +15,41 @@
     <meta name="robots"
         content="{{ $robots }}" />
 
+    <link rel="canonical"
+        href="{{ \App\Helpers::trailingSlashIt(url()->current()) }}">
+
+    <!-- Open Graph -->
+    <meta name="twitter:card"
+        content="summary_large_image" />
+    <meta name="twitter:site"
+        content="{{ config('brand.social_media.twitter') }}" />
+    <meta name="twitter:creator"
+        content="{{ config('brand.social_media.twitter') }}" />
+
+    <meta property="og:url"
+        content="{{ \App\Helpers::trailingSlashIt(url()->current()) }}" />
+    <meta property="og:type"
+        content="website" />
+    <meta property="og:title"
+        content="{{ $title }}" />
+    <meta property="og:description"
+        content="{{ $description }}" />
+    <meta property="og:locale"
+        content="{{ app()->getLocale() }}" />
+    <meta property="og:site_name"
+        content="{{ config('brand.source') }}" />
+
+    @if ($ogImage)
+        <meta property="og:image"
+            content="{{ $ogImage->openGraph }}" />
+        <meta property="og:image:alt"
+            content="{{ $ogImage->alt }}" />
+        <meta property="og:image:width"
+            content="1200" />
+        <meta property="og:image:height"
+            content="630" />
+    @endif
+
     @yield('meta')
 
     <!-- Fonts -->
@@ -30,6 +65,7 @@
         defer></script>
 
     @if (config('site.gtm_active'))
+        {{-- blade-formatter-disable --}}
         <style>
             .async-hide {
                 opacity: 0 !important
@@ -51,6 +87,7 @@
                 f.parentNode.insertBefore(j, f);
             })(window, document, "script", "dataLayer", "{{ config('site.gtm_id') }}");
         </script>
+        {{-- blade-formatter-disable --}}
     @endif
 
     @livewireStyles
@@ -59,10 +96,14 @@
 <body class="h-full font-sans text-gray-900 bg-gray-100">
 
     @if (config('site.gtm_active'))
-        <noscript><iframe src="//www.googletagmanager.com/ns.html?id={{ config('site.gtm_id') }}"
+        <noscript>
+            <iframe src="//www.googletagmanager.com/ns.html?id={{ config('site.gtm_id') }}"
                 height="0"
                 width="0"
-                style="display:none;visibility:hidden"></iframe></noscript>
+                tabindex="-1"
+                aria-hidden="true"
+                style="display:none;visibility:hidden"></iframe>
+        </noscript>
     @endif
 
     <div class="flex flex-col h-full">

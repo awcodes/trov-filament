@@ -13,11 +13,12 @@ class WelcomeController extends Controller
 
         return view('welcome', [
             'page' => $page,
-            'layout' => 'default',
+            'layout' => 'full',
             'meta' => [
                 'title' => $page->seo_title,
                 'description' => $page->seo_description,
-                'robots' => $page->indexable ? 'index,follow' : 'noindex,nofollow',
+                'robots' => app()->environment() == 'production' ? 'index,follow' : 'noindex,nofollow',
+                'ogImage' => $page->heroImage,
             ],
         ]);
     }

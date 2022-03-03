@@ -13,11 +13,12 @@ class DiscoveryArticleController extends Controller
 
         return view('discovery-article', [
             'article' => $article,
-            'layout' => 'default',
+            'layout' => 'grid',
             'meta' => [
                 'title' => $article->seo_title,
                 'description' => $article->seo_description,
                 'robots' => $article->indexable ? 'index,follow' : 'noindex,nofollow',
+                'ogImage' => $article->featuredImage,
             ],
         ]);
     }

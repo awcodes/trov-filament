@@ -13,11 +13,12 @@ class WhitePageController extends Controller
 
         return view('white-page', [
             'page' => $page,
-            'layout' => 'default',
+            'layout' => 'full',
             'meta' => [
                 'title' => $page->seo_title,
                 'description' => $page->seo_description,
                 'robots' => $page->indexable ? 'index,follow' : 'noindex,nofollow',
+                'ogImage' => $page->featuredImage,
             ],
         ]);
     }
