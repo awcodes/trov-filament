@@ -17,10 +17,5 @@ class PageSeeder extends Seeder
         Page::factory()->count(3)->create();
         Page::factory()->count(5)->inReview()->create();
         Page::factory()->count(15)->published()->create();
-
-        Page::where('status', 'Published')->first()->update([
-            'title' => 'Welcome',
-            'slug' => 'welcome'
-        ]);
     }
 }

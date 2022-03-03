@@ -2,14 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Page;
+use App\Models\Welcome;
 use Illuminate\Http\Request;
 
 class WelcomeController extends Controller
 {
     public function show()
     {
-        $page = Page::where('slug', config('site.home_page'))->first();
+        $page = Welcome::first();
 
         return view('welcome', [
             'page' => $page,
