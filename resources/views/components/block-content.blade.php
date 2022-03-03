@@ -7,7 +7,7 @@
             'bg-secondary-500' => $container['bg_color'] == 'secondary',
             'bg-tertiary-500' => $container['bg_color'] == 'tertiary',
             'bg-accent-500' => $container['bg_color'] == 'accent',
-            'bg-gray-500' => $container['bg_color'] == 'gray',
+            'bg-gray-300' => $container['bg_color'] == 'gray',
         ])>
             @if ($container['blocks'])
                 @foreach ($container['blocks'] as $block)

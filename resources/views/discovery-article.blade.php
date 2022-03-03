@@ -30,4 +30,9 @@
             <x-widgets.discovery-center />
         </x-slot>
     </x-grid>
+
+    @section('footer')
+        <x-footers.default />
+    @endsection
+
 </x-base-layout>

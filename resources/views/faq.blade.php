@@ -10,4 +10,8 @@
         <x-prose :content="$faq->answer" />
     </div>
 
+    @section('footer')
+        <x-footers.default />
+    @endsection
+
 </x-base-layout>

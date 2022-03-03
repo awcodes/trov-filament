@@ -14,4 +14,9 @@
             <x-block-content :content="$page->content" />
         @endif
     </div>
+
+    @section('footer')
+        <x-footers.default />
+    @endsection
+
 </x-base-layout>

@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}"
+    class="h-full">
 
 <head>
     <meta charset="utf-8" />
@@ -55,7 +56,7 @@
     @livewireStyles
 </head>
 
-<body class="font-sans antialiased text-gray-900 bg-gray-100">
+<body class="h-full font-sans text-gray-900 bg-gray-100">
 
     @if (config('site.gtm_active'))
         <noscript><iframe src="//www.googletagmanager.com/ns.html?id={{ config('site.gtm_id') }}"
@@ -64,17 +65,20 @@
                 style="display:none;visibility:hidden"></iframe></noscript>
     @endif
 
-    @yield('header')
+    <div class="flex flex-col h-full">
+        @yield('header')
 
-    <main id="site-main">
+        <main id="site-main"
+            class="flex-1">
 
-        @yield('hero')
+            @yield('hero')
 
-        {{ $slot }}
+            {{ $slot }}
 
-    </main>
+        </main>
 
-    @yield('footer')
+        @yield('footer')
+    </div>
 
     @livewireScripts
 
