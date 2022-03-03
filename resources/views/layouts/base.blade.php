@@ -35,20 +35,29 @@
             document.documentElement.classList.add('dark')
         }
     </script>
+    @livewireStyles
 </head>
 
 <body class="font-sans antialiased text-gray-900 dark:text-gray-50 dark:bg-gray-900">
-    <header id="site-header">
 
-    </header>
+    @yield('header')
+
     <main id="site-main">
+
         @yield('hero')
+
         {{ $slot }}
+
     </main>
+
     <footer>
 
     </footer>
+
+    @livewireScripts
+
     @stack('additional')
+
 </body>
 
 </html>

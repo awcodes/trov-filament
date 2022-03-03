@@ -24,6 +24,9 @@ Route::middleware('forceslash')->group(function () {
     Route::name('discovery-topics.show')->get('/discovery-center/topics/{topic:slug}/', [DiscoveryTopicController::class, 'show']);
     Route::name('discovery-articles.show')->get('/discovery-center/articles/{article:slug}/', [DiscoveryArticleController::class, 'show']);
     Route::name('landing-pages.show')->get('/loans/{page:slug}/', [LandingPageController::class, 'show']);
+    Route::name('author-list')->get('/authors/{author:slug}', function () {
+        return 'author list goes here';
+    });
     Route::name('white-pages.show')->get('/{type}/{page:slug}/', [WhitePageController::class, 'show']);
 
     // this needs to be last !!!!!!!!!!!!!!

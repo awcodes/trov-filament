@@ -17,7 +17,7 @@
             sizes="(max-width: 1200px) 100vw, 1200px"
             loading="lazy"
             class="absolute inset-0 z-0 object-cover w-full h-full" />
-        <p class="container z-10 text-4xl font-bold text-white">{{ $content }}</p>
+        <p class="container z-10 text-4xl font-bold text-white text-shadow-md">{{ $content }}</p>
     @else
         {{ $slot }}
     @endif

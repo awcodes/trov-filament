@@ -1,7 +1,7 @@
 <div class="content">
     @foreach ($content as $container)
         <div @class([
-            'container py-8 lg:py-12',
+            'container px-0 py-8 lg:py-12',
             'align-full' => $container['full_width'],
             'bg-primary-500' => $container['bg_color'] == 'primary',
             'bg-secondary-500' => $container['bg_color'] == 'secondary',
