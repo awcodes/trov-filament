@@ -72,13 +72,9 @@ class PageResource extends Resource
                                     ->label('Call Out')
                                     ->rows(3),
                             ]),
-                        Section::make('Page Content')
-                            ->schema([
-                                BlockContent::make('content')
-                            ])
                     ])
                     ->columnSpan([
-                        'sm' => 2,
+                        'lg' => 2,
                     ]),
                 Group::make()
                     ->schema([
@@ -114,11 +110,18 @@ class PageResource extends Resource
                                 Toggle::make('indexable'),
                             ])
                     ])
-                    ->columnSpan(1),
+                    ->columnSpan([
+                        'lg' => 1,
+                    ]),
+                Section::make('Page Content')
+                    ->schema([
+                        BlockContent::make('content')
+                    ])->columnSpan([
+                        'lg' => 3,
+                    ])
             ])
             ->columns([
-                'sm' => 3,
-                'lg' => null,
+                'lg' => 3,
             ]);
     }
 

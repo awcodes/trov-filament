@@ -11,7 +11,7 @@ class PostController extends Controller
     {
         abort_unless($post->status == 'published' || auth()->user(), 404);
 
-        return view('posts.show', [
+        return view('post', [
             'post' => $post,
             'layout' => 'default',
             'meta' => [

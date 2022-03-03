@@ -1,3 +1,28 @@
-@import 'tailwindcss/base';
-@import 'tailwindcss/components';
-@import 'tailwindcss/utilities';
+@import "tailwindcss/base";
+@import "tailwindcss/components";
+@import "tailwindcss/utilities";
+
+@layer utilities {
+    .align-full {
+        @apply relative z-0;
+
+        &::before {
+            @apply absolute inset-0 bg-inherit;
+            content: "";
+            z-index: -1;
+            background-color: inherit;
+            margin-left: calc((100% - 100vw) / 2);
+            margin-right: calc((100% - 100vw) / 2);
+
+            @screen md {
+                margin-left: calc(((theme("screens.md") - 48px) - 100vw) / 2);
+                margin-right: calc(((theme("screens.md") - 48px) - 100vw) / 2);
+            }
+
+            @screen lg {
+                margin-left: calc(((theme("screens.lg") - 48px) - 100vw) / 2);
+                margin-right: calc(((theme("screens.lg") - 48px) - 100vw) / 2);
+            }
+        }
+    }
+}

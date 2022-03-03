@@ -11,7 +11,7 @@ class DiscoveryArticleController extends Controller
     {
         abort_unless($article->status == 'published' || auth()->user(), 404);
 
-        return view('discovery-articles.show', [
+        return view('discovery-article', [
             'article' => $article,
             'layout' => 'default',
             'meta' => [

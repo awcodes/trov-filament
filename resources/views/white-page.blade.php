@@ -1,5 +1,4 @@
-<x-dynamic-component :component="$layout . '-layout'"
-    :meta="$meta">
+<x-base-layout :meta="$meta">
 
     <div class="container py-8 lg:py-12">
         <x-blocks.heading :data="['level' => 'h1', 'content' => $page->title]" />
@@ -13,7 +12,7 @@
         </div>
 
         @if ($page->content)
-            <x-block-content :blocks="$page->content" />
+            <x-block-content :content="$page->content" />
         @endif
     </div>
-</x-dynamic-component>
+</x-base-layout>

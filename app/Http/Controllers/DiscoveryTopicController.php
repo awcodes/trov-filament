@@ -11,7 +11,7 @@ class DiscoveryTopicController extends Controller
     {
         abort_unless($topic->status == 'published' || auth()->user(), 404);
 
-        return view('discovery-topics.show', [
+        return view('discovery-topic', [
             'topic' => $topic,
             'layout' => 'default',
             'meta' => [

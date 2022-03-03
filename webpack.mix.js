@@ -5,6 +5,7 @@ mix.disableSuccessNotifications();
 mix.js("resources/js/app.js", "public/js")
     .postCss("resources/css/app.css", "public/css", [
         require("postcss-import"),
+        require("tailwindcss/nesting"),
         require("tailwindcss"),
     ])
     .postCss("resources/css/admin.css", "public/css", [

@@ -11,7 +11,7 @@ class PageController extends Controller
     {
         abort_unless($page->status == 'published' || auth()->user(), 404);
 
-        return view('pages.show', [
+        return view('page', [
             'page' => $page,
             'layout' => 'default',
             'meta' => [

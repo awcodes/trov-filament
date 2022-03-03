@@ -6,16 +6,16 @@ use Illuminate\View\Component;
 
 class BlockContent extends Component
 {
-    public $blocks;
+    public $content;
 
     /**
      * Create a new component instance.
      *
      * @return void
      */
-    public function __construct(array $blocks)
+    public function __construct(array $content)
     {
-        $this->blocks = $blocks;
+        $this->content = $content;
     }
 
     /**

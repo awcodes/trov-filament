@@ -1,5 +1,4 @@
-<x-dynamic-component :component="$layout . '-layout'"
-    :meta="$meta">
+<x-base-layout :meta="$meta">
     @section('hero')
         <x-hero :media="$post->featuredImage" />
     @endsection
@@ -14,9 +13,9 @@
             <p class="font-bold">Published: <time
                     datetime="{{ $post->published_at }}">{{ $post->published_at->diffForHumans() }}</time></p>
         </div>
-
-        @if ($post->content)
-            <x-block-content :blocks="$post->content" />
-        @endif
     </div>
-</x-dynamic-component>
+
+    @if ($post->content)
+        <x-block-content :content="$post->content" />
+    @endif
+</x-base-layout>

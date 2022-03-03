@@ -11,7 +11,7 @@ class WhitePageController extends Controller
     {
         abort_unless(($page->status == 'published' && $page->type == $type) || auth()->user(), 404);
 
-        return view('white-pages.show', [
+        return view('white-page', [
             'page' => $page,
             'layout' => 'default',
             'meta' => [

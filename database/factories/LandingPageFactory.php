@@ -59,31 +59,44 @@ class LandingPageFactory extends Factory
             'status' => 'draft',
             'content' => [
                 [
-                    "type" => "heading",
-                    "data" => [
-                        "content" => Str::title($this->faker->words(rand(3, 8), true)),
-                        "level" => "h1"
-                    ]
+                    'full_width' => true,
+                    'bg_color' => 'gray',
+                    'blocks' => [
+                        [
+                            "type" => "hero",
+                            "data" => [
+                                "image" => Media::inRandomOrder()->limit(1)->first(),
+                                "content" => $this->faker->text,
+                            ]
+                        ],
+                        [
+                            "type" => "heading",
+                            "data" => [
+                                "content" => Str::title($this->faker->words(rand(3, 8), true)),
+                                "level" => "h1"
+                            ]
+                        ],
+                        [
+                            "type" => "rich-text",
+                            "data" => [
+                                "content" => $this->faker->paragraphs(rand(2, 5), true)
+                            ]
+                        ],
+                        [
+                            "type" => "heading",
+                            "data" => [
+                                "content" => Str::title($this->faker->words(rand(3, 8), true)),
+                                "level" => "h2"
+                            ]
+                        ],
+                        [
+                            "type" => "rich-text",
+                            "data" => [
+                                "content" => $this->faker->paragraphs(rand(2, 5), true)
+                            ]
+                        ],
+                    ],
                 ],
-                [
-                    "type" => "rich-text",
-                    "data" => [
-                        "content" => $this->faker->paragraphs(rand(2, 5), true)
-                    ]
-                ],
-                [
-                    "type" => "heading",
-                    "data" => [
-                        "content" => Str::title($this->faker->words(rand(3, 8), true)),
-                        "level" => "h2"
-                    ]
-                ],
-                [
-                    "type" => "rich-text",
-                    "data" => [
-                        "content" => $this->faker->paragraphs(rand(2, 5), true)
-                    ]
-                ]
             ],
             'seo_title' => Str::title($this->faker->words(rand(2, 6), true)),
             'seo_description' => $this->faker->text,

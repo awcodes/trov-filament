@@ -11,7 +11,7 @@ class FaqController extends Controller
     {
         abort_unless($faq->status == 'published' || auth()->user(), 404);
 
-        return view('faqs.show', [
+        return view('faq', [
             'faq' => $faq,
             'layout' => 'default',
             'meta' => [

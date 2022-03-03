@@ -4,7 +4,7 @@ namespace App\View\Components;
 
 use Illuminate\View\Component;
 
-class DefaultLayout extends Component
+class BaseLayout extends Component
 {
     public $meta;
     public $title;
@@ -25,7 +25,7 @@ class DefaultLayout extends Component
      */
     public function render()
     {
-        return view('layouts.default', [
+        return view('layouts.base', [
             'title' => $this->title,
             'description' => $this->description,
             'robots' => $this->robots,
