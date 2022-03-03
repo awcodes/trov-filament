@@ -2,23 +2,22 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Page;
 use Illuminate\Http\Request;
-use Trov\MediaLibrary\Models\Media;
 
 class WelcomeController extends Controller
 {
     public function show()
     {
-        $heroImage = Media::first();
+        $page = Page::where('slug', config('site.home_page'))->first();
 
         return view('welcome', [
+            'page' => $page,
             'layout' => 'default',
-            'hero_image' => $heroImage,
-            'hero_content' => 'Lorem ipsum dolor, sit amet consectetur adipisicing elit. Voluptatibus officia dolorem architecto porro molestias fuga iure culpa reprehenderit perferendis ullam neque rem repellat inventore magni, maxime officiis quaerat!',
             'meta' => [
-                'title' => 'Welcome',
-                'description' => 'Trov is a starter for TMX Fianance Family of Companies marketing websites because WordPress really does suck.',
-                'robots' => 'index,follow',
+                'title' => $page->seo_title,
+                'description' => $page->seo_description,
+                'robots' => $page->indexable ? 'index,follow' : 'noindex,nofollow',
             ],
         ]);
     }
