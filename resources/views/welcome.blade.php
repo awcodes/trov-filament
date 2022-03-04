@@ -9,11 +9,9 @@
             :content="$page->hero_content" />
     @endsection
 
-    <div class="container">
-        @if ($page->content)
-            <x-block-content :content="$page->content" />
-        @endif
-    </div>
+    @if ($page->content)
+        <x-block-content :content="$page->content" />
+    @endif
 
     @section('footer')
         <x-footers.default />

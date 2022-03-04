@@ -10,7 +10,9 @@ use Filament\Resources\Form;
 use Filament\Resources\Table;
 use App\Forms\Fields\SlugInput;
 use Filament\Resources\Resource;
+use App\Forms\Components\Section;
 use Filament\Forms\Components\Card;
+use Filament\Forms\Components\Group;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Toggle;
 use App\Forms\Components\BlockContent;
@@ -43,58 +45,76 @@ class LandingPageResource extends Resource
     {
         return $form
             ->schema([
-                Card::make()
+                Group::make()
                     ->schema([
                         TextInput::make('title')
                             ->required()
                             ->reactive()
+                            ->disableLabel()
+                            ->placeholder('Title')
+                            ->extraInputAttributes(['class' => 'text-2xl'])
                             ->afterStateUpdated(function ($state, callable $set, $livewire) {
                                 if ($livewire instanceof CreateLandingPage) {
                                     return $set('slug', Str::slug($state));
                                 }
                             }),
-                        SlugInput::make('slug')
-                            ->mode(fn ($livewire) => $livewire instanceof EditLandingPage ? 'edit' : 'create')
-                            ->required()
-                            ->unique(LandingPage::class, 'slug', fn ($record) => $record),
-                        TextInput::make('seo_title')
-                            ->required(),
-                        Textarea::make('seo_description')
-                            ->rows(3)
-                            ->required(),
-                        BlockContent::make('content')
+                        Section::make('Meta Information')
+                            ->schema([
+                                SlugInput::make('slug')
+                                    ->mode(fn ($livewire) => $livewire instanceof EditLandingPage ? 'edit' : 'create')
+                                    ->required()
+                                    ->unique(LandingPage::class, 'slug', fn ($record) => $record),
+                            ]),
+                        Section::make('SEO')
+                            ->schema([
+                                TextInput::make('seo_title')
+                                    ->label('Title')
+                                    ->required(),
+                                Textarea::make('seo_description')
+                                    ->label('Description')
+                                    ->rows(3)
+                                    ->required(),
+                            ])
                     ])
                     ->columnSpan([
-                        'sm' => 2,
+                        'lg' => 2,
                     ]),
-                Card::make()
+                Group::make()
                     ->schema([
-                        Select::make('status')
-                            ->default('draft')
-                            ->options([
-                                'draft' => 'Draft',
-                                'review' => 'In review',
-                                'published' => 'Published',
-                            ])
-                            ->required()
-                            ->columnSpan(2),
-                        Toggle::make('indexable')
-                            ->columnSpan(2),
-                        Toggle::make('has_chat')
-                            ->columnSpan(2),
-                        Placeholder::make('created_at')
-                            ->label('Created at')
-                            ->content(fn (?LandingPage $record): string => $record ? $record->created_at->diffForHumans() : '-'),
-                        Placeholder::make('updated_at')
-                            ->label('Last modified at')
-                            ->content(fn (?LandingPage $record): string => $record ? $record->updated_at->diffForHumans() : '-'),
+                        Section::make('Details')
+                            ->schema([
+                                Select::make('status')
+                                    ->default('draft')
+                                    ->options([
+                                        'draft' => 'Draft',
+                                        'review' => 'In review',
+                                        'published' => 'Published',
+                                    ])
+                                    ->required()
+                                    ->columnSpan(2),
+                                Toggle::make('has_chat')
+                                    ->columnSpan(2),
+                                Placeholder::make('created_at')
+                                    ->label('Created at')
+                                    ->content(fn (?LandingPage $record): string => $record ? $record->created_at->diffForHumans() : '-'),
+                                Placeholder::make('updated_at')
+                                    ->label('Last modified at')
+                                    ->content(fn (?LandingPage $record): string => $record ? $record->updated_at->diffForHumans() : '-'),
+                            ]),
+
                     ])
-                    ->columns(2)
-                    ->columnSpan(1),
+                    ->columnSpan([
+                        'lg' => 1,
+                    ]),
+                Section::make('Page Content')
+                    ->schema([
+                        BlockContent::make('content')
+                    ])->columnSpan([
+                        'lg' => 3,
+                    ])
             ])
             ->columns([
-                'sm' => 3,
-                'lg' => null,
+                'lg' => 3,
             ]);
     }
 

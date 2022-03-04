@@ -1,7 +1,7 @@
 <x-base-layout :meta="$meta">
 
     <x-grid>
-        <div class="pt-8 lg:t-12">
+        <div class="pt-8 lg:pt-12">
             <x-blocks.heading :data="['level' => 'h1', 'content' => $page->title]" />
 
             <div class="flex items-center justify-between py-2 mt-2 border-t border-b">

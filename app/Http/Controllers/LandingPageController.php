@@ -17,7 +17,7 @@ class LandingPageController extends Controller
             'meta' => [
                 'title' => $page->seo_title,
                 'description' => $page->seo_description,
-                'robots' => $page->indexable ? 'index,follow' : 'noindex,nofollow',
+                'robots' => 'noindex,nofollow',
                 'ogImage' => null,
             ],
         ]);

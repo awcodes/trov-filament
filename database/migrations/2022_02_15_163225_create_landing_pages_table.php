@@ -21,7 +21,6 @@ class CreateLandingPagesTable extends Migration
             $table->longText('content')->nullable();
             $table->string('seo_title');
             $table->text('seo_description');
-            $table->boolean('indexable')->default(true);
             $table->boolean('has_chat')->default(true);
             $table->timestamps();
         });

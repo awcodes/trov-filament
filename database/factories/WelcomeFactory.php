@@ -33,13 +33,13 @@ class WelcomeFactory extends Factory
                             "type" => "heading",
                             "data" => [
                                 "content" => Str::title($this->faker->words(rand(3, 8), true)),
-                                "level" => "h1"
+                                "level" => "h2"
                             ]
                         ],
                         [
                             "type" => "rich-text",
                             "data" => [
-                                "content" => $this->faker->paragraphs(rand(2, 5), true)
+                                "content" => collect($this->faker->paragraphs(rand(1, 6)))->implode('<br /><br />')
                             ]
                         ],
                         [
@@ -52,7 +52,7 @@ class WelcomeFactory extends Factory
                         [
                             "type" => "rich-text",
                             "data" => [
-                                "content" => $this->faker->paragraphs(rand(2, 5), true)
+                                "content" => collect($this->faker->paragraphs(rand(1, 6)))->implode('<br /><br />')
                             ]
                         ],
                     ],

@@ -33,7 +33,6 @@ class LandingPage extends Model
         'content',
         'seo_title',
         'seo_description',
-        'indexable',
         'has_chat',
     ];
 

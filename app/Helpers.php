@@ -2,6 +2,8 @@
 
 namespace App;
 
+use Mews\Purifier\Facades\Purifier;
+
 class Helpers
 {
     /**
@@ -223,7 +225,7 @@ class Helpers
             $haystack = implode($textarr);
         }
 
-        return $haystack;
+        return Purifier::clean($haystack);
     }
 
     private static function htmlSplit($input)

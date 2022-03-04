@@ -81,7 +81,7 @@ class WhitePageFactory extends Factory
                             "type" => "heading",
                             "data" => [
                                 "content" => Str::title($this->faker->words(rand(3, 8), true)),
-                                "level" => "h1"
+                                "level" => "h2"
                             ]
                         ],
                         [

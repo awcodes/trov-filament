@@ -73,7 +73,7 @@ class LandingPageFactory extends Factory
                             "type" => "heading",
                             "data" => [
                                 "content" => Str::title($this->faker->words(rand(3, 8), true)),
-                                "level" => "h1"
+                                "level" => "h2"
                             ]
                         ],
                         [
@@ -100,7 +100,6 @@ class LandingPageFactory extends Factory
             ],
             'seo_title' => Str::title($this->faker->words(rand(2, 6), true)),
             'seo_description' => $this->faker->text,
-            'indexable' => $this->faker->boolean,
             'has_chat' => $this->faker->boolean,
         ];
     }

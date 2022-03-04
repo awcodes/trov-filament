@@ -4,10 +4,10 @@
         <x-headers.default />
     @endsection
 
-    <div class="container py-8 lg:py-12">
+    <div class="py-8 wrapper lg:py-12">
         <x-blocks.heading :data="['level' => 'h1', 'content' => 'Frequently Asked Questions']" />
 
-        <div class="mt-12 prose max-w-none">
+        <div class="prose max-w-none">
             @if ($faqs)
                 <ul>
                     @foreach ($faqs as $faq)
