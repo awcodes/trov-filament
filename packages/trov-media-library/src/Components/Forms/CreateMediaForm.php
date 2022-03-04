@@ -2,14 +2,10 @@
 
 namespace Trov\MediaLibrary\Components\Forms;
 
-use Trov\MediaLibrary\Models\Media;
+use Filament\Forms;
 use Livewire\Component;
-use Filament\Forms\Components\Group;
-use Filament\Forms\Components\Hidden;
+use Trov\MediaLibrary\Models\Media;
 use Filament\Forms\Contracts\HasForms;
-use Filament\Forms\Components\Textarea;
-use Filament\Forms\Components\TextInput;
-use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Concerns\InteractsWithForms;
 
 class CreateMediaForm extends Component implements HasForms
@@ -45,17 +41,17 @@ class CreateMediaForm extends Component implements HasForms
     protected function getFormSchema(): array
     {
         return [
-            Group::make()
+            Forms\Components\Group::make()
                 ->schema([
-                    Hidden::make('public_id'),
-                    Hidden::make('filename'),
-                    Hidden::make('ext'),
-                    Hidden::make('type'),
-                    Hidden::make('width'),
-                    Hidden::make('height'),
-                    Hidden::make('disk'),
-                    Hidden::make('size'),
-                    FileUpload::make('upload')
+                    Forms\Components\Hidden::make('public_id'),
+                    Forms\Components\Hidden::make('filename'),
+                    Forms\Components\Hidden::make('ext'),
+                    Forms\Components\Hidden::make('type'),
+                    Forms\Components\Hidden::make('width'),
+                    Forms\Components\Hidden::make('height'),
+                    Forms\Components\Hidden::make('disk'),
+                    Forms\Components\Hidden::make('size'),
+                    Forms\Components\FileUpload::make('upload')
                         ->maxFiles(1)
                         ->maxWidth(5000)
                         ->imageResizeTargetWidth('1920')
@@ -81,10 +77,10 @@ class CreateMediaForm extends Component implements HasForms
                             return '';
                         }),
                 ]),
-            TextInput::make('alt')->label('Alt Text')->helperText('<a href="https://www.w3.org/WAI/tutorials/images/decision-tree/" class="underline" target="_blank">Learn how to describe the purpose of the image</a>. Leave empty if the image is purely decorative.'),
-            TextInput::make('title'),
-            Textarea::make('caption')->rows(2),
-            Textarea::make('description')->rows(2),
+            Forms\Components\TextInput::make('alt')->label('Alt Text')->helperText('<a href="https://www.w3.org/WAI/tutorials/images/decision-tree/" class="underline" target="_blank">Learn how to describe the purpose of the image</a>. Leave empty if the image is purely decorative.'),
+            Forms\Components\TextInput::make('title'),
+            Forms\Components\Textarea::make('caption')->rows(2),
+            Forms\Components\Textarea::make('description')->rows(2),
         ];
     }
 

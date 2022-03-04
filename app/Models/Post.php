@@ -2,27 +2,19 @@
 
 namespace App\Models;
 
-use Trov\MediaLibrary\Models\Media;
 use Spatie\Tags\HasTags;
-use Spatie\Sluggable\SlugOptions;
+use App\Traits\IsSluggable;
+use App\Traits\HasPublishedScope;
+use Trov\MediaLibrary\Models\Media;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Facades\Storage;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Spatie\Sluggable\HasSlug;
 
 class Post extends Model
 {
+    use HasPublishedScope;
+    use IsSluggable;
     use HasFactory;
     use HasTags;
-    use HasSlug;
-
-    public function getSlugOptions(): SlugOptions
-    {
-        return SlugOptions::create()
-            ->generateSlugsFrom('title')
-            ->saveSlugsTo('slug')
-            ->doNotGenerateSlugsOnUpdate();
-    }
 
     /**
      * The attributes that are mass assignable.

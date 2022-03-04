@@ -8,11 +8,7 @@ use App\Models\Permission;
 use Filament\Resources\Form;
 use Filament\Resources\Table;
 use Filament\Resources\Resource;
-use Filament\Tables\Columns\TextColumn;
 use App\Filament\Resources\PermissionResource\Pages;
-use App\Filament\Resources\PermissionResource\RelationManagers;
-use Filament\Forms\Components\Card;
-use Filament\Forms\Components\TextInput;
 
 class PermissionResource extends Resource
 {
@@ -28,8 +24,8 @@ class PermissionResource extends Resource
     {
         return $form
             ->schema([
-                Card::make()->schema([
-                    TextInput::make('name')->required(),
+                Forms\Components\Card::make()->schema([
+                    Forms\Components\TextInput::make('name')->required(),
                 ])
             ]);
     }
@@ -38,7 +34,7 @@ class PermissionResource extends Resource
     {
         return $table
             ->columns([
-                TextColumn::make('name')
+                Tables\Columns\TextColumn::make('name')
             ])
             ->filters([
                 //

@@ -2,15 +2,15 @@
 
 namespace Trov\MediaLibrary\Models;
 
-use Trov\MediaLibrary\Traits\HasCloudinaryUrls;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Storage;
+use Trov\MediaLibrary\Traits\HasCloudinaryUrls;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Media extends Model
 {
-    use HasFactory;
     use HasCloudinaryUrls;
+    use HasFactory;
 
     protected $fillable = [
         'public_id',

@@ -1,1 +1,3 @@
-<x-prose :content="$content" />
+<x-prose>
+    {!! $content !!}
+</x-prose>

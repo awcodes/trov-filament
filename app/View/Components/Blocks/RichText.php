@@ -3,7 +3,6 @@
 namespace App\View\Components\Blocks;
 
 use Illuminate\View\Component;
-use Mews\Purifier\Facades\Purifier;
 
 class RichText extends Component
 {
@@ -16,7 +15,7 @@ class RichText extends Component
      */
     public function __construct(array $data)
     {
-        $this->content = Purifier::clean($data['content']);
+        $this->content = $data['content'];
     }
 
     /**

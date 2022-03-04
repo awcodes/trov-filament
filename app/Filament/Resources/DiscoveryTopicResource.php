@@ -5,31 +5,16 @@ namespace App\Filament\Resources;
 use Filament\Forms;
 use App\Models\Post;
 use Filament\Tables;
-use Trov\MediaLibrary\Models\Media;
 use Illuminate\Support\Str;
 use Filament\Resources\Form;
 use Filament\Resources\Table;
 use App\Models\DiscoveryTopic;
 use App\Forms\Fields\SlugInput;
 use Filament\Resources\Resource;
-use App\Forms\Components\Section;
-use Trov\MediaLibrary\Components\Fields\MediaLibrary;
-use Filament\Forms\Components\Group;
-use Filament\Forms\Components\Select;
+use Trov\MediaLibrary\Models\Media;
 use App\Forms\Components\BlockContent;
-use Filament\Forms\Components\Textarea;
-use Filament\Tables\Columns\TextColumn;
-use Filament\Forms\Components\TextInput;
-use Filament\Tables\Columns\BadgeColumn;
-use Filament\Tables\Columns\ImageColumn;
-use Filament\Tables\Filters\SelectFilter;
-use Filament\Forms\Components\Placeholder;
-use Filament\Forms\Components\DateTimePicker;
+use Trov\MediaLibrary\Components\Fields\MediaLibrary;
 use App\Filament\Resources\DiscoveryTopicResource\Pages;
-use App\Filament\Resources\DiscoveryTopicResource\RelationManagers;
-use App\Filament\Resources\DiscoveryTopicResource\Pages\EditDiscoveryTopic;
-use App\Filament\Resources\DiscoveryTopicResource\Pages\ListDiscoveryTopics;
-use App\Filament\Resources\DiscoveryTopicResource\Pages\CreateDiscoveryTopic;
 
 class DiscoveryTopicResource extends Resource
 {
@@ -47,27 +32,27 @@ class DiscoveryTopicResource extends Resource
     {
         return $form
             ->schema([
-                Group::make()
+                Forms\Components\Group::make()
                     ->schema([
-                        TextInput::make('title')
+                        Forms\Components\TextInput::make('title')
                             ->required()
                             ->reactive()
                             ->disableLabel()
                             ->placeholder('Title')
                             ->extraInputAttributes(['class' => 'text-2xl'])
                             ->afterStateUpdated(function ($state, callable $set, $livewire) {
-                                if ($livewire instanceof CreateDiscoveryTopic) {
+                                if ($livewire instanceof Pages\CreateDiscoveryTopic) {
                                     return $set('slug', Str::slug($state));
                                 }
                             }),
-                        Section::make('Meta Information')
+                        Forms\Components\Section::make('Meta Information')
                             ->schema([
                                 SlugInput::make('slug')
-                                    ->mode(fn ($livewire) => $livewire instanceof EditDiscoveryTopic ? 'edit' : 'create')
+                                    ->mode(fn ($livewire) => $livewire instanceof Pages\EditDiscoveryTopic ? 'edit' : 'create')
                                     ->required()
                                     ->unique(DiscoveryTopic::class, 'slug', fn ($record) => $record),
                             ]),
-                        Section::make('Page Content')
+                        Forms\Components\Section::make('Page Content')
                             ->schema([
                                 MediaLibrary::make('featured_image')
                                     ->label('Featured Image'),
@@ -77,11 +62,11 @@ class DiscoveryTopicResource extends Resource
                     ->columnSpan([
                         'sm' => 2,
                     ]),
-                Group::make()
+                Forms\Components\Group::make()
                     ->schema([
-                        Section::make('Details')
+                        Forms\Components\Section::make('Details')
                             ->schema([
-                                Select::make('status')
+                                Forms\Components\Select::make('status')
                                     ->default('draft')
                                     ->options([
                                         'draft' => 'Draft',
@@ -90,23 +75,23 @@ class DiscoveryTopicResource extends Resource
                                     ])
                                     ->required()
                                     ->columnSpan(2),
-                                DateTimePicker::make('published_at')
+                                Forms\Components\DateTimePicker::make('published_at')
                                     ->label('Publish Date')
                                     ->withoutSeconds()
                                     ->columnSpan(2),
-                                Placeholder::make('created_at')
+                                Forms\Components\Placeholder::make('created_at')
                                     ->label('Created at')
                                     ->content(fn (?DiscoveryTopic $record): string => $record ? $record->created_at->diffForHumans() : '-'),
-                                Placeholder::make('updated_at')
+                                Forms\Components\Placeholder::make('updated_at')
                                     ->label('Last modified at')
                                     ->content(fn (?DiscoveryTopic $record): string => $record ? $record->updated_at->diffForHumans() : '-'),
                             ]),
-                        Section::make('SEO')
+                        Forms\Components\Section::make('SEO')
                             ->schema([
-                                TextInput::make('seo_title')
+                                Forms\Components\TextInput::make('seo_title')
                                     ->label('Title')
                                     ->required(),
-                                Textarea::make('seo_description')
+                                Forms\Components\Textarea::make('seo_description')
                                     ->label('Description')
                                     ->rows(3)
                                     ->required(),
@@ -123,17 +108,17 @@ class DiscoveryTopicResource extends Resource
     {
         return $table
             ->columns([
-                ImageColumn::make('featuredImage.thumb')->label('Thumb')->width(36)->height(36),
-                TextColumn::make('title')->searchable()->sortable(),
-                BadgeColumn::make('status')->enum([
+                Tables\Columns\ImageColumn::make('featuredImage.thumb')->label('Thumb')->width(36)->height(36),
+                Tables\Columns\TextColumn::make('title')->searchable()->sortable(),
+                Tables\Columns\BadgeColumn::make('status')->enum([
                     'draft' => 'Draft',
                     'review' => 'In Review',
                     'published' => 'Published',
                 ])->colors(['primary', 'danger' => 'draft', 'warning' => 'review', 'success' => 'published']),
-                TextColumn::make('published_at')->label('Published At')->date()->sortable(),
+                Tables\Columns\TextColumn::make('published_at')->label('Published At')->date()->sortable(),
             ])
             ->filters([
-                SelectFilter::make('status')
+                Tables\Filters\SelectFilter::make('status')
                     ->options([
                         'draft' => 'Draft',
                         'review' => 'In Review',

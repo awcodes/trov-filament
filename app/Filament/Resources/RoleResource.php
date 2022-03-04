@@ -8,12 +8,7 @@ use Filament\Tables;
 use Filament\Resources\Form;
 use Filament\Resources\Table;
 use Filament\Resources\Resource;
-use Filament\Forms\Components\Card;
-use Filament\Tables\Columns\TextColumn;
-use Filament\Forms\Components\TextInput;
 use App\Filament\Resources\RoleResource\Pages;
-use App\Filament\Resources\RoleResource\RelationManagers;
-use Filament\Forms\Components\BelongsToManyCheckboxList;
 
 class RoleResource extends Resource
 {
@@ -29,9 +24,12 @@ class RoleResource extends Resource
     {
         return $form
             ->schema([
-                Card::make()->schema([
-                    TextInput::make('name')->required(),
-                    BelongsToManyCheckboxList::make('permissions')->relationship('permissions', 'name')->columns(4)
+                Forms\Components\Card::make()->schema([
+                    Forms\Components\TextInput::make('name')
+                        ->required(),
+                    Forms\Components\BelongsToManyCheckboxList::make('permissions')
+                        ->relationship('permissions', 'name')
+                        ->columns(4)
                 ])
             ]);
     }
@@ -40,7 +38,7 @@ class RoleResource extends Resource
     {
         return $table
             ->columns([
-                TextColumn::make('name')
+                Tables\Columns\TextColumn::make('name')
             ])
             ->filters([
                 //

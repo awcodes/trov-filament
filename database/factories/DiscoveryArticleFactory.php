@@ -75,7 +75,7 @@ class DiscoveryArticleFactory extends Factory
                         [
                             "type" => "rich-text",
                             "data" => [
-                                "content" => $this->faker->paragraphs(rand(2, 5), true)
+                                "content" => '<p>' . collect($this->faker->paragraphs(rand(1, 6)))->implode('</p><p>') . '</p>',
                             ]
                         ],
                         [
@@ -88,7 +88,7 @@ class DiscoveryArticleFactory extends Factory
                         [
                             "type" => "rich-text",
                             "data" => [
-                                "content" => $this->faker->paragraphs(rand(2, 5), true)
+                                "content" => '<p>' . collect($this->faker->paragraphs(rand(1, 6)))->implode('</p><p>') . '</p>',
                             ]
                         ],
                     ],

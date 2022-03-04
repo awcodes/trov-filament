@@ -2,11 +2,10 @@
 
 namespace Trov\MediaLibrary\Components\Forms;
 
-use Trov\MediaLibrary\Models\Media;
+use Filament\Forms;
 use Livewire\Component;
+use Trov\MediaLibrary\Models\Media;
 use Filament\Forms\Contracts\HasForms;
-use Filament\Forms\Components\Textarea;
-use Filament\Forms\Components\TextInput;
 use Filament\Forms\Concerns\InteractsWithForms;
 
 class EditMediaForm extends Component implements HasForms
@@ -35,10 +34,10 @@ class EditMediaForm extends Component implements HasForms
     protected function getFormSchema(): array
     {
         return [
-            TextInput::make('alt')->label('Alt Text')->helperText('<a href="https://www.w3.org/WAI/tutorials/images/decision-tree/" class="underline" target="_blank">Learn how to describe the purpose of the image</a>. Leave empty if the image is purely decorative.'),
-            TextInput::make('title'),
-            Textarea::make('caption')->rows(2),
-            Textarea::make('description')->rows(2),
+            Forms\Components\TextInput::make('alt')->label('Alt Text')->helperText('<a href="https://www.w3.org/WAI/tutorials/images/decision-tree/" class="underline" target="_blank">Learn how to describe the purpose of the image</a>. Leave empty if the image is purely decorative.'),
+            Forms\Components\TextInput::make('title'),
+            Forms\Components\Textarea::make('caption')->rows(2),
+            Forms\Components\Textarea::make('description')->rows(2),
         ];
     }
 

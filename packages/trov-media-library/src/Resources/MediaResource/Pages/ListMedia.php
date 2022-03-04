@@ -2,8 +2,8 @@
 
 namespace Trov\MediaLibrary\Resources\MediaResource\Pages;
 
-use Trov\MediaLibrary\Resources\MediaResource;
 use Filament\Resources\Pages\ListRecords;
+use Trov\MediaLibrary\Resources\MediaResource;
 
 class ListMedia extends ListRecords
 {

@@ -3,24 +3,17 @@
 namespace App\Models;
 
 use App\Models\Author;
-use Spatie\Sluggable\HasSlug;
-use Spatie\Sluggable\SlugOptions;
+use App\Traits\IsSluggable;
+use App\Traits\HasPublishedScope;
 use Trov\MediaLibrary\Models\Media;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class WhitePage extends Model
 {
+    use HasPublishedScope;
+    use IsSluggable;
     use HasFactory;
-    use HasSlug;
-
-    public function getSlugOptions(): SlugOptions
-    {
-        return SlugOptions::create()
-            ->generateSlugsFrom('title')
-            ->saveSlugsTo('slug')
-            ->doNotGenerateSlugsOnUpdate();
-    }
 
     /**
      * The attributes that are mass assignable.

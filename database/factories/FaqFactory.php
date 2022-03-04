@@ -51,13 +51,12 @@ class FaqFactory extends Factory
     public function definition()
     {
         $title = $this->faker->sentence(4);
-        $answer = collect($this->faker->paragraphs(rand(1, 6)))->implode('<br /><br />');
 
         return [
             'question' => $title,
             'slug' => Str::slug($title),
             'status' => 'draft',
-            'answer' => $answer,
+            'answer' => '<p>' . collect($this->faker->paragraphs(rand(1, 6)))->implode('</p><p>') . '</p>',
             'seo_title' => Str::title($this->faker->words(rand(2, 6), true)),
             'seo_description' => $this->faker->text,
         ];

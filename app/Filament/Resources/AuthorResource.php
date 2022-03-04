@@ -2,7 +2,6 @@
 
 namespace App\Filament\Resources;
 
-use Closure;
 use Filament\Forms;
 use Filament\Tables;
 use App\Models\Author;
@@ -11,15 +10,9 @@ use Illuminate\Support\Str;
 use Filament\Resources\Form;
 use Filament\Resources\Table;
 use Filament\Resources\Resource;
-use Filament\Forms\Components\Card;
-use Filament\Forms\Components\Group;
 use Illuminate\Support\Facades\Route;
-use Filament\Forms\Components\TextInput;
-use Filament\Forms\Components\FileUpload;
-use Filament\Forms\Components\RichEditor;
 use App\Filament\Resources\AuthorResource\Pages;
-use App\Filament\Resources\AuthorResource\Pages\CreateAuthor;
-use App\Filament\Resources\AuthorResource\RelationManagers;
+use Mohamedsabil83\FilamentFormsTinyeditor\Components\TinyEditor;
 
 class AuthorResource extends Resource
 {
@@ -35,29 +28,29 @@ class AuthorResource extends Resource
     {
         return $form
             ->schema([
-                Card::make()
+                Forms\Components\Card::make()
                     ->schema([
-                        TextInput::make('name')
+                        Forms\Components\TextInput::make('name')
                             ->required()
                             ->reactive()
                             ->afterStateUpdated(function ($state, callable $set, $livewire) {
-                                if ($livewire instanceof CreateAuthor) {
+                                if ($livewire instanceof Pages\CreateAuthor) {
                                     return $set('slug', Str::slug($state));
                                 }
                             }),
-                        TextInput::make('slug')
+                        Forms\Components\TextInput::make('slug')
                             ->required()
                             ->unique(Author::class, 'slug', fn ($record) => $record),
-                        RichEditor::make('bio')
-                            ->disableToolbarButtons(['attachFiles', 'h2', 'h3', 'blockquote', 'codeBlock', 'strike'])
+                        TinyEditor::make('bio')
+                            ->profile('custom')
                             ->columnSpan(['sm' => 2]),
-                        Group::make()->schema([
-                            TextInput::make('facebook_handle'),
-                            TextInput::make('twitter_handle'),
-                            TextInput::make('instagram_handle'),
-                            TextInput::make('linkedin_handle'),
-                            TextInput::make('youtube_handle'),
-                            TextInput::make('pinterest_handle'),
+                        Forms\Components\Group::make()->schema([
+                            Forms\Components\TextInput::make('facebook_handle'),
+                            Forms\Components\TextInput::make('twitter_handle'),
+                            Forms\Components\TextInput::make('instagram_handle'),
+                            Forms\Components\TextInput::make('linkedin_handle'),
+                            Forms\Components\TextInput::make('youtube_handle'),
+                            Forms\Components\TextInput::make('pinterest_handle'),
                         ])->columns(2)->columnSpan(['sm' => 2])
                     ])
                     ->columns([
@@ -66,9 +59,9 @@ class AuthorResource extends Resource
                     ->columnSpan([
                         'sm' => 2,
                     ]),
-                Card::make()
+                Forms\Components\Card::make()
                     ->schema([
-                        FileUpload::make('avatar')->disk('avatars')->image()->imagePreviewHeight('250')->maxFiles(1)->maxSize(512)
+                        Forms\Components\FileUpload::make('avatar')->disk('avatars')->image()->imagePreviewHeight('250')->maxFiles(1)->maxSize(512)
                     ])
                     ->columnSpan(1),
             ])

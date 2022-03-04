@@ -7,7 +7,7 @@
     <div class="py-8 wrapper lg:py-12">
         <x-blocks.heading :data="['level' => 'h1', 'content' => 'Frequently Asked Questions']" />
 
-        <div class="prose max-w-none">
+        <x-prose>
             @if ($faqs)
                 <ul>
                     @foreach ($faqs as $faq)
@@ -22,7 +22,7 @@
                     @endforeach
                 </ul>
             @endif
-        </div>
+        </x-prose>
     </div>
 
     @section('footer')

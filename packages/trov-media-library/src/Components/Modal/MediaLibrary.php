@@ -2,8 +2,8 @@
 
 namespace Trov\MediaLibrary\Components\Modal;
 
-use Trov\MediaLibrary\Models\Media;
 use Livewire\Component;
+use Trov\MediaLibrary\Models\Media;
 
 class MediaLibrary extends Component
 {

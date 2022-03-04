@@ -8,18 +8,9 @@ use App\Models\Welcome;
 use Filament\Resources\Form;
 use Filament\Resources\Table;
 use Filament\Resources\Resource;
-use App\Forms\Components\Section;
-use Filament\Forms\Components\Group;
-use Filament\Forms\Components\Toggle;
 use App\Forms\Components\BlockContent;
-use Filament\Forms\Components\Textarea;
-use Filament\Tables\Columns\TextColumn;
-use Filament\Forms\Components\TextInput;
-use Filament\Tables\Columns\ImageColumn;
-use Filament\Forms\Components\Placeholder;
 use App\Filament\Resources\WelcomeResource\Pages;
 use Trov\MediaLibrary\Components\Fields\MediaLibrary;
-use App\Filament\Resources\WelcomeResource\RelationManagers;
 
 class WelcomeResource extends Resource
 {
@@ -37,18 +28,18 @@ class WelcomeResource extends Resource
     {
         return $form
             ->schema([
-                Group::make()
+                Forms\Components\Group::make()
                     ->schema([
-                        TextInput::make('title')
+                        Forms\Components\TextInput::make('title')
                             ->required()
                             ->disableLabel()
                             ->placeholder('Title')
                             ->extraInputAttributes(['class' => 'text-2xl']),
-                        Section::make('Hero')
+                        Forms\Components\Section::make('Hero')
                             ->schema([
                                 MediaLibrary::make('hero_image')
                                     ->label('Image'),
-                                Textarea::make('hero_content')
+                                Forms\Components\Textarea::make('hero_content')
                                     ->label('Call Out')
                                     ->rows(3),
                             ]),
@@ -56,35 +47,35 @@ class WelcomeResource extends Resource
                     ->columnSpan([
                         'lg' => 2,
                     ]),
-                Group::make()
+                Forms\Components\Group::make()
                     ->schema([
-                        Section::make('Details')
+                        Forms\Components\Section::make('Details')
                             ->schema([
-                                Toggle::make('has_chat')
+                                Forms\Components\Toggle::make('has_chat')
                                     ->columnSpan(2),
-                                Placeholder::make('created_at')
+                                Forms\Components\Placeholder::make('created_at')
                                     ->label('Created at')
                                     ->content(fn (?Welcome $record): string => $record ? $record->created_at->diffForHumans() : '-'),
-                                Placeholder::make('updated_at')
+                                Forms\Components\Placeholder::make('updated_at')
                                     ->label('Last modified at')
                                     ->content(fn (?Welcome $record): string => $record ? $record->updated_at->diffForHumans() : '-'),
                             ]),
-                        Section::make('SEO')
+                        Forms\Components\Section::make('SEO')
                             ->schema([
-                                TextInput::make('seo_title')
+                                Forms\Components\TextInput::make('seo_title')
                                     ->label('Title')
                                     ->required(),
-                                Textarea::make('seo_description')
+                                Forms\Components\Textarea::make('seo_description')
                                     ->label('Description')
                                     ->rows(3)
                                     ->required(),
-                                Toggle::make('indexable'),
+                                Forms\Components\Toggle::make('indexable'),
                             ])
                     ])
                     ->columnSpan([
                         'lg' => 1,
                     ]),
-                Section::make('Page Content')
+                Forms\Components\Section::make('Page Content')
                     ->schema([
                         BlockContent::make('content')
                     ])->columnSpan([
@@ -100,9 +91,12 @@ class WelcomeResource extends Resource
     {
         return $table
             ->columns([
-                ImageColumn::make('heroImage.thumb')->label('Hero'),
-                TextColumn::make('title'),
-                TextColumn::make('updated_at')->label('Last Updated')->date(),
+                Tables\Columns\ImageColumn::make('heroImage.thumb')
+                    ->label('Hero'),
+                Tables\Columns\TextColumn::make('title'),
+                Tables\Columns\TextColumn::make('updated_at')
+                    ->label('Last Updated')
+                    ->date(),
             ])
             ->filters([]);
     }

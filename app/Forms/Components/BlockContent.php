@@ -10,12 +10,12 @@ use Filament\Forms\Components\Repeater;
 use Filament\Forms\Components\Component;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\FileUpload;
-use Filament\Forms\Components\RichEditor;
 use Filament\Forms\Components\CheckboxList;
 use Filament\Forms\Components\Builder\Block;
 use App\Forms\Fields\RadioButton;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\Toggle;
+use Mohamedsabil83\FilamentFormsTinyeditor\Components\TinyEditor;
 use Trov\MediaLibrary\Components\Fields\MediaLibrary;
 
 class BlockContent extends Component
@@ -83,16 +83,9 @@ class BlockContent extends Component
                                 ]),
                             Block::make('rich-text')
                                 ->schema([
-                                    RichEditor::make('content')
+                                    TinyEditor::make('content')
                                         ->label('Rich Text')
-                                        ->disableToolbarButtons([
-                                            'blockquote',
-                                            'codeBlock',
-                                            'attachFiles',
-                                            'strike',
-                                            'h2',
-                                            'h3',
-                                        ])
+                                        ->profile('custom')
                                         ->required(),
                                 ]),
                             Block::make('grid')
@@ -139,32 +132,18 @@ class BlockContent extends Component
                                     MediaLibrary::make('image')
                                         ->label('Image')
                                         ->columnSpan(1),
-                                    RichEditor::make('content')
+                                    TinyEditor::make('content')
                                         ->label('Rich Text')
-                                        ->disableToolbarButtons([
-                                            'blockquote',
-                                            'codeBlock',
-                                            'attachFiles',
-                                            'strike',
-                                            'h2',
-                                            'h3',
-                                        ])
+                                        ->profile('custom')
                                         ->required()
                                         ->columnSpan(2),
                                 ])->columns(['sm' => 3]),
                             Block::make('image-right')
                                 ->label('Image with Text on Right')
                                 ->schema([
-                                    RichEditor::make('content')
+                                    TinyEditor::make('content')
                                         ->label('Rich Text')
-                                        ->disableToolbarButtons([
-                                            'blockquote',
-                                            'codeBlock',
-                                            'attachFiles',
-                                            'strike',
-                                            'h2',
-                                            'h3',
-                                        ])
+                                        ->profile('custom')
                                         ->required()
                                         ->columnSpan(2),
                                     MediaLibrary::make('image')

@@ -9,21 +9,8 @@ use Filament\Resources\Form;
 use Filament\Resources\Table;
 use App\Forms\Fields\SlugInput;
 use Filament\Resources\Resource;
-use Filament\Forms\Components\Select;
-use Filament\Forms\Components\Textarea;
-use Filament\Tables\Columns\TextColumn;
-use Filament\Forms\Components\TextInput;
-use Filament\Tables\Columns\BadgeColumn;
-use Filament\Forms\Components\RichEditor;
-use Filament\Tables\Filters\SelectFilter;
-use Filament\Forms\Components\Placeholder;
 use App\Filament\Resources\FaqResource\Pages;
-use Filament\Forms\Components\SpatieTagsInput;
-use App\Filament\Resources\FaqResource\Pages\EditFaq;
-use App\Filament\Resources\FaqResource\Pages\CreateFaq;
-use App\Filament\Resources\FaqResource\RelationManagers;
-use App\Forms\Components\Section;
-use Filament\Forms\Components\Group;
+use Mohamedsabil83\FilamentFormsTinyeditor\Components\TinyEditor;
 
 class FaqResource extends Resource
 {
@@ -43,47 +30,42 @@ class FaqResource extends Resource
     {
         return $form
             ->schema([
-                Group::make()
+                Forms\Components\Group::make()
                     ->schema([
-                        TextInput::make('question')
+                        Forms\Components\TextInput::make('question')
                             ->required()
                             ->reactive()
                             ->disableLabel()
                             ->placeholder('Question')
                             ->extraInputAttributes(['class' => 'text-2xl'])
                             ->afterStateUpdated(function ($state, callable $set, $livewire) {
-                                if ($livewire instanceof CreateFaq) {
+                                if ($livewire instanceof Pages\CreateFaq) {
                                     return $set('slug', Str::slug($state));
                                 }
                             }),
-                        Section::make('Meta Information')
+                        Forms\Components\Section::make('Meta Information')
                             ->schema([
                                 SlugInput::make('slug')
-                                    ->mode(fn ($livewire) => $livewire instanceof EditFaq ? 'edit' : 'create')
+                                    ->mode(fn ($livewire) => $livewire instanceof Pages\EditFaq ? 'edit' : 'create')
                                     ->required()
                                     ->unique(Faq::class, 'slug', fn ($record) => $record),
                             ]),
-                        Section::make('Answer')
+                        Forms\Components\Section::make('Answer')
                             ->schema([
-                                RichEditor::make('answer')
+                                TinyEditor::make('answer')
                                     ->label('Rich Text')
-                                    ->disableToolbarButtons([
-                                        'blockquote',
-                                        'codeBlock',
-                                        'attachFiles',
-                                        'strike',
-                                    ])
+                                    ->profile('custom')
                                     ->required(),
                             ]),
                     ])
                     ->columnSpan([
                         'sm' => 2
                     ]),
-                Group::make()
+                Forms\Components\Group::make()
                     ->schema([
-                        Section::make('Details')
+                        Forms\Components\Section::make('Details')
                             ->schema([
-                                Select::make('status')
+                                Forms\Components\Select::make('status')
                                     ->default('draft')
                                     ->options([
                                         'draft' => 'Draft',
@@ -92,22 +74,22 @@ class FaqResource extends Resource
                                     ])
                                     ->required()
                                     ->columnSpan(2),
-                                SpatieTagsInput::make('tags')
+                                Forms\Components\SpatieTagsInput::make('tags')
                                     ->type('faqTag')
                                     ->columnspan(2),
-                                Placeholder::make('created_at')
+                                Forms\Components\Placeholder::make('created_at')
                                     ->label('Created at')
                                     ->content(fn (?Faq $record): string => $record ? $record->created_at->diffForHumans() : '-'),
-                                Placeholder::make('updated_at')
+                                Forms\Components\Placeholder::make('updated_at')
                                     ->label('Last modified at')
                                     ->content(fn (?Faq $record): string => $record ? $record->updated_at->diffForHumans() : '-'),
                             ]),
-                        Section::make('SEO')
+                        Forms\Components\Section::make('SEO')
                             ->schema([
-                                TextInput::make('seo_title')
+                                Forms\Components\TextInput::make('seo_title')
                                     ->label('Title')
                                     ->required(),
-                                Textarea::make('seo_description')
+                                Forms\Components\Textarea::make('seo_description')
                                     ->label('Description')
                                     ->rows(3)
                                     ->required(),
@@ -124,16 +106,16 @@ class FaqResource extends Resource
     {
         return $table
             ->columns([
-                TextColumn::make('question')->searchable()->sortable(),
-                BadgeColumn::make('status')->enum([
+                Tables\Columns\TextColumn::make('question')->searchable()->sortable(),
+                Tables\Columns\BadgeColumn::make('status')->enum([
                     'draft' => 'Draft',
                     'review' => 'In Review',
                     'published' => 'Published',
                 ])->colors(['primary', 'danger' => 'draft', 'warning' => 'review', 'success' => 'published']),
-                TextColumn::make('updated_at')->label('Last Updated')->date()->sortable(),
+                Tables\Columns\TextColumn::make('updated_at')->label('Last Updated')->date()->sortable(),
             ])
             ->filters([
-                SelectFilter::make('status')
+                Tables\Filters\SelectFilter::make('status')
                     ->options([
                         'draft' => 'Draft',
                         'review' => 'In Review',

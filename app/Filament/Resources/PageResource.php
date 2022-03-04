@@ -5,29 +5,15 @@ namespace App\Filament\Resources;
 use Filament\Forms;
 use App\Models\Page;
 use Filament\Tables;
-use Trov\MediaLibrary\Models\Media;
 use Illuminate\Support\Str;
 use Filament\Resources\Form;
 use Filament\Resources\Table;
 use App\Forms\Fields\SlugInput;
 use Filament\Resources\Resource;
-use Trov\MediaLibrary\Components\Fields\MediaLibrary;
-use Filament\Forms\Components\Group;
-use Filament\Forms\Components\Select;
-use Filament\Forms\Components\Toggle;
-use App\Forms\Components\Section;
-use Filament\Forms\Components\Textarea;
-use Filament\Tables\Columns\TextColumn;
-use Filament\Forms\Components\TextInput;
-use Filament\Tables\Columns\BadgeColumn;
-use Filament\Tables\Columns\ImageColumn;
-use Filament\Tables\Filters\SelectFilter;
-use Filament\Forms\Components\Placeholder;
-use App\Filament\Resources\PageResource\Pages;
-use App\Filament\Resources\PageResource\Pages\EditPage;
-use App\Filament\Resources\PageResource\RelationManagers;
+use Trov\MediaLibrary\Models\Media;
 use App\Forms\Components\BlockContent;
-use Filament\Tables\Columns\SpatieMediaLibraryImageColumn;
+use App\Filament\Resources\PageResource\Pages;
+use Trov\MediaLibrary\Components\Fields\MediaLibrary;
 
 class PageResource extends Resource
 {
@@ -43,32 +29,32 @@ class PageResource extends Resource
     {
         return $form
             ->schema([
-                Group::make()
+                Forms\Components\Group::make()
                     ->schema([
-                        TextInput::make('title')
+                        Forms\Components\TextInput::make('title')
                             ->required()
                             ->reactive()
                             ->disableLabel()
                             ->placeholder('Title')
                             ->extraInputAttributes(['class' => 'text-2xl'])
                             ->afterStateUpdated(function ($state, callable $set, $livewire) {
-                                if ($livewire instanceof CreatePage) {
+                                if ($livewire instanceof Pages\CreatePage) {
                                     return $set('slug', Str::slug($state));
                                 }
                             }),
-                        Section::make('Meta Information')
+                        Forms\Components\Section::make('Meta Information')
                             ->schema([
                                 SlugInput::make('slug')
-                                    ->mode(fn ($livewire) => $livewire instanceof EditPage ? 'edit' : 'create')
+                                    ->mode(fn ($livewire) => $livewire instanceof Pages\EditPage ? 'edit' : 'create')
                                     ->required()
                                     ->unique(Page::class, 'slug', fn ($record) => $record),
 
                             ]),
-                        Section::make('Hero')
+                        Forms\Components\Section::make('Hero')
                             ->schema([
                                 MediaLibrary::make('hero_image')
                                     ->label('Image'),
-                                Textarea::make('hero_content')
+                                Forms\Components\Textarea::make('hero_content')
                                     ->label('Call Out')
                                     ->rows(3),
                             ]),
@@ -76,11 +62,11 @@ class PageResource extends Resource
                     ->columnSpan([
                         'lg' => 2,
                     ]),
-                Group::make()
+                Forms\Components\Group::make()
                     ->schema([
-                        Section::make('Details')
+                        Forms\Components\Section::make('Details')
                             ->schema([
-                                Select::make('status')
+                                Forms\Components\Select::make('status')
                                     ->default('draft')
                                     ->options([
                                         'draft' => 'Draft',
@@ -89,31 +75,31 @@ class PageResource extends Resource
                                     ])
                                     ->required()
                                     ->columnSpan(2),
-                                Toggle::make('has_chat')
+                                Forms\Components\Toggle::make('has_chat')
                                     ->columnSpan(2),
-                                Placeholder::make('created_at')
+                                Forms\Components\Placeholder::make('created_at')
                                     ->label('Created at')
                                     ->content(fn (?Page $record): string => $record ? $record->created_at->diffForHumans() : '-'),
-                                Placeholder::make('updated_at')
+                                Forms\Components\Placeholder::make('updated_at')
                                     ->label('Last modified at')
                                     ->content(fn (?Page $record): string => $record ? $record->updated_at->diffForHumans() : '-'),
                             ]),
-                        Section::make('SEO')
+                        Forms\Components\Section::make('SEO')
                             ->schema([
-                                TextInput::make('seo_title')
+                                Forms\Components\TextInput::make('seo_title')
                                     ->label('Title')
                                     ->required(),
-                                Textarea::make('seo_description')
+                                Forms\Components\Textarea::make('seo_description')
                                     ->label('Description')
                                     ->rows(3)
                                     ->required(),
-                                Toggle::make('indexable'),
+                                Forms\Components\Toggle::make('indexable'),
                             ])
                     ])
                     ->columnSpan([
                         'lg' => 1,
                     ]),
-                Section::make('Page Content')
+                Forms\Components\Section::make('Page Content')
                     ->schema([
                         BlockContent::make('content')
                     ])->columnSpan([
@@ -129,17 +115,17 @@ class PageResource extends Resource
     {
         return $table
             ->columns([
-                ImageColumn::make('heroImage.thumb')->label('Hero'),
-                TextColumn::make('title')->searchable()->sortable(),
-                BadgeColumn::make('status')->enum([
+                Tables\Columns\ImageColumn::make('heroImage.thumb')->label('Hero'),
+                Tables\Columns\TextColumn::make('title')->searchable()->sortable(),
+                Tables\Columns\BadgeColumn::make('status')->enum([
                     'draft' => 'Draft',
                     'review' => 'In Review',
                     'published' => 'Published',
                 ])->colors(['primary', 'danger' => 'draft', 'warning' => 'review', 'success' => 'published']),
-                TextColumn::make('updated_at')->label('Last Updated')->date()->sortable(),
+                Tables\Columns\TextColumn::make('updated_at')->label('Last Updated')->date()->sortable(),
             ])
             ->filters([
-                SelectFilter::make('status')
+                Tables\Filters\SelectFilter::make('status')
                     ->options([
                         'draft' => 'Draft',
                         'review' => 'In Review',

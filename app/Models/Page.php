@@ -2,25 +2,18 @@
 
 namespace App\Models;
 
-use Spatie\Sluggable\HasSlug;
-use Spatie\Sluggable\SlugOptions;
+use App\Traits\IsSluggable;
+use App\Traits\HasPublishedScope;
+use Trov\MediaLibrary\Models\Media;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Trov\MediaLibrary\Models\Media;
 
 class Page extends Model
 {
     use HasFactory;
-    use HasSlug;
-
-    public function getSlugOptions(): SlugOptions
-    {
-        return SlugOptions::create()
-            ->generateSlugsFrom('title')
-            ->saveSlugsTo('slug')
-            ->doNotGenerateSlugsOnUpdate();
-    }
+    use HasPublishedScope;
+    use IsSluggable;
 
     /**
      * The attributes that are mass assignable.

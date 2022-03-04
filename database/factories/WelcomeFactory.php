@@ -39,7 +39,7 @@ class WelcomeFactory extends Factory
                         [
                             "type" => "rich-text",
                             "data" => [
-                                "content" => collect($this->faker->paragraphs(rand(1, 6)))->implode('<br /><br />')
+                                "content" => '<p>' . collect($this->faker->paragraphs(rand(1, 6)))->implode('</p><p>') . '</p>',
                             ]
                         ],
                         [
@@ -52,7 +52,7 @@ class WelcomeFactory extends Factory
                         [
                             "type" => "rich-text",
                             "data" => [
-                                "content" => collect($this->faker->paragraphs(rand(1, 6)))->implode('<br /><br />')
+                                "content" => '<p>' . collect($this->faker->paragraphs(rand(1, 6)))->implode('</p><p>') . '</p>',
                             ]
                         ],
                     ],
