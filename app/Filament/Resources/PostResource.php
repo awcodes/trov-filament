@@ -102,6 +102,7 @@ class PostResource extends Resource
                                     ->required()
                                     ->columnSpan(2),
                                 SpatieTagsInput::make('tags')
+                                    ->type('postTag')
                                     ->columnSpan(2),
                                 Placeholder::make('created_at')
                                     ->label('Created at')

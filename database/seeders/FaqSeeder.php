@@ -2,8 +2,8 @@
 
 namespace Database\Seeders;
 
-use Faker\Factory;
 use App\Models\Faq;
+use Spatie\Tags\Tag;
 use Illuminate\Database\Seeder;
 
 class FaqSeeder extends Seeder
@@ -15,7 +15,8 @@ class FaqSeeder extends Seeder
      */
     public function run()
     {
-        $faker = Factory::create();
+
+        $tags = Tag::getWithType('faqTag');
 
         Faq::factory()
             ->count(3)
@@ -24,15 +25,15 @@ class FaqSeeder extends Seeder
         Faq::factory()
             ->count(5)
             ->inReview()
-            ->create()->each(function ($post) use ($faker) {
-                $post->attachTags($faker->words(rand(1, 5)));
+            ->create()->each(function ($faq) use ($tags) {
+                $faq->attachTag($tags->random());
             });
 
         Faq::factory()
             ->count(15)
             ->published()
-            ->create()->each(function ($post) use ($faker) {
-                $post->attachTags($faker->words(rand(1, 5)));
+            ->create()->each(function ($faq) use ($tags) {
+                $faq->attachTag($tags->random());
             });
     }
 }

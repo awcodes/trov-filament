@@ -3,16 +3,18 @@
 namespace App\Models;
 
 use Spatie\Tags\HasTags;
+use Spatie\Sluggable\HasSlug;
+use App\Traits\HasPublishedScope;
 use Spatie\Sluggable\SlugOptions;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Spatie\Sluggable\HasSlug;
 
 class Faq extends Model
 {
     use HasFactory;
     use HasTags;
     use HasSlug;
+    use HasPublishedScope;
 
     public function getSlugOptions(): SlugOptions
     {

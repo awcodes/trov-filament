@@ -93,6 +93,7 @@ class FaqResource extends Resource
                                     ->required()
                                     ->columnSpan(2),
                                 SpatieTagsInput::make('tags')
+                                    ->type('faqTag')
                                     ->columnspan(2),
                                 Placeholder::make('created_at')
                                     ->label('Created at')

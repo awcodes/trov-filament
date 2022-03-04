@@ -24,6 +24,7 @@ class DatabaseSeeder extends Seeder
 
             $this->call(UserSeeder::class);
             $this->call(MediaSeeder::class);
+            $this->call(TagSeeder::class);
             $this->call(WelcomeSeeder::class);
             $this->call(PageSeeder::class);
             $this->call(LandingPageSeeder::class);

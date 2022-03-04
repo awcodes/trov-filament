@@ -2,15 +2,12 @@
 
 namespace Database\Seeders;
 
-use Faker\Factory;
-use App\Models\Tag;
 use App\Models\Post;
+use Spatie\Tags\Tag;
 use Illuminate\Database\Seeder;
 
 class PostSeeder extends Seeder
 {
-
-
     /**
      * Run the database seeds.
      *
@@ -18,22 +15,22 @@ class PostSeeder extends Seeder
      */
     public function run()
     {
-        $faker = Factory::create();
+        $tags = Tag::getWithType('postTag');
 
         Post::factory()->count(3)->create();
 
         Post::factory()
             ->count(5)
             ->inReview()
-            ->create()->each(function ($post) use ($faker) {
-                $post->attachTags($faker->words(rand(1, 5)));
+            ->create()->each(function ($post) use ($tags) {
+                $post->attachTag($tags->random());
             });
 
         Post::factory()
             ->count(15)
             ->published()
-            ->create()->each(function ($post) use ($faker) {
-                $post->attachTags($faker->words(rand(1, 5)));
+            ->create()->each(function ($post) use ($tags) {
+                $post->attachTag($tags->random());
             });
     }
 }
