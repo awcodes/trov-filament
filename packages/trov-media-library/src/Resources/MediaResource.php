@@ -62,14 +62,18 @@ class MediaResource extends Resource
                                         return '';
                                     }),
                             ]),
-                        Forms\Components\ViewField::make('preview')
+                        Forms\Components\Section::make('Preview')
                             ->hidden(function ($livewire) {
-                                return $livewire instanceof CreateMedia;
+                                return $livewire instanceof Pages\CreateMedia;
                             })
-                            ->view('forms.components.media-preview')
-                            ->afterStateHydrated(function ($component, $state, $record) {
-                                $component->state($record);
-                            }),
+                            ->schema([
+                                Forms\Components\ViewField::make('preview')
+                                    ->view('forms.components.media-preview')
+                                    ->disableLabel()
+                                    ->afterStateHydrated(function ($component, $state, $record) {
+                                        $component->state($record);
+                                    }),
+                            ]),
                         Forms\Components\Section::make('Details')
                             ->schema([
                                 Forms\Components\Placeholder::make('uploaded_on')
@@ -98,12 +102,12 @@ class MediaResource extends Resource
                     ]),
                 Forms\Components\Group::make()
                     ->schema([
-                        Forms\Components\Section::make('Details')
+                        Forms\Components\Section::make('Meta')
                             ->schema([
-                                Forms\Components\TextInput::make('alt')->helperText('<a href="https://www.w3.org/WAI/tutorials/images/decision-tree" target="_blank" rel="noopener" class="underline">Learn how to describe the purpose of the image</a>. Leave empty if the image is purely decorative.'),
+                                Forms\Components\TextInput::make('alt')->helperText('<a href="https://www.w3.org/WAI/tutorials/images/decision-tree" target="_blank" rel="noopener" class="underline text-primary-500 hover:text-primary-600 focus:text-primary-600">Learn how to describe the purpose of the image</a>. Leave empty if the image is purely decorative.'),
                                 Forms\Components\TextInput::make('title'),
-                                Forms\Components\Textarea::make('caption'),
-                                Forms\Components\Textarea::make('description'),
+                                Forms\Components\Textarea::make('caption')->rows(2),
+                                Forms\Components\Textarea::make('description')->rows(2),
                             ])
                     ])
             ])

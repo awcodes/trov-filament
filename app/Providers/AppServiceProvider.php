@@ -6,6 +6,7 @@ use Filament\Facades\Filament;
 use Illuminate\Support\ServiceProvider;
 use Filament\Navigation\NavigationBuilder;
 use Filament\Navigation\NavigationItem;
+use Filament\Navigation\UserMenuItem;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -26,6 +27,10 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+        Filament::registerUserMenuItems([
+            'account' => UserMenuItem::make()->url('/admin/profile'),
+        ]);
+
         Filament::registerNavigationGroups([
             'Site',
             'Airport',
