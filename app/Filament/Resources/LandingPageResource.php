@@ -43,13 +43,13 @@ class LandingPageResource extends Resource
                                     return $set('slug', Str::slug($state));
                                 }
                             }),
-                        Forms\Components\Section::make('Meta Information')
-                            ->schema([
-                                SlugInput::make('slug')
-                                    ->mode(fn ($livewire) => $livewire instanceof Pages\EditLandingPage ? 'edit' : 'create')
-                                    ->required()
-                                    ->unique(LandingPage::class, 'slug', fn ($record) => $record),
-                            ]),
+                        SlugInput::make('slug')
+                            ->mode(fn ($livewire) => $livewire instanceof Pages\EditLandingPage ? 'edit' : 'create')
+                            ->baseUrl('/loans/')
+                            ->label('slug')
+                            ->disableLabel()
+                            ->required()
+                            ->unique(LandingPage::class, 'slug', fn ($record) => $record),
                         Forms\Components\Section::make('SEO')
                             ->schema([
                                 Forms\Components\TextInput::make('seo_title')

@@ -23,7 +23,7 @@ Route::middleware('forceslash')->group(function () {
     Route::name('faqs.index')->get('/faqs/', [FaqController::class, 'index']);
     Route::name('faqs.show')->get('/faqs/{faq:slug}/', [FaqController::class, 'show']);
 
-    Route::name('posts.show')->get('/blog/{post:slug}/', [PostController::class, 'show']);
+    Route::name('posts.show')->get('/posts/{post:slug}/', [PostController::class, 'show']);
 
     Route::name('discovery-topics.show')->get('/discovery-center/topics/{topic:slug}/', [DiscoveryTopicController::class, 'show']);
 
@@ -35,7 +35,7 @@ Route::middleware('forceslash')->group(function () {
         return 'author list goes here';
     });
 
-    Route::name('white-pages.show')->get('/{type}/{page:slug}/', [WhitePageController::class, 'show']);
+    Route::name('white-pages.show')->get('/{type}s/{page:slug}/', [WhitePageController::class, 'show']);
 
     // this needs to be last !!!!!!!!!!!!!!
     Route::name('pages.show')->get('/{page:slug}', [PageController::class, 'show']);

@@ -17,6 +17,8 @@ class SlugInput extends TextInput
 
     protected string | Closure | null $mode = 'create';
 
+    protected string | Closure | null $baseUrl = '';
+
     protected bool $cancelled = false;
 
     public function mode(string | Closure | null $mode): static
@@ -26,9 +28,21 @@ class SlugInput extends TextInput
         return $this;
     }
 
+    public function baseUrl(string | Closure | null $baseUrl): static
+    {
+        $this->baseUrl = $baseUrl;
+
+        return $this;
+    }
+
     public function getMode(): ?string
     {
         return $this->evaluate($this->mode);
+    }
+
+    public function getBaseUrl(): ?string
+    {
+        return config('app.url') . $this->evaluate($this->baseUrl);
     }
 
     public function cancelChange()

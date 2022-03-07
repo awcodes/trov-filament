@@ -43,13 +43,13 @@ class FaqResource extends Resource
                                     return $set('slug', Str::slug($state));
                                 }
                             }),
-                        Forms\Components\Section::make('Meta Information')
-                            ->schema([
-                                SlugInput::make('slug')
-                                    ->mode(fn ($livewire) => $livewire instanceof Pages\EditFaq ? 'edit' : 'create')
-                                    ->required()
-                                    ->unique(Faq::class, 'slug', fn ($record) => $record),
-                            ]),
+                        SlugInput::make('slug')
+                            ->mode(fn ($livewire) => $livewire instanceof Pages\EditFaq ? 'edit' : 'create')
+                            ->baseUrl('/faqs/')
+                            ->label('slug')
+                            ->disableLabel()
+                            ->required()
+                            ->unique(Faq::class, 'slug', fn ($record) => $record),
                         Forms\Components\Section::make('Answer')
                             ->schema([
                                 TinyEditor::make('answer')

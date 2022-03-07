@@ -42,14 +42,13 @@ class PageResource extends Resource
                                     return $set('slug', Str::slug($state));
                                 }
                             }),
-                        Forms\Components\Section::make('Meta Information')
-                            ->schema([
-                                SlugInput::make('slug')
-                                    ->mode(fn ($livewire) => $livewire instanceof Pages\EditPage ? 'edit' : 'create')
-                                    ->required()
-                                    ->unique(Page::class, 'slug', fn ($record) => $record),
-
-                            ]),
+                        SlugInput::make('slug')
+                            ->mode(fn ($livewire) => $livewire instanceof Pages\EditPage ? 'edit' : 'create')
+                            ->baseUrl('/')
+                            ->label('slug')
+                            ->disableLabel()
+                            ->required()
+                            ->unique(Page::class, 'slug', fn ($record) => $record),
                         Forms\Components\Section::make('Hero')
                             ->schema([
                                 MediaLibrary::make('hero_image')

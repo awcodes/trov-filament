@@ -45,13 +45,13 @@ class PostResource extends Resource
                                     return $set('slug', Str::slug($state));
                                 }
                             }),
-                        Forms\Components\Section::make('Meta Information')
-                            ->schema([
-                                SlugInput::make('slug')
-                                    ->mode(fn ($livewire) => $livewire instanceof Pages\EditPost ? 'edit' : 'create')
-                                    ->required()
-                                    ->unique(Post::class, 'slug', fn ($record) => $record),
-                            ]),
+                        SlugInput::make('slug')
+                            ->mode(fn ($livewire) => $livewire instanceof Pages\EditPost ? 'edit' : 'create')
+                            ->baseUrl('/posts/')
+                            ->label('slug')
+                            ->disableLabel()
+                            ->required()
+                            ->unique(Post::class, 'slug', fn ($record) => $record),
                         Forms\Components\Section::make('Post Content')
                             ->schema([
                                 MediaLibrary::make('featured_image')

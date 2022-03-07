@@ -36,17 +36,19 @@ class WhitePageResource extends Resource
                             ->placeholder('Title')
                             ->extraInputAttributes(['class' => 'text-2xl'])
                             ->afterStateUpdated(function ($state, callable $set, $livewire) {
-                                if ($livewire instanceof Pages\CreateArticle) {
+                                if ($livewire instanceof Pages\CreateWhitePage) {
                                     return $set('slug', Str::slug($state));
                                 }
                             }),
-                        Forms\Components\Section::make('Meta Information')
-                            ->schema([
-                                SlugInput::make('slug')
-                                    ->mode(fn ($livewire) => $livewire instanceof Pages\EditArticle ? 'edit' : 'create')
-                                    ->required()
-                                    ->unique(Article::class, 'slug', fn ($record) => $record),
-                            ]),
+                        SlugInput::make('slug')
+                            ->mode(fn ($livewire) => $livewire instanceof Pages\EditWhitePage ? 'edit' : 'create')
+                            ->baseUrl(function ($record) {
+                                return '/' . $record->type . 's/';
+                            })
+                            ->label('slug')
+                            ->disableLabel()
+                            ->required()
+                            ->unique(WhitePage::class, 'slug', fn ($record) => $record),
                         Forms\Components\Section::make('Page Content')
                             ->schema([
                                 BlockContent::make('content')

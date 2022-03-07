@@ -45,13 +45,13 @@ class DiscoveryArticleResource extends Resource
                                     return $set('slug', Str::slug($state));
                                 }
                             }),
-                        Forms\Components\Section::make('Meta Information')
-                            ->schema([
-                                SlugInput::make('slug')
-                                    ->mode(fn ($livewire) => $livewire instanceof Pages\EditDiscoveryArticle ? 'edit' : 'create')
-                                    ->required()
-                                    ->unique(DiscoveryArticle::class, 'slug', fn ($record) => $record),
-                            ]),
+                        SlugInput::make('slug')
+                            ->mode(fn ($livewire) => $livewire instanceof Pages\EditDiscoveryArticle ? 'edit' : 'create')
+                            ->baseUrl('/discovery-center/aritcles/')
+                            ->label('slug')
+                            ->disableLabel()
+                            ->required()
+                            ->unique(DiscoveryArticle::class, 'slug', fn ($record) => $record),
                         Forms\Components\Section::make('Page Content')
                             ->schema([
                                 MediaLibrary::make('featured_image')

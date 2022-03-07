@@ -45,13 +45,13 @@ class DiscoveryTopicResource extends Resource
                                     return $set('slug', Str::slug($state));
                                 }
                             }),
-                        Forms\Components\Section::make('Meta Information')
-                            ->schema([
-                                SlugInput::make('slug')
-                                    ->mode(fn ($livewire) => $livewire instanceof Pages\EditDiscoveryTopic ? 'edit' : 'create')
-                                    ->required()
-                                    ->unique(DiscoveryTopic::class, 'slug', fn ($record) => $record),
-                            ]),
+                        SlugInput::make('slug')
+                            ->mode(fn ($livewire) => $livewire instanceof Pages\EditDiscoveryTopic ? 'edit' : 'create')
+                            ->baseUrl('/discovery-center/topics/')
+                            ->label('slug')
+                            ->disableLabel()
+                            ->required()
+                            ->unique(DiscoveryTopic::class, 'slug', fn ($record) => $record),
                         Forms\Components\Section::make('Page Content')
                             ->schema([
                                 MediaLibrary::make('featured_image')
